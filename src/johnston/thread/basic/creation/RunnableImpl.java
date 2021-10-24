@@ -1,18 +1,23 @@
 package johnston.thread.basic.creation;
 
+/**
+ * Thread creation by implementing Runnable interface
+ *
+ * Notice the Runnable interface has run() method only, so there is no corresponding
+ * fields in Thread class.
+ */
 public class RunnableImpl {
-  public static final int THREAD_COUNT = 4;
-
   static class RunnableThread implements Runnable {
     @Override
     public void run() {
-      System.out.println("Running: " + Thread.currentThread().getName());
+      System.out.println("Running thread with name: " + Thread.currentThread().getName());
     }
   }
 
   public static void main(String[] args) {
     Runnable runnable = new RunnableThread();
-    Thread newThread = new Thread(runnable);
+    String threadName = "New runnable thread";
+    Thread newThread = new Thread(runnable, threadName);
     newThread.start();
   }
 }

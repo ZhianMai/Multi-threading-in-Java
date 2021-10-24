@@ -1,5 +1,8 @@
 package johnston.thread.basic.creation;
 
+/**
+ * Thread creation by extending Thread class
+ */
 public class InheritedThread {
   static class ThreadDemo extends Thread {
     public ThreadDemo(String name) {
