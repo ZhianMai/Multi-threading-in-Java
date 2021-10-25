@@ -83,5 +83,14 @@ This class simulates all these states of a thread.
 #### 1.2.5 :warning: Difference of run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
 start() method make a thread start running run().
-So simply calling run() directly would not start multi-threading, it just run run() method in 
+So simply calling run() directly would not start multi-threading, it just calls run() method in 
 the current thread!
+
+#### 1.2.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/DaemonThread.java)
+In general, a process would not exit execution as long as it has at least one running thread, but some threads are doing 
+background task, like file auto saving thread, or producer thread using external resources. These threads should not block 
+the process from exiting.
+
+We can set these threads as daemon thread, so they won't bother the main thread when main is about to exit.
+
+Call threadA.setDaemon(true) to mark it as a daemon thread. The default is false.
