@@ -36,6 +36,18 @@ The first step of multi-threading.
 #### 1.1.4 Anonymous Class with Lambda Expression :link:[link](src/johnston/thread/basic/creation/AnonymousLambdaThread.java)
 - Similar to 1.1.3, but the code is less again.
 
+#### 1.1.5 :warning: Comparing Thread and Runnable :link:[link](src/johnston/thread/basic/creation/ThreadRunnableComparison.java)
+In OOD, it favors interface over inheritance, so implementing Runnable interface for thread creation is preferable.
+
+Also, using Runnable interface can greatly decouple data and logic. Class which implements Runnable can start multiple threads
+to work on the same data which is inside the class.
+
+In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
+- Alice group extends Thread, while Bob group extends Runnable;
+- Each Alice group thread cannot collaborate to eat a same set of apples, unless the apple is outside the class;
+- A Bob group can start multiple threads to eat a same set of apples, because interface Runnable holds no data field!
+
+
 <br />
 
 ### 1.2 Thread Properties
