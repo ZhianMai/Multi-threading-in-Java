@@ -12,6 +12,7 @@ public class AnonymousLambdaThread {
     Thread[] threadPool = new Thread[THREAD_COUNT];
 
     for (int i = 0; i < threadPool.length; i++) {
+      // Lambda expression
       threadPool[i] = new Thread(() -> {
         System.out.println("Running: " + Thread.currentThread().getName());
       });
