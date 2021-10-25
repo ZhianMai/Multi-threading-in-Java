@@ -40,7 +40,7 @@ The first step of multi-threading.
 In OOD, it favors interface over inheritance, so implementing Runnable interface for thread creation is preferable.
 
 Also, using Runnable interface can greatly decouple data and logic. Class which implements Runnable can start multiple threads
-to work on the same data which is inside the class.
+to work on the same data which is inside the class. However, the data should be free from data racing!
 
 In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
 - Alice group extends Thread, while Bob group extends Runnable;
