@@ -65,7 +65,9 @@ To get the priority of threadA, call threadA.getPriority().
 - Thread.MAX_PRIORITY: 10;
 - Thread.MIN_PRIORITY: 1.
 
-This class creates 10 threads, and each of them runs a heavy task. The last thread is set
+The default priority is 5.
+
+This demo class creates 10 threads, and each of them runs a heavy task. The last thread is set
 to the highest priority, while others have the lowest priority. Then the highest one always 
 finishes first.
 
