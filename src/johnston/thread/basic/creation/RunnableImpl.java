@@ -10,7 +10,7 @@ public class RunnableImpl {
   static class RunnableThread implements Runnable {
     @Override
     public void run() {
-      System.out.println("Running thread with name: " + Thread.currentThread().getName());
+      System.out.println("Running with name: \"" + Thread.currentThread().getName() + "\"");
     }
   }
 

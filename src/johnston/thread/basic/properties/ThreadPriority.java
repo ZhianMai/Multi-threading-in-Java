@@ -42,7 +42,8 @@ public class ThreadPriority {
         @Override
         public void run() {
           heavyTask(HEAVY_WORK_ROUNDS);
-          System.out.println("Finished running thread : " + Thread.currentThread().getName());
+          System.out.print("Finished running thread: " + Thread.currentThread().getName());
+          System.out.println(", priority: " + Thread.currentThread().getPriority());
         }
       });
       threadPool[i].setName(String.valueOf(i));

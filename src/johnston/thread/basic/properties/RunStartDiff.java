@@ -10,7 +10,7 @@ package johnston.thread.basic.properties;
 public class RunStartDiff {
   static class ThreadDemo extends Thread {
     public void run() {
-      System.out.println("run() method called by " + Thread.currentThread().getName());
+      System.out.println("run() method called by: " + Thread.currentThread().getName());
     }
   }
 
