@@ -36,6 +36,8 @@ The first step of multi-threading.
 #### 1.1.4 Anonymous Class with Lambda Expression :link:[link](src/johnston/thread/basic/creation/AnonymousLambdaThread.java)
 - Similar to 1.1.3, but the code is less again.
 
+<hr />
+
 ### 1.2 Thread Properties
 
 #### 1.2.1 Thread ID :link:[link](src/johnston/thread/basic/properties/ThreadID.java)
