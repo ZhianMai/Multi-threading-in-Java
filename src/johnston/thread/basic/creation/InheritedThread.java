@@ -12,7 +12,7 @@ public class InheritedThread {
     }
 
     public void run() {
-      System.out.println("Thread with id : " + this.getName() + " is running.");
+      System.out.println("Thread with name: \"" + this.getName() + "\" is running.");
     }
   }
 
