@@ -10,7 +10,8 @@ This repo is a collection of multi-threading concept demo in Java.
 
 ## 1. Thread Basics
 
-### 1.1 Thread Creation
+### 1.1 Thread Creation :link:[link](src/johnston/thread/basic/creation/InheritedThread.java)
+
 The first step of multi-threading.
 
 #### 1.1.1 Inheriting Thread Class
