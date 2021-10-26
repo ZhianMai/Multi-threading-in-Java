@@ -4,6 +4,7 @@ This repo is a collection of multi-threading concept demo in Java.
 
 ## Contents
 - Thread basics
+  - Thread Creation: Thread class, Runnable interface, and async thread.
 - Thread communications
 - Critical section, data racing, atomicity, and locking
 - producer-consumer, and semaphore
@@ -14,14 +15,14 @@ This repo is a collection of multi-threading concept demo in Java.
 
 The first step of multi-threading.
 
-#### 1.1.1 Inheriting Thread Class :link:[link](src/johnston/thread/basic/creation/InheritedThread.java)
+#### 1.1.1 Inheriting <i>Thread</i> Class :link:[link](src/johnston/thread/basic/creation/InheritedThread.java)
 
 - Create a class that extends <i>Thread</i> class;
 - Override run() method by putting the multi-threading logic in it;
 - Create an object of the multi-threaded class;
 - Call start() method.
 
-#### 1.1.2 Implementing Runnable Class :link:[link](src/johnston/thread/basic/creation/RunnableImpl.java)
+#### 1.1.2 Implementing <i>Runnable</i> Class :link:[link](src/johnston/thread/basic/creation/RunnableImpl.java)
 - Create a class that implements <i>Runnable</i> interface;
 - This interface has run() method only, and no other fields or methods;
 - So override run() method by putting the multi-threading logic in it;
@@ -47,6 +48,11 @@ In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
 - Each Alice group thread cannot collaborate to eat a same set of apples, unless the apple is outside the class;
 - A Bob group can start multiple threads to eat a same set of apples, because interface Runnable holds no data field!
 
+#### 1.1.6 Async Thread with return value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/CallableThread.java)
+Async thread: thread that runs async task, and supports return result. Basic Thread class and Runnable interface do not support return value on run() method.
+- <i>Callable</i> interface: has only one method named call() which is like run() method in Runnable but can return value. Callable object cannot be the target
+  of Thread instance.
+- <i>FutureTask</i> class: the connection between Callable interface and Thread instance.
 
 <br />
 

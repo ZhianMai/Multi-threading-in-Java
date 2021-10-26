@@ -30,12 +30,12 @@ public class ThreadRunnableComparison {
     // Avoid data racing
     private int appleLeft = APPLE_AMOUNT;
 
-    private synchronized boolean eatApple() {
+    private synchronized int eatApple() {
       if (appleLeft > 0) {
         appleLeft--;
-        return true;
+        return appleLeft;
       }
-      return false;
+      return -1;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ThreadRunnableComparison {
       Thread.currentThread().setName("Bob group " + Thread.currentThread().getId());
 
       for (int i = 0; i < APPLE_AMOUNT; i++) {
-        if (eatApple()) {
+        if (eatApple() != -1) {
           System.out.println(Thread.currentThread().getName() + " ate an apple.");
         }
       }
