@@ -54,7 +54,7 @@ Async thread: thread that runs async task, and supports return result. Basic Thr
   of Thread instance.
 - <i>FutureTask</i> class: the connection between Callable interface and Thread instance.
 
-#### 1.1.7 Async Thread with return value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/ExecutorPool.java)
+#### 1.1.7 Thread pool :link:[link](src/johnston/thread/basic/creation/ExecutorPool.java)
 Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
