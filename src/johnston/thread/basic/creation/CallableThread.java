@@ -4,12 +4,16 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * Async thread demo. Async thread can return value, while basic Thread with run() method
+ * does not.
+ */
 public class CallableThread {
   public static final int SLEEP_MILLI_SEC = 1000;
   public static final int COMPUTE_TIMES = 100000000;
 
   // Callable interface implementation
-  static class ReturnableTask implements Callable<Long> {
+  static class ReturnableThread implements Callable<Long> {
     // Call method has return type
     public Long call() throws Exception{
       long startTime = System.currentTimeMillis();
@@ -33,7 +37,7 @@ public class CallableThread {
   }
 
   public static void main(String args[]) throws InterruptedException {
-    ReturnableTask task = new ReturnableTask();
+    ReturnableThread task = new ReturnableThread();
     FutureTask<Long> futureTask = new FutureTask<>(task);
     Thread thread = new Thread(futureTask, "Returnable_Thread");//⑤
     thread.start();
@@ -48,6 +52,7 @@ public class CallableThread {
 
     System.out.println(getCurThreadName() + " get returnable thread result.");
     try {
+      // Main thread will be blocked here for waiting the result.
       double result = futureTask.get();
       System.out.println(thread.getName()+" thread running time：" + result);
     } catch (InterruptedException e) {

@@ -50,9 +50,14 @@ In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
 
 #### 1.1.6 Async Thread with return value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/CallableThread.java)
 Async thread: thread that runs async task, and supports return result. Basic Thread class and Runnable interface do not support return value on run() method.
-- <i>Callable</i> interface: has only one method named call() which is like run() method in Runnable but can return value. Callable object cannot be the target
+- <i>Callable</i> interface: has only one method named call() which is like run() method in Runnable but can return value and throw exception. Callable object cannot be the target
   of Thread instance.
 - <i>FutureTask</i> class: the connection between Callable interface and Thread instance.
+
+#### 1.1.7 Async Thread with return value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/ExecutorPool.java)
+Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
+
+The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
 
 <br />
 
@@ -93,7 +98,7 @@ finishes first.
 A thread can have 6 different states, which represent 6 certain parts of its life cycle.
 
 - NEW: a multi-threaded object is created, and before it runs;
-- RUNNABLE: when a thread is running or scheduled to run;
+- RUNNABLE: when a thread is running or scheduled to run (JVM called start(), and wait for CPU time slice);
 - BLOCKED: when a thread is waiting to enter critical section;
 - WAITING/TIMED_WAITING: a thread is called wait() ro sleep();
 - TERMINATED: a thread is finished running.
