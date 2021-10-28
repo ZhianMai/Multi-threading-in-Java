@@ -124,14 +124,14 @@ Call threadA.setDaemon(true) to mark it as a daemon thread. The default is false
 
 ## 2. Thread Communications
 
-#### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/basic/communications/ThreadStop.java)
+#### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/communications/ThreadStop.java)
 Calling stop() method of a thread can immediately terminate that thread.
 
 This operation is not safety. If the thread being stopped holds a lock, then it
 would not release it. If the thread being stopped is using database, then it would
 cause data inconsistency. So this method is @Deprecated.
 
-#### 2.2 Thread Join :link:[link](src/johnston/thread/basic/communications/ThreadJoin.java)
+#### 2.2 Thread Join :link:[link](src/johnston/thread/communications/ThreadJoin.java)
  When calling threadB.join() in threadA, threadA would wait until threadB finishes the
  work.
 
@@ -143,3 +143,10 @@ cause data inconsistency. So this method is @Deprecated.
  This demo creates two threads (A & B) to run a random int generator until get the target number.
  Main thread will wait until A exits, but will not wait B. So main thread always get the target
  number from A and needs some luck to get the same from B.
+ 
+#### 2.3 Thread Interruption :link:[link](src/johnston/thread/communications/ThreadInterruption.java)
+When threadA calls threadB.interrupt(), threadB can receive a interruption signal, and
+decide what to do next. So calling interrupt() to threadB does not stop or pause threadB if
+it's running (not waiting or sleeping).
+
+This demo is to interrupt a thread.
