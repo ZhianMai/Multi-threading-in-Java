@@ -4,8 +4,10 @@ This repo is a collection of multi-threading concept demo in Java.
 
 ## Contents
 - Thread basics
-  - Thread Creation: Thread class, Runnable interface, and async thread.
+  - Thread Creation: <i>Thread</i> class, <i>Runnable</i> interface, <i>Callable</i> interface, and Thread pool.
+  - Thread Properties: ID, name, priority, state, and daemon thread.
 - Thread communications
+  - stop(), join(), interrupt().
 - Critical section, data racing, atomicity, and locking
 - producer-consumer, and semaphore
 
