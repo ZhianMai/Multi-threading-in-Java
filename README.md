@@ -100,7 +100,7 @@ A thread can have 6 different states, which represent 6 certain parts of its lif
 - NEW: a multi-threaded object is created, and before it runs;
 - RUNNABLE: when a thread is running or scheduled to run (JVM called start(), and wait for CPU time slice);
 - BLOCKED: when a thread is waiting to enter critical section;
-- WAITING/TIMED_WAITING: a thread is called wait() ro sleep();
+- WAITING/TIMED_WAITING: a thread is called wait(), join(), or sleep();
 - TERMINATED: a thread is finished running.
 
 This class simulates all these states of a thread.
@@ -119,3 +119,12 @@ the process from exiting.
 We can set these threads as daemon thread, so they won't bother the main thread when main is about to exit.
 
 Call threadA.setDaemon(true) to mark it as a daemon thread. The default is false.
+
+## 2. Thread Communications
+
+#### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/basic/communications/ThreadStop.java)
+Calling stop() method of a thread can immediately terminate that thread.
+
+This operation is not safety. If the thread being stopped holds a lock, then it
+would not release it. If the thread being stopped is using database, then it would
+cause data inconsistency. So this method is @Deprecated.
