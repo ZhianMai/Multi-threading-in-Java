@@ -128,3 +128,16 @@ Calling stop() method of a thread can immediately terminate that thread.
 This operation is not safety. If the thread being stopped holds a lock, then it
 would not release it. If the thread being stopped is using database, then it would
 cause data inconsistency. So this method is @Deprecated.
+
+#### 2.2 Thread Join :link:[link](src/johnston/thread/basic/communications/ThreadJoin.java)
+ When calling threadB.join() in threadA, threadA would wait until threadB finishes the
+ work.
+
+ Suppose threadA needs the result from threadB, then threadA can call threadB.join() to
+ wait for the threadB instead of using a while loop to run a spinlock.
+
+ ThreadA that called join() may throw InterruptedException if other threads interrupt ThreadA.
+
+ This demo creates two threads (A & B) to run a random int generator until get the target number.
+ Main thread will wait until A exits, but will not wait B. So main thread always get the target
+ number from A and needs some luck to get the same from B.
