@@ -121,7 +121,7 @@ the process from exiting.
 We can set these threads as daemon thread, so they won't bother the main thread when main is about to exit.
 
 Call threadA.setDaemon(true) to mark it as a daemon thread. The default is false.
-<hr />
+<br />
 
 ## 2. Thread Communications
 
