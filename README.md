@@ -8,8 +8,8 @@ This repo is a collection of multi-threading concept demo in Java.
   - Thread Properties: ID, name, priority, state, and daemon thread.
 - Thread communications
   - stop(), join(), interrupt().
-- Critical section, data racing, atomicity, and locking
-- producer-consumer, and semaphore
+- Critical section, data racing, atomicity, and locking.
+- Producer-consumer, semaphore, and more.
 
 ## 1. Thread Basics
 
@@ -107,7 +107,7 @@ A thread can have 6 different states, which represent 6 certain parts of its lif
 
 This class simulates all these states of a thread.
 
-#### 1.2.5 :warning: Difference of run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
+#### 1.2.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
 start() method make a thread start running run().
 So simply calling run() directly would not start multi-threading, it just calls run() method in 
