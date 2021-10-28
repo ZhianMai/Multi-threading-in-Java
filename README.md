@@ -156,3 +156,11 @@ This demo is to interrupt a thread.
 
 #### 2.4 InterruptedException :link:[link](src/johnston/thread/communications/ThreadInterruptedException.java)
 When interrupting a sleeping or joined thread, it will throw InterruptedException.
+
+#### 2.5 InterruptedException :link:[link](src/johnston/thread/communications/YieldThread.java)
+Method yield() is provided by Thread class. When a thread calls Thread.yield(), it gives up
+the usage of CPU and put itself into the thread scheduling, which depends on the thread
+priority. The state is still Runnable, but it's "ready to run" instead of "running".
+
+In this demo, an array of low priority thread, and an array of high priority thread yield to
+each other and the final result shows that high priority threads have more execution times.
