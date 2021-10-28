@@ -1,4 +1,5 @@
 # Multi-threading in Java
+(In Progress)
 
 This repo is a collection of multi-threading concept demo in Java.
 
@@ -7,7 +8,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - Thread Creation: <i>Thread</i> class, <i>Runnable</i> interface, <i>Callable</i> interface, and Thread pool.
   - Thread Properties: ID, name, priority, state, and daemon thread.
 - Thread communications
-  - stop(), join(), interrupt().
+  - stop(), join(), interrupt(), InterruptedException.
 - Critical section, data racing, atomicity, and locking.
 - Producer-consumer, semaphore, and more.
 
@@ -152,3 +153,6 @@ decide what to do next. So calling interrupt() to threadB does not stop or pause
 it's running (not waiting or sleeping).
 
 This demo is to interrupt a thread.
+
+#### 2.4 InterruptedException :link:[link](src/johnston/thread/communications/ThreadInterruptedException.java)
+When interrupting a sleeping or joined thread, it will throw InterruptedException.
