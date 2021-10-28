@@ -163,4 +163,5 @@ the usage of CPU and put itself into the thread scheduling, which depends on the
 priority. The state is still Runnable, but it's "ready to run" instead of "running".
 
 In this demo, an array of low priority thread, and an array of high priority thread yield to
-each other, and the final result shows that high priority threads have more execution times.
+each other, and the final result shows that high priority threads have more execution times than the lower
+priority ones.
