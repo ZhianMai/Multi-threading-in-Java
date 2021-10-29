@@ -13,11 +13,12 @@ import java.util.concurrent.*;
  * pool.submit() method accepts Callable instance, and can return T.
  * Future<T> future = pool.submit(Callable<T> thread);
  */
-public class ExecutorFixedPool {
-  public static final int COMPUTE_TIMES = 1000000;
-  public static final int SLEEP_MILLI_SEC = 1000;
+public class ExecutorReturnablePool {
+  private static final int COMPUTE_TIMES = 10000;
+  private static final int SLEEP_MILLI_SEC = 1000;
+  private static final int THREAD_POOL_SIZE = 3;
 
-  private static ExecutorService pool = Executors.newFixedThreadPool(3);
+  private static ExecutorService pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
   static class RunnableThread implements Runnable {
     @Override

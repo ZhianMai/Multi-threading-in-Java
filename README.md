@@ -79,12 +79,16 @@ executed in FIFO order.
 
 Single thread pool is a blocking queue with unlimited size.
 
-#### 1.2.2 Fixed-size Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorFixedPool.java)
+#### 1.2.2 Fixed-size Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorFixedThreadPool.java)
+Thread pool with fixed size n can allow at most n threads run at the same time. The order is
+still FIFO.
+
+#### 1.2.3 Thread Pool Returning Result :link:[link](src/johnston/thread/basic/creation/executors/ExecutorReturnablePool.java)
 Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
 
-#### 1.2.3 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+#### 1.2.4 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
 thread from terminating.
  
@@ -96,9 +100,8 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
-
-#### 1.2.4 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
-If shutdownNow() is called, the thread pool will terminates all threads that are currently
+#### 1.2.5 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
 <br />
