@@ -77,11 +77,24 @@ its thread slot.
 In this Demo, a single thread pool is loaded multiple threads, and these threads will be
 executed in FIFO order.
 
+Single thread pool is a blocking queue with unlimited size.
 
 #### 1.2.2 Fixed-size Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorFixedPool.java)
 Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
+
+#### 1.2.3 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+A thread pool can run forever if not calling shutdown() method, which will prevent the main
+thread from terminating.
+ 
+When shutdown() is called, the thread pool will no longer receive new thread task, and waits
+for all threads in queue are executed, then exits.
+ 
+Adding new threads on a shutdown thread pool would throw RejectedExecutionException.
+ 
+In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
+finished after shutting down the thread pool.
 
 <br />
 
