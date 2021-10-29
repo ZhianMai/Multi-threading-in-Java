@@ -83,12 +83,18 @@ Single thread pool is a blocking queue with unlimited size.
 Thread pool with fixed size n can allow at most n threads run at the same time. The order is
 still FIFO.
 
-#### 1.2.3 Thread Pool Returning Result :link:[link](src/johnston/thread/basic/creation/executors/ExecutorReturnablePool.java)
+#### 1.2.3 Cached Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorCachedThreadPool.java)
+Cached thread pool has mutable size. Each new coming task will be allocated a new thread. The
+size of cached thread pool is unbounded until reaches the limit that JVM allows.
+
+A thread whose idle time is over 60s will be terminated.
+
+#### 1.2.4 Thread Pool Returning Result :link:[link](src/johnston/thread/basic/creation/executors/ExecutorReturnablePool.java)
 Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
 
-#### 1.2.4 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+#### 1.2.5 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
 thread from terminating.
  
@@ -100,7 +106,7 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
-#### 1.2.5 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+#### 1.2.6 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
