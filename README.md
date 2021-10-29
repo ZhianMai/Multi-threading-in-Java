@@ -57,6 +57,8 @@ Async thread: thread that runs async task, and supports return result. Basic Thr
   of Thread instance.
 - <i>FutureTask</i> class: the connection between Callable interface and Thread instance.
 
+<br />
+
 ### 1.2 Thread Pool
 Using Thread class start() method to run a thread is a one-time process. When a thread is terminated, it cannot run again.
 For a large scale multi-threaded system, it's very resource-consuming.
