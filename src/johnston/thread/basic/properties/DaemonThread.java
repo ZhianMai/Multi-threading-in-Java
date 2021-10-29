@@ -7,6 +7,9 @@ package johnston.thread.basic.properties;
  *
  * We can set these threads as daemon thread, so they won't bother the main thread when main is
  * about to exit.
+ *
+ * Only can set a thread daemon before it starts. Trying to set its daemon status when running will
+ * throw InterruptedException.
  */
 public class DaemonThread {
   public static void main(String[] args) {

@@ -14,7 +14,7 @@ This repo is a collection of multi-threading concept demo in Java.
 
 ## 1. Thread Basics
 
-### 1.1 Thread Creation 
+### 1.1 Single Thread Creation
 
 The first step of multi-threading.
 
@@ -51,29 +51,48 @@ In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
 - Each Alice group thread cannot collaborate to eat a same set of apples, unless the apple is outside the class;
 - A Bob group can start multiple threads to eat a same set of apples, because interface Runnable holds no data field!
 
-#### 1.1.6 Async Thread with return value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/CallableThread.java)
+#### 1.1.6 Async Thread with Return Value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/CallableThread.java)
 Async thread: thread that runs async task, and supports return result. Basic Thread class and Runnable interface do not support return value on run() method.
 - <i>Callable</i> interface: has only one method named call() which is like run() method in Runnable but can return value and throw exception. Callable object cannot be the target
   of Thread instance.
 - <i>FutureTask</i> class: the connection between Callable interface and Thread instance.
 
-#### 1.1.7 Thread pool :link:[link](src/johnston/thread/basic/creation/ExecutorPool.java)
+### 1.2 Thread Pool
+Using Thread class start() method to run a thread is a one-time process. When a thread is terminated, it cannot run again.
+For a large scale multi-threaded system, it's very resource-consuming.
+
+There is an alternate way to run multi-threading: using thread pool. Thread pool is provided in Java concurrency package. Its thread is reusable, and also provide better thread management
+than threads run by start() method.
+
+Thread pool is created by <i>Executors</i>, a factory method provided by Java concurrency package.
+
+#### 1.2.1 Single Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorSingleThread.java)
+Executor can create a thread pool with single thread. The execution order is guaranteed FIFO.
+ 
+When using Thread class to run a thread, it's one time usage, but a thread pool can reuse
+its thread slot.
+ 
+In this Demo, a single thread pool is loaded multiple threads, and these threads will be
+executed in FIFO order.
+
+
+#### 1.2.2 Fixed-size Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorFixedPool.java)
 Using <i>Executors</i> factory can create a thread pool. The thread pool can run Runnable thread or Callable thread.
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
 
 <br />
 
-### 1.2 Thread Properties
+### 1.3 Thread Properties
 
-#### 1.2.1 Thread ID :link:[link](src/johnston/thread/basic/properties/ThreadID.java)
+#### 1.3.1 Thread ID :link:[link](src/johnston/thread/basic/properties/ThreadID.java)
 Each thread has a unique ID assigned by the JVM.
 
 To get the id of a thread, call:
 - threadA.getId();
 - Thread.currentThread().getId();
 
-#### 1.2.2 Thread Naming  :link:[link](src/johnston/thread/basic/properties/ThreadNaming.java)
+#### 1.3.2 Thread Naming  :link:[link](src/johnston/thread/basic/properties/ThreadNaming.java)
 Each thread has its name, either assigned by the JVM or by user.
 To set the name of a thread:
 - Pass in the name when calling constructor;
@@ -81,7 +100,7 @@ To set the name of a thread:
 
 To get the name of a thread, call threadA.getName().
 
-#### 1.2.3 Thread Priority :link:[link](src/johnston/thread/basic/properties/ThreadPriority.java)
+#### 1.3.3 Thread Priority :link:[link](src/johnston/thread/basic/properties/ThreadPriority.java)
 Each thread can set its priority, from 1 as the lowest, to 10 as the highest. Thread
 has higher priority can schedule earlier than other threads with lower priority.
 
@@ -97,7 +116,7 @@ This demo class creates 10 threads, and each of them runs a heavy task. The last
 to the highest priority, while others have the lowest priority. Then the highest one always 
 finishes first.
 
-#### 1.2.4 Thread State :link:[link](src/johnston/thread/basic/properties/ThreadState.java)
+#### 1.3.4 Thread State :link:[link](src/johnston/thread/basic/properties/ThreadState.java)
 A thread can have 6 different states, which represent 6 certain parts of its life cycle.
 
 - NEW: a multi-threaded object is created, and before it runs;
@@ -108,13 +127,13 @@ A thread can have 6 different states, which represent 6 certain parts of its lif
 
 This class simulates all these states of a thread.
 
-#### 1.2.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
+#### 1.3.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
 start() method make a thread start running run().
 So simply calling run() directly would not start multi-threading, it just calls run() method in 
 the current thread!
 
-#### 1.2.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/DaemonThread.java)
+#### 1.3.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/DaemonThread.java)
 In general, a process would not exit execution as long as it has at least one running thread, but some threads are doing 
 background task, like file auto saving thread, or producer thread using external resources. These threads should not block 
 the process from exiting.
@@ -122,6 +141,11 @@ the process from exiting.
 We can set these threads as daemon thread, so they won't bother the main thread when main is about to exit.
 
 Call threadA.setDaemon(true) to mark it as a daemon thread. The default is false.
+
+Only can set a thread daemon before it starts. Trying to set its daemon status when running will
+throw InterruptedException.
+
+The threads created by Daemon thread are Daemon threads by default. It's allowed to manually set them as user thread.
 
 <br />
 

@@ -1,4 +1,4 @@
-package johnston.thread.basic.creation;
+package johnston.thread.basic.creation.executors;
 
 import java.util.concurrent.*;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.*;
  * pool.submit() method accepts Callable instance, and can return T.
  * Future<T> future = pool.submit(Callable<T> thread);
  */
-public class ExecutorPool {
+public class ExecutorFixedPool {
   public static final int COMPUTE_TIMES = 1000000;
   public static final int SLEEP_MILLI_SEC = 1000;
 

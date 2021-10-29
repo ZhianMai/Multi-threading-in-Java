@@ -14,10 +14,14 @@ public class RunnableImpl {
     }
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     Runnable runnable = new RunnableThread();
-    String threadName = "New runnable thread";
-    Thread newThread = new Thread(runnable, threadName);
-    newThread.start();
+    Thread newThreadA = new Thread(runnable, "New runnable thread A");
+    newThreadA.start();
+
+    Thread.sleep(10);
+
+    Thread newThreadB = new Thread(runnable, "New runnable thread B");
+    newThreadB.start();
   }
 }
