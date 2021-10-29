@@ -96,6 +96,11 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
+
+#### 1.2.4 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+If shutdownNow() is called, the thread pool will terminates all threads that are currently
+running, and return the tasks that are not yet started.
+
 <br />
 
 ### 1.3 Thread Properties
