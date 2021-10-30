@@ -242,7 +242,7 @@ public class ThreadBlockingQueue {
   public static void main(String[] args) throws InterruptedException {
     useArrayBlockingQueue();
     //usePriorityBlockingQueue();
-    // useDelayedQueue();
-    // useSynchronousQueue();
+    //useDelayedQueue();
+    //useSynchronousQueue();
   }
 }
