@@ -114,7 +114,7 @@ In this demo, a set of threads with different scheduled periods are loaded into 
 and let the thread pool run for a while. The result shows that threads with smaller scheduled
 period run more times than others. Fixed delay demo skips because it's very similar to this one.
 
-#### 1.2.6 Standard ThreadPoolExecutor :link:[link](src/johnston/thread/basic/creation/executors/StandardThreadPoolExecutor.java)
+#### 1.2.6 :warning: Standard ThreadPoolExecutor :link:[link](src/johnston/thread/basic/creation/executors/StandardThreadPoolExecutor.java)
 In general, using Executors factory to create thread pool is not allowed in large-scale
 development. The standard method is to use standard ThreadPoolExecutor, although Executors
 factory invokes ThreadPoolExecutor.
