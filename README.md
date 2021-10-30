@@ -19,14 +19,14 @@ This repo is a collection of multi-threading concept demo in Java.
 
 The first step of multi-threading.
 
-#### 1.1.1 Inheriting <i>Thread</i> Class :link:[link](src/johnston/thread/basic/creation/InheritedThread.java)
+#### 1.1.1 Inheriting <i>Thread</i> Class :link:[link](src/johnston/thread/basic/creation/single_thread/InheritedThread.java)
 
 - Create a class that extends <i>Thread</i> class;
 - Override run() method by putting the multi-threading logic in it;
 - Create an object of the multi-threaded class;
 - Call start() method.
 
-#### 1.1.2 Implementing <i>Runnable</i> Class :link:[link](src/johnston/thread/basic/creation/RunnableImpl.java)
+#### 1.1.2 Implementing <i>Runnable</i> Class :link:[link](src/johnston/thread/basic/creation/single_thread/RunnableImpl.java)
 - Create a class that implements <i>Runnable</i> interface;
 - This interface has run() method only, and no other fields or methods;
 - So override run() method by putting the multi-threading logic in it;
@@ -34,14 +34,14 @@ The first step of multi-threading.
 - Create a <i>Thread</i> object, and pass the Runnable object into the constructor;
 - Call the Thread object start() method.
 
-#### 1.1.3 Anonymous Class  :link:[link](src/johnston/thread/basic/creation/AnonymousThread.java)
+#### 1.1.3 Anonymous Class  :link:[link](src/johnston/thread/basic/creation/single_thread/AnonymousThread.java)
 - Create a Thread object, then new a Runnable implementation inside the constructor;
 - Call start() method!
 
-#### 1.1.4 Anonymous Class with Lambda Expression :link:[link](src/johnston/thread/basic/creation/AnonymousLambdaThread.java)
+#### 1.1.4 Anonymous Class with Lambda Expression :link:[link](src/johnston/thread/basic/creation/single_thread/AnonymousLambdaThread.java)
 - Similar to 1.1.3, but the code is less again.
 
-#### 1.1.5 :warning: Comparing Thread and Runnable :link:[link](src/johnston/thread/basic/creation/ThreadRunnableComparison.java)
+#### 1.1.5 :warning: Comparing Thread and Runnable :link:[link](src/johnston/thread/basic/creation/single_thread/ThreadRunnableComparison.java)
 In OOD, it favors interface over inheritance, so implementing Runnable interface for thread creation is preferable.
 
 Also, using Runnable interface can greatly decouple data and logic. Class which implements Runnable can start multiple threads
@@ -52,7 +52,7 @@ In this demo, I created two groups (Alice and Bob group) to eat 5 apples.
 - Each Alice group thread cannot collaborate to eat a same set of apples, unless the apple is outside the class;
 - A Bob group can start multiple threads to eat a same set of apples, because interface Runnable holds no data field!
 
-#### 1.1.6 Async Thread with Return Value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/CallableThread.java)
+#### 1.1.6 Async Thread with Return Value: Callable & FutureTask :link:[link](src/johnston/thread/basic/creation/single_thread/CallableThread.java)
 Async thread: thread that runs async task, and supports return result. Basic Thread class and Runnable interface do not support return value on run() method.
 - <i>Callable</i> interface: has only one method named call() which is like run() method in Runnable but can return value and throw exception. Callable object cannot be the target
   of Thread instance.
@@ -114,8 +114,33 @@ In this demo, a set of threads with different scheduled periods are loaded into 
 and let the thread pool run for a while. The result shows that threads with smaller scheduled
 period run more times than others. Fixed delay demo skips because it's very similar to this one.
 
+#### 1.2.6 Standard ThreadPoolExecutor :link:[link](src/johnston/thread/basic/creation/executors/StandardThreadPoolExecutor.java)
+In general, using Executors factory to create thread pool is not allowed in large-scale
+development. The standard method is to use standard ThreadPoolExecutor, although Executors
+factory invokes ThreadPoolExecutor.
 
-#### 1.2.6 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+Important ThreadPoolExecutor constructor parameter
+corePoolSize: the minimum amount of core threads;
+maximumPoolSize: the maximum amount of threads in the pool.
+keepAliveTime: the maximum duration of a non-core threads being idle.
+threadFactory: creations of new thread.
+BlockingQueue<Runnable>: queue to hold tasks when no idle core threads available.
+RejectedExecutionHandler: ways to handle new tasks when the pool is full, like throwing
+  exception, discard, or replacing the oldest blocking task.
+
+Thread pool task scheduling policy when getting a new task:
+ - If the number current core threads is < corePoolSize, new a new thread for this task, even
+   though some core threads are idle;
+ - If the number current core threads is >= corePoolSize...
+   - Find if there are any idle core threads, then replace it;
+   - else if no idle core threads, and the blocking queue is not full, enqueue;
+   - else if the blocking queue is full, new a new thread until the total number of threads > maximumPoolSize
+   - else execute rejected execution policy.
+
+This demo shows how threadPoolExecutor scheduling tasks with different thread pool parameters
+and different reject task policies.
+
+#### 1.2.7 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
 thread from terminating.
  
@@ -127,7 +152,7 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
-#### 1.2.7 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+#### 1.2.8 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 

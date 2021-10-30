@@ -1,4 +1,4 @@
-package johnston.thread.basic.creation;
+package johnston.thread.basic.creation.single_thread;
 
 /**
  * Thread creation by extending Thread class

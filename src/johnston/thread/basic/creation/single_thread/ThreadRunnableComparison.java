@@ -1,6 +1,4 @@
-package johnston.thread.basic.creation;
-
-import java.util.concurrent.atomic.AtomicInteger;
+package johnston.thread.basic.creation.single_thread;
 
 /**
  * In OOD, favor interface over inheritance, so implementing Runnable interface for thread creation

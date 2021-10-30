@@ -1,4 +1,4 @@
-package johnston.thread.basic.creation;
+package johnston.thread.basic.creation.single_thread;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
