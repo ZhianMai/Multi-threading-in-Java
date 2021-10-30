@@ -57,10 +57,10 @@ public class ThreadBlockingQueue {
         } else {
           result = blockingQueue.poll();
         }
-        System.out.println(this.getName() + " got an element from blockingQueue: " + result +
+        print(this.getName() + " got an element from blockingQueue: " + result +
             "\n");
       } catch (InterruptedException e) {
-        System.out.println(this.getName() + " is interrupted. Stop waiting and exit.\n");
+        print(this.getName() + " is interrupted. Stop waiting and exit.\n");
         return;
       }
     }
@@ -78,12 +78,12 @@ public class ThreadBlockingQueue {
       try {
         if (isPut) {
           blockingQueue.put(1);
-          System.out.println(this.getName() + " put an element to blockingQueue.\n");
+          print(this.getName() + " put an element to blockingQueue.\n");
         } else {
-          System.out.println("Offered an element to queue: " + blockingQueue.offer(1));
+          print("Offered an element to queue: " + blockingQueue.offer(1));
         }
       } catch (InterruptedException e) {
-        System.out.println(this.getName() + " is interrupted. Stop waiting and exit.\n");
+        print(this.getName() + " is interrupted. Stop waiting and exit.\n");
         return;
       }
     }
@@ -141,59 +141,56 @@ public class ThreadBlockingQueue {
 
     Thread.sleep(DEFAULT_SLEEP_MILLIS_SECOND);
 
-    System.out.println("The blockingQueue size: " + blockingQueue.size());
-    System.out.println("The running getter Thread's state: " + getterThread.getState());
-
-    System.out.println("\nAdding an element to the blockingQueue: " + blockingQueue.offer(1));
+    print("The blockingQueue size: " + blockingQueue.size());
+    print("The running getter Thread's state: " + getterThread.getState());
+    print("\nAdding an element to the blockingQueue: " + blockingQueue.offer(1));
   }
 
   private static void usePriorityBlockingQueue() throws InterruptedException {
     PriorityBlockingQueue<Integer> priorityBlockingQueue =
         new PriorityBlockingQueue<>(1, Collections.reverseOrder());
     blockingQueue = priorityBlockingQueue;
-    System.out.println("BlockPriorityQueue's order is: " + priorityBlockingQueue.comparator() +
+    print("BlockPriorityQueue's order is: " + priorityBlockingQueue.comparator() +
         "\n");
 
     for (int i = 0; i < ELEMENTS_TO_INSERT_AMOUNT; i++) {
-      System.out.println("Adding an element to priorityBlockingQueue: " + i);
+      print("Adding an element to priorityBlockingQueue: " + i);
       blockingQueue.offer(i);
     }
 
-    System.out.println();
+    print("\n");
 
     while (!blockingQueue.isEmpty()) {
-      System.out.println("Polling an element to priorityBlockingQueue: " + blockingQueue.take());
+      print("Polling an element to priorityBlockingQueue: " + blockingQueue.take());
     }
 
 
     Thread getterThread = new GetterThread("Getter Thread", true);
     getterThread.start();
-
     Thread.sleep(DEFAULT_SLEEP_MILLIS_SECOND);
-
-    System.out.println("\nThe blockingQueue size: " + blockingQueue.size());
-    System.out.println("The running getter Thread's state: " + getterThread.getState());
+    print("\nThe blockingQueue size: " + blockingQueue.size());
+    print("The running getter Thread's state: " + getterThread.getState());
     getterThread.interrupt();
   }
 
   private static void useDelayedQueue() throws InterruptedException {
     BlockingQueue<DelayElement> delayQueue = new DelayQueue<>();
-    System.out.println("\nDelayQueue enqueue: 0 milli sec delay, 100 milli sec delay," +
+    print("\nDelayQueue enqueue: 0 milli sec delay, 100 milli sec delay," +
         " & 200 milli sec delay.\n");
     delayQueue.offer(new DelayElement("Delay 0 milli sec", 0));
     delayQueue.offer(new DelayElement("Delay 100 milli sec", 100));
     delayQueue.offer(new DelayElement("Delay 200 mill sec", 200));
 
-    System.out.println("Dequeue now: " + delayQueue.poll().toString());
-    System.out.println("Dequeue now. Is it null: " + (delayQueue.poll() == null));
+    print("Dequeue now: " + delayQueue.poll().toString());
+    print("Dequeue now. Is it null: " + (delayQueue.poll() == null));
 
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("\nSlept 100 milli sec. Dequeue now: " + delayQueue.poll().toString());
-    System.out.println("Dequeue now. Is it null: " + (delayQueue.poll() == null));
+    print("\nSlept 100 milli sec. Dequeue now: " + delayQueue.poll().toString());
+    print("Dequeue now. Is it null: " + (delayQueue.poll() == null));
 
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("\nSlept 100 milli sec. Dequeue now: " + delayQueue.poll().toString());
-    System.out.println("Dequeue now. Is it null: " + (delayQueue.poll() == null) + "\n");
+    print("\nSlept 100 milli sec. Dequeue now: " + delayQueue.poll().toString());
+    print("Dequeue now. Is it null: " + (delayQueue.poll() == null) + "\n");
   }
 
   private static void useSynchronousQueue() throws InterruptedException {
@@ -208,35 +205,39 @@ public class ThreadBlockingQueue {
     // offer(E e): enqueue data only if another thread is waiting for data.
     Thread offeredThread = new PutterThread("Offered thread", true); // use offer()
 
-    System.out.println("*** take() - put(E e) Demo ***");
+    print("*** take() - put(E e) Demo ***");
     threadPool.submit(takerThread);
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Sync queue is empty. Taker runs.");
+    print("Sync queue is empty. Taker runs.");
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Putter runs.");
+    print("Putter runs.");
     threadPool.submit(putterThread);
 
 
     threadPool.submit(putterThread);
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Sync queue is empty. Putter runs.");
-    System.out.println("Taker runs.");
+    print("Sync queue is empty. Putter runs.");
+    print("Taker runs.");
     threadPool.submit(takerThread);
     Thread.sleep(SLEEP_MILLIS_SEC);
 
-    System.out.println("*** poll() - offer(E e) demo ***");
-    System.out.println("Sync queue is empty. Poller runs.");
+    print("*** poll() - offer(E e) demo ***");
+    print("Sync queue is empty. Poller runs.");
     threadPool.submit(pollerThread);
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Offerer runs.");
+    print("Offerer runs.");
     threadPool.submit(offeredThread);
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Sync queue is empty. Offerer runs.");
+    print("Sync queue is empty. Offerer runs.");
     Thread.sleep(SLEEP_MILLIS_SEC);
-    System.out.println("Poller runs.");
+    print("Poller runs.");
     threadPool.submit(pollerThread);
 
     threadPool.shutdown();
+  }
+
+  private static void print(String s) {
+    System.out.println(s);
   }
 
   public static void main(String[] args) throws InterruptedException {
