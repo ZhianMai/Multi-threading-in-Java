@@ -140,7 +140,17 @@ Thread pool task scheduling policy when getting a new task:
 This demo shows how threadPoolExecutor scheduling tasks with different thread pool parameters
 and different reject task policies.
 
-#### 1.2.7 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+#### 1.2.7 ThreadFactory Interface :link:[link](src/johnston/thread/basic/creation/executors/ThreadFactoryDemo.java)
+<i>ThreadFactory</i> is an interface from concurrent package. It has only one
+method: newThread(Runnable r). User can implement this interface to customize the method of
+creating new threads, and pass this interface instance to a thread pool. The thread pool then
+will use this thread factory to create reusable new threads.
+
+In this demo, an implementation of ThreadFactory is created and pass it to the thread pool.
+When the thread pool receives new Runnable tasks, it will use the threads created by
+ThreadFactory to run it.
+
+#### 1.2.8 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
 thread from terminating.
  
@@ -152,7 +162,7 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
-#### 1.2.8 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+#### 1.2.9 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
