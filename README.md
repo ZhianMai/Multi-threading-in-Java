@@ -172,20 +172,20 @@ blocks that thread (wait) until one element is available to dequeue. Each thread
 a blocking queue.
 
 Blocking queue has several implementations:
- - ArrayBlockingQueue: queue implemented by array. The order is FIFO. Size must be defined.
+ - <i>ArrayBlockingQueue</i>: queue implemented by array. The order is FIFO. Size must be defined.
 
- - LinkedBlockingQueue: queue implemented by linked-list. The order is FIFO. Size can be
+ - <i>LinkedBlockingQueue</i>: queue implemented by linked-list. The order is FIFO. Size can be
    defined. If not, then the size is unlimited.
 
- - PriorityBlockingQueue: a priority queue that can take in comparator. If no comparator is
+ - <i>PriorityBlockingQueue</i>: a priority queue that can take in comparator. If no comparator is
    provided, then use the natural order of the elements. Size is unlimited.
 
- - DelayQueue: like a blocking queue. Elements can dequeue only if their time is expired. It
+ - <i>DelayQueue</i>: like a blocking queue. Elements can dequeue only if their time is expired. It
    can be used in producer-consumer scenario.
    The elements stored in DelayQueue must implement Delayed interface. The element that will
    expire first will be dequeued first. It cannot dequeue unexpired elements.
 
- - SynchronousQueue: a queue with size 1. This queue allows two threads exchange data
+ - <i>SynchronousQueue</i>: a queue with size 1. This queue allows two threads exchange data
    thread-safely.
    - take(): if the queue has no data, then the caller will be waiting until data available.
    - poll(): like take(), but if no data available, then it returns null instead of waiting.
