@@ -95,7 +95,27 @@ Using <i>Executors</i> factory can create a thread pool. The thread pool can run
 
 The thread pool can better manage multi running threads, including limiting maximum concurrent threads, and utilize system resources.
 
-#### 1.2.5 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
+#### 1.2.5 Scheduled Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorScheduledThreadPool.java)
+Scheduled thread pool supports repeatedly running a thread task with fixed time of period.
+Thread pool will run the scheduled task repeatedly until calling shutdown() method.
+
+<i>scheduledThreadPool</i> has two types of schedule methods: fixed period or fixed delay.
+
+For fixed period, the period is minimal runtime of one task. If task A1 runs longer than
+the period, than it won't start task A2 until A1 finishes. If task A1 runs faster than the
+period, A2 won't start but wait until the minimal interval time is satisfied.
+
+For fixed delay, the delay is the fixed interval between two tasks. If task A1 finishes, it
+will wait the delay time than start task A2.
+
+Beside scheduled thread pool, Executors also provides single thread scheduled executor.
+
+In this demo, a set of threads with different scheduled periods are loaded into to thread pool,
+and let the thread pool run for a while. The result shows that threads with smaller scheduled
+period run more times than others. Fixed delay demo skips because it's very similar to this one.
+
+
+#### 1.2.6 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
 thread from terminating.
  
@@ -107,7 +127,7 @@ Adding new threads on a shutdown thread pool would throw RejectedExecutionExcept
 In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
 finished after shutting down the thread pool.
 
-#### 1.2.6 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
+#### 1.2.7 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
