@@ -166,7 +166,7 @@ finished after shutting down the thread pool.
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
-#### 1.2.10 BlockingQueue :link:[link](src/johnston/thread/basic/creation/executors/ThreadBlockingQueue.java)
+#### 1.2.10 :warning: BlockingQueue :link:[link](src/johnston/thread/basic/creation/executors/ThreadBlockingQueue.java)
 Blocking queue is a queue that if the size is empty and one thread requires dequeue, then it
 blocks that thread (wait) until one element is available to dequeue. Each thread pool needs
 a blocking queue.
