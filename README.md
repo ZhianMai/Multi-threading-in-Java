@@ -166,6 +166,35 @@ finished after shutting down the thread pool.
 If shutdownNow() is called, the thread pool will terminate all threads that are currently
 running, and return the tasks that are not yet started.
 
+#### 1.2.10 BlockingQueue :link:[link](src/johnston/thread/basic/creation/executors/ThreadBlockingQueue.java)
+Blocking queue is a queue that if the size is empty and one thread requires dequeue, then it
+blocks that thread (wait) until one element is available to dequeue. Each thread pool needs
+a blocking queue.
+
+Blocking queue has several implementations:
+ - ArrayBlockingQueue: queue implemented by array. The order is FIFO. Size must be defined.
+
+ - LinkedBlockingQueue: queue implemented by linked-list. The order is FIFO. Size can be
+   defined. If not, then the size is unlimited.
+
+ - PriorityBlockingQueue: a priority queue that can take in comparator. If no comparator is
+   provided, then use the natural order of the elements. Size is unlimited.
+
+ - DelayQueue: like a blocking queue. Elements can dequeue only if their time is expired. It
+   can be used in producer-consumer scenario.
+   The elements stored in DelayQueue must implement Delayed interface. The element that will
+   expire first will be dequeued first. It cannot dequeue unexpired elements.
+
+ - SynchronousQueue: a queue with size 1. This queue allows two threads exchange data
+   thread-safely.
+   - take(): if the queue has no data, then the caller will be waiting until data available.
+   - poll(): like take(), but if no data available, then it returns null instead of waiting.
+   - put(E e): the caller has to wait until another thread takes away the data.
+   - offer(E e): enqueue data only if another thread is waiting for data.
+   -isEmpty(): ALWAYS return true!
+
+This demo contains usage of four types of BlockingQueue implementations.
+
 <br />
 
 ### 1.3 Thread Properties

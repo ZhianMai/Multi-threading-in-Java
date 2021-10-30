@@ -24,10 +24,10 @@ import java.util.concurrent.TimeUnit;
  * period run more times than others. Fixed delay demo skips because it's very similar to this one.
  */
 public class ExecutorScheduledThreadPool {
-  private static final int EXECUTION_INTERVAL_MILLIS_SECOND = 50;
-  private static final int THREAD_POOL_SIZE = 3;
-  private static final int THREAD_AMOUNT = 10;
-  private static final int MAIN_THREAD_WAIT_MILLIS_SECOND = 100;
+  private static final int DEFAULT_EXECUTION_INTERVAL_MILLIS_SECOND = 50;
+  private static final int DEFAULT_THREAD_POOL_SIZE = 3;
+  private static final int DEFAULT_THREAD_AMOUNT = 10;
+  private static final int DEFAULT_MAIN_THREAD_WAIT_MILLIS_SECOND = 100;
 
   static class ThreadDemo extends Thread {
     private int[] runCount;
@@ -44,24 +44,24 @@ public class ExecutorScheduledThreadPool {
   }
 
   public static void main(String[] args) throws InterruptedException {
-    int[][] threadRunCount = new int[THREAD_AMOUNT][1];
+    int[][] threadRunCount = new int[DEFAULT_THREAD_AMOUNT][1];
     ScheduledExecutorService scheduledThreadPool =
-        Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
+        Executors.newScheduledThreadPool(DEFAULT_THREAD_POOL_SIZE);
 
-    for (int i = 0; i < THREAD_AMOUNT; i++) {
+    for (int i = 0; i < DEFAULT_THREAD_AMOUNT; i++) {
       // Demo fixed rate method here only. To switch to fixed delay method, change the method name
       // to:
       // scheduledThreadPool.scheduleAtFixedDelay(...);
       scheduledThreadPool.scheduleAtFixedRate(new ThreadDemo("Thread " + i, threadRunCount[i]), 0,
-          EXECUTION_INTERVAL_MILLIS_SECOND / (i + 1), TimeUnit.MILLISECONDS);
+          DEFAULT_EXECUTION_INTERVAL_MILLIS_SECOND / (i + 1), TimeUnit.MILLISECONDS);
     }
 
-    Thread.sleep(MAIN_THREAD_WAIT_MILLIS_SECOND);
+    Thread.sleep(DEFAULT_MAIN_THREAD_WAIT_MILLIS_SECOND);
     scheduledThreadPool.shutdown();
 
     System.out.println("\n");
 
-    for (int i = 0; i < THREAD_AMOUNT; i++) {
+    for (int i = 0; i < DEFAULT_THREAD_AMOUNT; i++) {
       System.out.println("Thread " + i + " has run " + threadRunCount[i][0] + " times.");
     }
   }

@@ -11,8 +11,7 @@ import java.util.concurrent.Executors;
  */
 public class ExecutorCachedThreadPool {
   private static final int SLEEP_MILLIS_SEC = 1000;
-  private static final int THREAD_POOL_SIZE = 3;
-  private static final int THREAD_AMOUNT = 10;
+  private static final int DEFAULT_THREAD_AMOUNT = 10;
 
   static class ThreadDemo extends Thread {
     public ThreadDemo(String name) {
@@ -43,7 +42,7 @@ public class ExecutorCachedThreadPool {
     ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     Thread thread = new ThreadDemo("Thread_A");
 
-    for (int i = 0; i < THREAD_AMOUNT; i++) {
+    for (int i = 0; i < DEFAULT_THREAD_AMOUNT; i++) {
       thread.setName(thread.getName() + i);
       cachedThreadPool.submit(thread);
     }

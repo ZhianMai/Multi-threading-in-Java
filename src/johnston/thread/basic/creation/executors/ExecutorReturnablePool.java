@@ -14,11 +14,11 @@ import java.util.concurrent.*;
  * Future<T> future = pool.submit(Callable<T> thread);
  */
 public class ExecutorReturnablePool {
-  private static final int COMPUTE_TIMES = 10000;
+  private static final int DEFAULT_COMPUTE_TIMES = 10000;
   private static final int SLEEP_MILLI_SEC = 1000;
-  private static final int THREAD_POOL_SIZE = 3;
+  private static final int DEFAULT_THREAD_POOL_SIZE = 3;
 
-  private static ExecutorService pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+  private static ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
 
   static class RunnableThread implements Runnable {
     @Override
@@ -30,8 +30,8 @@ public class ExecutorReturnablePool {
         e.printStackTrace();
       }
 
-      for (int i = 0; i < COMPUTE_TIMES / 2; i++) {
-        if (Math.random() < 1.0 / COMPUTE_TIMES) {
+      for (int i = 0; i < DEFAULT_COMPUTE_TIMES / 2; i++) {
+        if (Math.random() < 1.0 / DEFAULT_COMPUTE_TIMES) {
           System.out.println(getCurThreadName() + " Jackpot!");
         }
       }
@@ -47,8 +47,8 @@ public class ExecutorReturnablePool {
       System.out.println(getCurThreadName() + " thread started.");
       Thread.sleep(SLEEP_MILLI_SEC);
 
-      for (int i = 0; i < COMPUTE_TIMES; i++) {
-        if (Math.random() < 1.0 / COMPUTE_TIMES) {
+      for (int i = 0; i < DEFAULT_COMPUTE_TIMES; i++) {
+        if (Math.random() < 1.0 / DEFAULT_COMPUTE_TIMES) {
           System.out.println(getCurThreadName() + " Jackpot!");
         }
       }
