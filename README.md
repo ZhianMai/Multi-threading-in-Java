@@ -265,7 +265,7 @@ Blocking queue has several implementations:
 
 This demo contains usage of four types of BlockingQueue implementations.
 
-#### 1.4.4 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolHookMethods.java)
+#### 1.4.4 Thread Pool Hook Methods :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolHookMethods.java)
 ThreadPoolExecutor has three hood methods:
  - void beforeExecute(Thread t, Runnable target): this method runs before each task begins.
  - afterExecute(Runnable target, Throwable t): this method runs after each task begins.
@@ -276,6 +276,10 @@ ThreadPoolExecutor has three hood methods:
 
  This demo overrides these three methods to record the total runtime of all Runnable tasks. The
  task will sleep random milli sec.
+
+#### 1.4.5 Thread Pool Rejection Policy
+See 1.2.6.
+
 
 ## 2. Thread Communications
 
