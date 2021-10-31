@@ -151,7 +151,6 @@ When the thread pool receives new Runnable tasks, it will use the threads create
 ThreadFactory to run it.
 
 ### 1.3 Thread Properties
-<br />
 
 #### 1.3.1 Thread ID :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadID.java)
 Each thread has a unique ID assigned by the JVM.
@@ -218,7 +217,7 @@ The threads created by Daemon thread are Daemon threads by default. It's allowed
 <br />
 
 ### 1.4 Thread Pool Properties
-<br />
+
 
 #### 1.4.1 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolShutdown.java)
 A thread pool can run forever if not calling shutdown() method, which will prevent the main
