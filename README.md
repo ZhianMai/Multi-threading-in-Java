@@ -60,7 +60,7 @@ Async thread: thread that runs async task, and supports return result. Basic Thr
 
 <br />
 
-### 1.2 Thread Pool
+### 1.2 Thread Pool Creating Threads
 Using Thread class start() method to run a thread is a one-time process. When a thread is terminated, it cannot run again.
 For a large scale multi-threaded system, it's very resource-consuming.
 
@@ -150,63 +150,17 @@ In this demo, an implementation of ThreadFactory is created and pass it to the t
 When the thread pool receives new Runnable tasks, it will use the threads created by
 ThreadFactory to run it.
 
-#### 1.2.8 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdown.java)
-A thread pool can run forever if not calling shutdown() method, which will prevent the main
-thread from terminating.
- 
-When shutdown() is called, the thread pool will no longer receive new thread task, and waits
-for all threads in queue are executed, then exits.
- 
-Adding new threads on a shutdown thread pool would throw RejectedExecutionException.
- 
-In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be 
-finished after shutting down the thread pool.
-
-#### 1.2.9 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/creation/executors/ThreadPoolShutdownNow.java)
-If shutdownNow() is called, the thread pool will terminate all threads that are currently
-running, and return the tasks that are not yet started.
-
-#### 1.2.10 :warning: BlockingQueue :link:[link](src/johnston/thread/basic/creation/executors/ThreadBlockingQueue.java)
-Blocking queue is a queue that if the size is empty and one thread requires dequeue, then it
-blocks that thread (wait) until one element is available to dequeue. Each thread pool needs
-a blocking queue.
-
-Blocking queue has several implementations:
- - <i>ArrayBlockingQueue</i>: queue implemented by array. The order is FIFO. Size must be defined.
-
- - <i>LinkedBlockingQueue</i>: queue implemented by linked-list. The order is FIFO. Size can be
-   defined. If not, then the size is unlimited.
-
- - <i>PriorityBlockingQueue</i>: a priority queue that can take in comparator. If no comparator is
-   provided, then use the natural order of the elements. Size is unlimited.
-
- - <i>DelayQueue</i>: like a blocking queue. Elements can dequeue only if their time is expired. It
-   can be used in producer-consumer scenario.
-   The elements stored in DelayQueue must implement Delayed interface. The element that will
-   expire first will be dequeued first. It cannot dequeue unexpired elements.
-
- - <i>SynchronousQueue</i>: a queue with size 1. This queue allows two threads exchange data
-   thread-safely.
-   - take(): if the queue has no data, then the caller will be waiting until data available.
-   - poll(): like take(), but if no data available, then it returns null instead of waiting.
-   - put(E e): the caller has to wait until another thread takes away the data.
-   - offer(E e): enqueue data only if another thread is waiting for data.
-   -isEmpty(): ALWAYS return true!
-
-This demo contains usage of four types of BlockingQueue implementations.
-
+### 1.3 Thread Properties
 <br />
 
-### 1.3 Thread Properties
-
-#### 1.3.1 Thread ID :link:[link](src/johnston/thread/basic/properties/ThreadID.java)
+#### 1.3.1 Thread ID :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadID.java)
 Each thread has a unique ID assigned by the JVM.
 
 To get the id of a thread, call:
 - threadA.getId();
 - Thread.currentThread().getId();
 
-#### 1.3.2 Thread Naming  :link:[link](src/johnston/thread/basic/properties/ThreadNaming.java)
+#### 1.3.2 Thread Naming  :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadNaming.java)
 Each thread has its name, either assigned by the JVM or by user.
 To set the name of a thread:
 - Pass in the name when calling constructor;
@@ -214,7 +168,7 @@ To set the name of a thread:
 
 To get the name of a thread, call threadA.getName().
 
-#### 1.3.3 Thread Priority :link:[link](src/johnston/thread/basic/properties/ThreadPriority.java)
+#### 1.3.3 Thread Priority :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadPriority.java)
 Each thread can set its priority, from 1 as the lowest, to 10 as the highest. Thread
 has higher priority can schedule earlier than other threads with lower priority.
 
@@ -230,7 +184,7 @@ This demo class creates 10 threads, and each of them runs a heavy task. The last
 to the highest priority, while others have the lowest priority. Then the highest one always 
 finishes first.
 
-#### 1.3.4 Thread State :link:[link](src/johnston/thread/basic/properties/ThreadState.java)
+#### 1.3.4 Thread State :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadState.java)
 A thread can have 6 different states, which represent 6 certain parts of its life cycle.
 
 - NEW: a multi-threaded object is created, and before it runs;
@@ -241,13 +195,13 @@ A thread can have 6 different states, which represent 6 certain parts of its lif
 
 This class simulates all these states of a thread.
 
-#### 1.3.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/RunStartDiff.java)
+#### 1.3.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/single_thread/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
 start() method make a thread start running run().
 So simply calling run() directly would not start multi-threading, it just calls run() method in 
 the current thread!
 
-#### 1.3.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/DaemonThread.java)
+#### 1.3.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/single_thread/DaemonThread.java)
 In general, a process would not exit execution as long as it has at least one running thread, but some threads are doing 
 background task, like file auto saving thread, or producer thread using external resources. These threads should not block 
 the process from exiting.
@@ -262,6 +216,66 @@ throw InterruptedException.
 The threads created by Daemon thread are Daemon threads by default. It's allowed to manually set them as user thread.
 
 <br />
+
+### 1.4 Thread Pool Properties
+<br />
+
+#### 1.4.1 Thread Pool Shutdown :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolShutdown.java)
+A thread pool can run forever if not calling shutdown() method, which will prevent the main
+thread from terminating.
+
+When shutdown() is called, the thread pool will no longer receive new thread task, and waits
+for all threads in queue are executed, then exits.
+
+Adding new threads on a shutdown thread pool would throw RejectedExecutionException.
+
+In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be
+finished after shutting down the thread pool.
+
+#### 1.4.2 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolShutdownNow.java)
+If shutdownNow() is called, the thread pool will terminate all threads that are currently
+running, and return the tasks that are not yet started.
+
+#### 1.4.3 :warning: BlockingQueue :link:[link](src/johnston/thread/basic/properties/executors/ThreadBlockingQueue.java)
+Blocking queue is a queue that if the size is empty and one thread requires dequeue, then it
+blocks that thread (wait) until one element is available to dequeue. Each thread pool needs
+a blocking queue.
+
+Blocking queue has several implementations:
+- <i>ArrayBlockingQueue</i>: queue implemented by array. The order is FIFO. Size must be defined.
+
+- <i>LinkedBlockingQueue</i>: queue implemented by linked-list. The order is FIFO. Size can be
+  defined. If not, then the size is unlimited.
+
+- <i>PriorityBlockingQueue</i>: a priority queue that can take in comparator. If no comparator is
+  provided, then use the natural order of the elements. Size is unlimited.
+
+- <i>DelayQueue</i>: like a blocking queue. Elements can dequeue only if their time is expired. It
+  can be used in producer-consumer scenario.
+  The elements stored in DelayQueue must implement Delayed interface. The element that will
+  expire first will be dequeued first. It cannot dequeue unexpired elements.
+
+- <i>SynchronousQueue</i>: a queue with size 1. This queue allows two threads exchange data
+  thread-safely.
+    - take(): if the queue has no data, then the caller will be waiting until data available.
+    - poll(): like take(), but if no data available, then it returns null instead of waiting.
+    - put(E e): the caller has to wait until another thread takes away the data.
+    - offer(E e): enqueue data only if another thread is waiting for data.
+      -isEmpty(): ALWAYS return true!
+
+This demo contains usage of four types of BlockingQueue implementations.
+
+#### 1.4.4 Thread Pool Shutdown Now :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolHookMethods.java)
+ThreadPoolExecutor has three hood methods:
+ - void beforeExecute(Thread t, Runnable target): this method runs before each task begins.
+ - afterExecute(Runnable target, Throwable t): this method runs after each task begins.
+ - terminated(): this method runs when the pool is shutdown.
+
+ These three methods can be overridden to do some tasks, like customize environment, clean up
+ data, etc.
+
+ This demo overrides these three methods to record the total runtime of all Runnable tasks. The
+ task will sleep random milli sec.
 
 ## 2. Thread Communications
 

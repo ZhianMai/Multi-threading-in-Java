@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * run() method contains the logic/task for a thread to execute.

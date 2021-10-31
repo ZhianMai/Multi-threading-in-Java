@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * Each thread has a unique id assigned by JVM.

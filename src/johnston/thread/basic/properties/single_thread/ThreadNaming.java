@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * The thread can have a config name, by passing the name to the constructor when creating the

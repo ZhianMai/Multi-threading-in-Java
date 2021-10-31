@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * Setting thread priority to guarantees all threads run in order. To set thread threadA priority,

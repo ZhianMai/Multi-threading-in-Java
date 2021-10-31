@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * In general, a process would not exit execution as long as it has at least one running thread.

@@ -1,4 +1,4 @@
-package johnston.thread.basic.creation.executors;
+package johnston.thread.basic.properties.executors;
 
 import java.util.Collections;
 import java.util.concurrent.*;

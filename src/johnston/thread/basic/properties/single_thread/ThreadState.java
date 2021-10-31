@@ -1,4 +1,4 @@
-package johnston.thread.basic.properties;
+package johnston.thread.basic.properties.single_thread;
 
 /**
  * A thread has six types of states: new, runnable, blocked, waiting, timed_waiting, and

@@ -1,14 +1,21 @@
-package johnston.thread.basic.creation.executors;
+package johnston.thread.basic.properties.executors;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * If shutdownNow() is called, the thread pool will terminates all threads that are currently
- * running, and return the tasks that are not yet started.
+ * A thread pool can run forever if not calling shutdown() method, which will prevent the main
+ * thread from terminating.
+ *
+ * When shutdown() is called, the thread pool will no longer receive new thread task, and waits
+ * for all threads in queue are executed, then exits.
+ *
+ * Adding new threads on a shutdown thread pool would throw RejectedExecutionException.
+ *
+ * In this demo, four tasks are added to the thread pool then shut it down. Four tasks will be
+ * finished after shutting down the thread pool.
  */
-public class ThreadPoolShutdownNow {
+public class ThreadPoolShutdown {
   private static final int SLEEP_MILLIS_SEC = 1000;
 
   static class ThreadDemo extends Thread {
@@ -46,9 +53,10 @@ public class ThreadPoolShutdownNow {
     singlePool.submit(threadA);
     singlePool.submit(threadB);
 
-    System.out.println("\n*** Thread pool shutdown now! ***\n");
-    List<Runnable> unStartedThreadList =  singlePool.shutdownNow();
+    System.out.println("\n*** Thread pool shutdown! ***\n");
+    singlePool.shutdown();
 
-    System.out.println("Unstated thread amount: " + unStartedThreadList.size());
+    // RejectedExecutionException
+    //singlePool.execute(threadA);
   }
 }
