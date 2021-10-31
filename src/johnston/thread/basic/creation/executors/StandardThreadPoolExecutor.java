@@ -65,10 +65,10 @@ public class StandardThreadPoolExecutor {
         TimeUnit.MILLISECONDS,
         new LinkedBlockingDeque<>(DEFAULT_BLOCKING_QUEUE_SIZE),
         // Try different reject handling policy!
-        // new ThreadPoolExecutor.DiscardOldestPolicy()
+        // new ThreadPoolExecutor.DiscardOldestPolicy() // Dequeue & discard one task to make room
         // new ThreadPoolExecutor.AbortPolicy() // Throw RejectedExecutionException
-        // new ThreadPoolExecutor.CallerRunsPolicy()
-        new ThreadPoolExecutor.DiscardPolicy()
+        // new ThreadPoolExecutor.CallerRunsPolicy() // Thread who submit task run task itself.
+        new ThreadPoolExecutor.DiscardPolicy() // Silent AbortPolicy()
     );
 
     for (int i = 0; i < DEFAULT_TASK_AMOUNT; i++) {

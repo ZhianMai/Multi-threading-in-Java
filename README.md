@@ -277,7 +277,13 @@ ThreadPoolExecutor has three hood methods:
  task will sleep random milli sec.
 
 #### 1.4.5 Thread Pool Rejection Policy
-See 1.2.6.
+ - <i>DiscardOldestPolicy()</i>: dequeue & discard one task to make room
+ - <i>AbortPolicy()</i>: throw RejectedExecutionException
+ - <i>CallerRunsPolicy()</i>: thread who submit task run task itself.
+ - <i>DiscardPolicy()</i>: silent AbortPolicy().
+ - self-defined policy: implements the method <i>rejectedExecution</i> in the interface RejectedExecutionHandler.
+
+Demo see 1.2.6.
 
 
 ## 2. Thread Communications
