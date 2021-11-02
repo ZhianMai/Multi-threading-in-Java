@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * working threads.
  *
  * A * B = C, A_cols == B_rows
- * C[i][j] = sum(A[i][0 - n] * B[0 -m][j])
+ * C[i][j] = sum(A[i][0 - n] * B[0 - n][j])
  */
 public class MatrixMultiplication {
   private static final int DEFAULT_MATRIX_A_MIN_ROW = 1000;
@@ -167,6 +167,9 @@ public class MatrixMultiplication {
     return true;
   }
 
+  /**
+   * Print a matrix in column right-aligned manner.
+   */
   private static void printMatrix(int[][] matrix, int entryRange) {
     int digit = 2;
     while (entryRange != 0) {
