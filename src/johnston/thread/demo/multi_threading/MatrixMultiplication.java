@@ -16,7 +16,7 @@ public class MatrixMultiplication {
   private static final int DEFAULT_MATRIX_A_MIN_ROW = 1000;
   private static final int DEFAULT_MATRIX_B_MIN_COL = 1000;
   private static final int DEFAULT_MIN_A_COLUMN_B_ROW = 1000;
-  private static final int DEFAULT_THREAD_AMOUNT = 2;
+  private static final int DEFAULT_THREAD_AMOUNT = 4;
   private static final int DEFAULT_CPU_CORE_AMOUNT = 4;
 
   private static Random random;
@@ -26,7 +26,7 @@ public class MatrixMultiplication {
   /**
    * Method to calculate matrix multiplication by iterating each entry in one thread.
    */
-  private static int[][] multiplyMatrix(int[][] matrixA, int[][] matrixB) {
+  public static int[][] multiplyMatrix(int[][] matrixA, int[][] matrixB) {
     validateMatrixMultiply(matrixA[0].length, matrixB.length);
 
     int aRow = matrixA.length;
@@ -110,7 +110,7 @@ public class MatrixMultiplication {
    * Method to calculate matrix multiplication using multi-threading. Use thread pool to create
    * threads. The corePoolSize is the CPU core amount set by user.
    */
-  private int[][] multiThreadedMultiplyMatrix(int[][] matrixA, int[][] matrixB)
+  public int[][] multiThreadedMultiplyMatrix(int[][] matrixA, int[][] matrixB)
       throws InterruptedException {
     validateMatrixMultiply(matrixA[0].length, matrixB.length);
 
@@ -148,16 +148,16 @@ public class MatrixMultiplication {
    * Method to generate a matrix whose entries are random number within the given range.
    * @param row The row of the matrix
    * @param col The column of the matrix
-   * @param minVal The lower bound of entry value
-   * @param maxVal The upper bound of entry value
+   * @param entryMin The lower bound of entry value
+   * @param entryMax The upper bound of entry value
    * @return A matrix
    */
-  private static int[][] generateMatrix(int row, int col, int minVal, int maxVal) {
+  public static int[][] generateMatrix(int row, int col, int entryMin, int entryMax) {
     int[][] matrix = new int[row][col];
 
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
-        matrix[i][j] = getRandom(minVal, maxVal);
+        matrix[i][j] = getRandom(entryMin, entryMax);
       }
     }
     return matrix;
@@ -170,7 +170,7 @@ public class MatrixMultiplication {
 
     if (random == null) {
       // Ignore the data racing here, since it won't breaking anything...
-      random = new Random();
+      random = new Random(System.currentTimeMillis());
     }
 
     return random.nextInt((maxVal - minVal) + 1) + minVal;
@@ -179,7 +179,7 @@ public class MatrixMultiplication {
   /**
    * Method to check if two given matrices are identical
    */
-  private static boolean compareMatrix(int[][] matrixA, int[][] matrixB) {
+  public static boolean compareMatrix(int[][] matrixA, int[][] matrixB) {
     if (matrixA.length != matrixB.length || matrixA[0].length != matrixB[0].length) {
       return false;
     }
@@ -197,7 +197,7 @@ public class MatrixMultiplication {
   /**
    * Print a matrix in column right-aligned manner.
    */
-  private static void printMatrix(int[][] matrix, int entryRange) {
+  public static void printMatrix(int[][] matrix, int entryRange) {
     int digit = 2;
     while (entryRange != 0) {
       digit++;
