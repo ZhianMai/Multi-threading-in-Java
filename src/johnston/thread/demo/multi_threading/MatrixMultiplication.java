@@ -227,8 +227,8 @@ public class MatrixMultiplication {
     long totalTime = (System.currentTimeMillis() - startTime) / 1000;
     System.out.println("Single thread runtime: " + totalTime + "sec.");
 
-    matrixMul.setThreadAmount(8);
-    matrixMul.setCpuCoreAmount(4);
+    matrixMul.setThreadAmount(5);
+    matrixMul.setCpuCoreAmount(5);
 
     startTime = System.currentTimeMillis();
     int[][] resultB = matrixMul.multiThreadedMultiplyMatrix(matrixA, matrixB);
