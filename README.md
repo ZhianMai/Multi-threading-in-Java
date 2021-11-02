@@ -336,4 +336,4 @@ priority ones.
 
 ### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
 Matrix multiplication is a computationally heavy task. Using multi-threading to calculate matrix multiplication
-is 4X faster than single-threaded. 
+is 4X faster than single-threaded. This demo uses thread pool to create worker threads.

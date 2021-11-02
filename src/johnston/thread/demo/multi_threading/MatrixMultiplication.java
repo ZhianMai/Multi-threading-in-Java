@@ -123,7 +123,7 @@ public class MatrixMultiplication {
    * @param col The column of the matrix
    * @param minVal The lower bound of entry value
    * @param maxVal The upper bound of entry value
-   * @return An matrix
+   * @return A matrix
    */
   private static int[][] generateMatrix(int row, int col, int minVal, int maxVal) {
     int[][] matrix = new int[row][col];
