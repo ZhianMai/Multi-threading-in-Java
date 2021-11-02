@@ -12,6 +12,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - stop(), join(), interrupt(), yield(), and InterruptedException.
 - Critical section, data racing, atomicity, and locking.
 - Producer-consumer, semaphore, and more.
+- Demo of using multi-threading.
 
 ## 1. Thread Basics
 
@@ -326,3 +327,13 @@ priority. The state is still Runnable, but it's "ready to run" instead of "runni
 In this demo, an array of low priority thread, and an array of high priority thread yield to
 each other, and the final result shows that high priority threads have more execution times than the lower
 priority ones.
+
+## 3.
+
+## 4. 
+
+## 5. Demos of Using Multi-threading
+
+### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
+Matrix multiplication is a computationally heavy task. Using multi-threading to calculate matrix multiplication
+is 4X faster than single-threaded. 
