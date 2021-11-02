@@ -45,6 +45,68 @@ public class MatrixMultiplication {
   }
 
   /**
+   * Thread class for calculating matrix multiplication.
+   */
+  static class MatrixMultiplicationThread extends Thread {
+    private int entriesAssigned;
+    private int[][] matrixA;
+    private int[][] matrixB;
+    private int[][] result;
+    private int totalEntries;
+    private int subTaskEntries;
+    private int bCol;
+    private int aColBRow;
+
+    public MatrixMultiplicationThread(int[][] matrixA, int[][] matrixB, int[][] result,
+                                      int subTaskEntries, String name) {
+      super(name);
+      this.entriesAssigned = 0;
+      this.matrixA = matrixA;
+      this.matrixB = matrixB;
+      this.result = result;
+      this.totalEntries = matrixA.length * matrixB[0].length;
+      this.subTaskEntries = subTaskEntries;
+      bCol = matrixB[0].length;
+      aColBRow = matrixB.length;
+    }
+
+    /**
+     * Assign a range of entries in the result matrix for each thread to calculate.
+     * This method is synchronized to make sure each assignment is atomic to ensure
+     * computation consistency.
+     *
+     * @return range[]: range[0]: begin entry, range[1]: end entry exclusively.
+     * Return null if no more tasks.
+     */
+    private synchronized int[] getEntryRange() {
+      if (entriesAssigned == this.totalEntries) {
+        return null;
+      }
+      int begin = entriesAssigned;
+      int total = Math.min(this.subTaskEntries, this.totalEntries - entriesAssigned);
+      entriesAssigned += total;
+
+      return new int[]{begin, begin + total};
+    }
+
+    public void run() {
+      int[] entryRange = getEntryRange();
+      if (entryRange == null) {
+        return;
+      }
+
+      for (int i = entryRange[0]; i < entryRange[1]; i++) {
+        int row = i / bCol;
+        int col = i % bCol;
+
+        for (int j = 0; j < aColBRow; j++) {
+          this.result[row][col] += (this.matrixA[row][j] * this.matrixB[j][col]);
+        }
+      }
+    }
+  } // End thread class
+
+  /**
    * Method to calculate matrix multiplication using multi-threading. Use thread pool to create
    * threads. The corePoolSize is the CPU core amount set by user.
    */
@@ -59,44 +121,6 @@ public class MatrixMultiplication {
     int totalEntries = aRow * bCol;
     int subTaskEntries = (totalEntries + 1) / threadAmount;
 
-    // Thread class for calculating matrix multiplication
-    class CalculationThread extends Thread {
-      int entriesAssigned;
-
-      public CalculationThread() {
-        super("matrix_multiplication_thread");
-        this.entriesAssigned = 0;
-      }
-
-      private synchronized int[] getEntryRange() {
-        if (entriesAssigned == totalEntries) {
-          System.out.println("Finished: " + entriesAssigned);
-          return null;
-        }
-        int begin = entriesAssigned;
-        int total = Math.min(subTaskEntries, totalEntries - entriesAssigned);
-        entriesAssigned += total;
-
-        return new int[]{begin, begin + total};
-      }
-
-      public void run() {
-        int[] entryRange = getEntryRange();
-        if (entryRange == null) {
-          return;
-        }
-
-        for (int i = entryRange[0]; i < entryRange[1]; i++) {
-          int row = i / bCol;
-          int col = i % bCol;
-
-          for (int j = 0; j < aColBRow; j++) {
-            result[row][col] += (matrixA[row][j] * matrixB[j][col]);
-          }
-        }
-      }
-    } // End thread class
-
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
         cpuCoreAmount,
         cpuCoreAmount * 2,
@@ -106,8 +130,11 @@ public class MatrixMultiplication {
         new ThreadPoolExecutor.CallerRunsPolicy() // Thread who submit task run task itself.
     );
 
-    Thread calculationThread = new CalculationThread();
+    // Create new Thread object
+    Thread calculationThread = new MatrixMultiplicationThread(matrixA, matrixB, result,
+        subTaskEntries,"Matrix Multiplication Thread A");
 
+    // Assign tasks
     for (int i = 0; i < threadAmount; i++) {
       threadPool.execute(calculationThread);
     }
