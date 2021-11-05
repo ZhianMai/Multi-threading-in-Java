@@ -115,7 +115,6 @@ public class MatrixMultiplication {
     validateMatrixMultiply(matrixA[0].length, matrixB.length);
 
     int aRow = matrixA.length;
-    int aColBRow = matrixA[0].length;
     int bCol = matrixB[0].length;
     int[][] result = new int[aRow][bCol];
     int totalEntries = aRow * bCol;

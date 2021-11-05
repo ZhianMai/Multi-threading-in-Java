@@ -165,7 +165,7 @@ public class AngleBetweenTwoVectors {
   }
 
   public static void main(String[] args) throws InterruptedException {
-    int vecLength = 100000000;
+    int vecLength = 150000000;
     double vecEntryMin = -189.99495173784872e-50;
     double vecEntryMax = 189.99495173784872e-50;
 

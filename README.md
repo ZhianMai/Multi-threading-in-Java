@@ -286,6 +286,12 @@ ThreadPoolExecutor has three hood methods:
 
 Demo see 1.2.6.
 
+#### 1.4.6 Thread Pool Properly Shutdown :link:[link](src/johnston/thread/basic/properties/executors/ThreadPoolProperShutDown.java)
+General way to shut down a thread pool:
+ - Call shutdown() to stop accepting new task;
+ - awaitTermination(long timeout, TimeUnit unit) to wait for the existing task to finish.
+ - If timeout, call shutdownNow() to force all task finished.
+ - Iteratively call shutdownNow() -- awaitTermination()
 
 ## 2. Thread Communications
 
