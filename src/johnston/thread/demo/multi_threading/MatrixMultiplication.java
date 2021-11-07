@@ -16,8 +16,13 @@ public class MatrixMultiplication {
   private static final int DEFAULT_MATRIX_A_MIN_ROW = 1000;
   private static final int DEFAULT_MATRIX_B_MIN_COL = 1000;
   private static final int DEFAULT_MIN_A_COLUMN_B_ROW = 1000;
-  private static final int DEFAULT_THREAD_AMOUNT = 4;
-  private static final int DEFAULT_CPU_CORE_AMOUNT = 4;
+  private static final int DEFAULT_THREAD_AMOUNT;
+  private static final int DEFAULT_CPU_CORE_AMOUNT;
+
+  static {
+    DEFAULT_CPU_CORE_AMOUNT = Runtime.getRuntime().availableProcessors();
+    DEFAULT_THREAD_AMOUNT = DEFAULT_CPU_CORE_AMOUNT;
+  }
 
   private static Random random;
   private int threadAmount = DEFAULT_THREAD_AMOUNT;
@@ -241,6 +246,7 @@ public class MatrixMultiplication {
    */
   public static void main(String[] args) throws InterruptedException {
     MatrixMultiplication matrixMul = new MatrixMultiplication();
+    System.out.println(DEFAULT_CPU_CORE_AMOUNT);
     int aRow = DEFAULT_MATRIX_A_MIN_ROW * 2;
     int aColBRow = DEFAULT_MIN_A_COLUMN_B_ROW * 2;
     int bCol = DEFAULT_MATRIX_B_MIN_COL * 2;
