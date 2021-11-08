@@ -334,6 +334,17 @@ In this demo, an array of low priority thread, and an array of high priority thr
 each other, and the final result shows that high priority threads have more execution times than the lower
 priority ones.
 
+#### 2.6 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
+ThreadLocal is a convenient way to ensure data safety in multi-threading. It's like a hash map
+where the key is the thread task id, and the value is the variable belonging to that thread task
+only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
+ThreadLocal also helps decouple among multi-threading methods and class when variable sharing is
+required.
+
+In this demo, each Runnable task has its own unique random number n, and it creates a variable
+in the ThreadLocal object, then increment that variable n times. The result shows that
+ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
+
 ## 3.
 
 ## 4. 
