@@ -144,7 +144,7 @@ and different reject task policies.
 #### 1.2.7 ThreadFactory Interface :link:[link](src/johnston/thread/basic/creation/executors/ThreadFactoryDemo.java)
 <i>ThreadFactory</i> is an interface from concurrent package. It has only one
 method: newThread(Runnable r). User can implement this interface to customize the method of
-creating new threads, and pass this interface instance to a thread pool. The thread pool then
+creating new threads, and pass this interface instance to a thread pool. The thread pools then
 will use this thread factory to create reusable new threads.
 
 In this demo, an implementation of ThreadFactory is created and pass it to the thread pool.
@@ -316,7 +316,7 @@ cause data inconsistency. So this method is @Deprecated.
  number from A and needs some luck to get the same from B.
  
 #### 2.3 Thread Interruption :link:[link](src/johnston/thread/communications/ThreadInterruption.java)
-When threadA calls threadB.interrupt(), threadB can receive a interruption signal, and
+When threadA calls threadB.interrupt(), threadB can receive an interruption signal, and
 decide what to do next. So calling interrupt() to threadB does not stop or pause threadB if
 it's running (not waiting or sleeping).
 
@@ -351,6 +351,16 @@ it's terminated.
 In this demo, each Runnable task has its own unique random number n, and it creates a variable
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
+
+#### 2.7 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
+CountDownLatch is a decremental counter for multi-threading. It inits as an integer, and any
+threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
+will be blocked until the counter is 0. It's like a join() method that can specify the location
+of exit-joining point instead of waiting the joined thread terminated.
+
+#### 2.8 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
+This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
+wait until decrement to 0, let all threads starts at the same time by calling await()!
 
 ## 3.
 
