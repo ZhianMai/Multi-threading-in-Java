@@ -341,6 +341,9 @@ only. It's a more efficient way to ensure data-racing free than using "synchroni
 ThreadLocal also helps decouple among multi-threading methods and class when variable sharing is
 required.
 
+ThreadLocal is usually static and final. Static ensures it can be used across all threads, and
+final ensures it won't be replaced causing threads losing their data.
+
 In this demo, each Runnable task has its own unique random number n, and it creates a variable
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.

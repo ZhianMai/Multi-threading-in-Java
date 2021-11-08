@@ -12,6 +12,10 @@ import java.util.concurrent.TimeUnit;
  * ThreadLocal also helps decouple among multi-threading methods and class when variable sharing is
  * required.
  *
+ * ThreadLocal is usually static and final. Static ensures it can be used across all threads, and
+ * final ensures it won't be replaced causing threads losing their data. Always use remove() method
+ * to remove instance when the current thread is about to terminate.
+ *
  * In this demo, each Runnable task has its own unique random number n, and it creates a variable
  * in the ThreadLocal object, then increment that variable n times. The result shows that
  * ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
@@ -36,21 +40,21 @@ public class ThreadLocalInnerCommunication {
     public void run() {
       int executeTimes = random.nextInt(1000);
 
-      if (threadLocalData.get() == null) {
-        threadLocalData.set(0);
+      if (THREAD_LOCAL_DATA.get() == null) {
+        THREAD_LOCAL_DATA.set(0);
       }
 
       for (int i = 0; i < executeTimes; i++) {
-        threadLocalData.set(threadLocalData.get() + 1);
+        THREAD_LOCAL_DATA.set(THREAD_LOCAL_DATA.get() + 1);
       }
 
 
       System.out.println("The amount of execution times is " + executeTimes + ", and I have " +
-          "executed " + threadLocalData.get() + " times.");
+          "executed " + THREAD_LOCAL_DATA.get() + " times.");
     }
   }
 
-  private static ThreadLocal<Integer> threadLocalData = new ThreadLocal<>();
+  private static final ThreadLocal<Integer> THREAD_LOCAL_DATA = new ThreadLocal<>();
 
   public static void main(String[] args) {
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
@@ -60,7 +64,13 @@ public class ThreadLocalInnerCommunication {
         TimeUnit.MILLISECONDS,
         new LinkedBlockingDeque<>(DEFAULT_THREAD_AMOUNT),
         new ThreadPoolExecutor.CallerRunsPolicy() // Thread who submit task run task itself.
-    );
+    ) {
+      @Override
+      protected void afterExecute(Runnable target, Throwable t) {
+        // Ensure no memory leak.
+        THREAD_LOCAL_DATA.remove();
+      }
+    };
 
     Thread threadLocalIncrement = new ThreadLocalIncrement("ThreadLocal Increment");
 
