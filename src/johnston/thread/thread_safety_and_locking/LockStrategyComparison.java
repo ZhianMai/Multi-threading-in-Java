@@ -18,12 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class LockStrategyComparison {
   private static final int INCREMENT_TIMES = 1000000;
   private static final int DEFAULT_THREAD_CORD_AMOUNT;
-  private static int[] incrementalTask;
   private static final Random random = new Random(System.currentTimeMillis());
 
   static {
     DEFAULT_THREAD_CORD_AMOUNT = Runtime.getRuntime().availableProcessors();
-    incrementalTask = new int[DEFAULT_THREAD_CORD_AMOUNT];
   }
 
   static class IncrementalTaskThread extends Thread  {
