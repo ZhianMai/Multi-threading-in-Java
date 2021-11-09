@@ -298,8 +298,8 @@ General way to shut down a thread pool:
 #### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/communications/ThreadStop.java)
 Calling stop() method of a thread can immediately terminate that thread.
 
-This operation is not safety. If the thread being stopped holds a lock, then it
-would not release it. If the thread being stopped is using database, then it would
+This operation is not safety. If a stopped thread holds a lock, then it
+would not release it. If the thread which is about to stop is using database, then it would
 cause data inconsistency. So this method is @Deprecated.
 
 #### 2.2 Thread Join :link:[link](src/johnston/thread/communications/ThreadJoin.java)
@@ -335,7 +335,7 @@ each other, and the final result shows that high priority threads have more exec
 priority ones.
 
 #### 2.6 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
-ThreadLocal is a convenient way to ensure data safety in multi-threading. It's like a hash map
+<i>ThreadLocal</i> is a convenient way to ensure data safety in multi-threading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
 only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
 ThreadLocal also helps decouple among multi-threading methods and class when variable sharing is
@@ -353,7 +353,7 @@ in the ThreadLocal object, then increment that variable n times. The result show
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
 #### 2.7 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
-CountDownLatch is a decremental counter for multi-threading. It inits as an integer, and any
+<i>CountDownLatch</i> is a decremental counter for multi-threading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
 will be blocked until the counter is 0. It's like a join() method that can specify the location
 of exit-joining point instead of waiting the joined thread terminated.
@@ -362,7 +362,20 @@ of exit-joining point instead of waiting the joined thread terminated.
 This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
 wait until decrement to 0, let all threads starts at the same time by calling await()!
 
-## 3.
+## 3. Locking and Thread Safety
+
+#### 3.1 Data Racing :link:[link](src/johnston/thread/thread_safety_and_locking/DataRacing.java)
+If a set of operation is not <i>atomic</i>, then <i>race condition</i> may have. Race condition can cause <i>data racing</i>.
+
+This demo shows that incremental operation <i>var++</i> is not thread-safety.
+
+#### 3.2 Lock Strategy Comparison :link:[link](src/johnston/thread/thread_safety_and_locking/LockStrategyComparison.java)
+Exclusively locking critical section can avoid data racing, and comes with performance overhead.
+So minimizing the critical section execution code and using more flexible locking strategy can
+help to improve performance.
+
+This demo compares performance on two different strategies of locking: using one lock for all
+synced variable, and each variable uses one specific lock.
 
 ## 4. 
 
