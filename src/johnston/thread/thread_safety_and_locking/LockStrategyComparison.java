@@ -16,12 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * synced variable, and each variable uses one specific lock.
  */
 public class LockStrategyComparison {
-  private static final int INCREMENT_TIMES = 1000000;
+  private static final int INCREMENT_TIMES = 100;
   private static final int DEFAULT_THREAD_CORD_AMOUNT;
-  private static final Random random = new Random(System.currentTimeMillis());
 
   static {
-    DEFAULT_THREAD_CORD_AMOUNT = Runtime.getRuntime().availableProcessors();
+    DEFAULT_THREAD_CORD_AMOUNT = Runtime.getRuntime().availableProcessors() / 2;
   }
 
   static class IncrementalTaskThread extends Thread  {
@@ -46,19 +45,15 @@ public class LockStrategyComparison {
       }
     }
 
-    private synchronized void bigLockIncrement(int[] taskList, int idx) {
+    private synchronized void bigLockIncrement(int[] taskList, int idx) throws InterruptedException {
       taskList[idx]++;
-
-      while (random.nextInt(100) != 0) {
-      }
+      Thread.sleep(10);
     }
 
-    private void smallLockIncrement(Object lock, int[] taskList, int idx) {
+    private void smallLockIncrement(Object lock, int[] taskList, int idx) throws InterruptedException {
       synchronized (lock) {
         taskList[idx]++;
-
-        while (random.nextInt(5) != 0) {
-        }
+        Thread.sleep(10);
       }
     }
 
@@ -73,12 +68,21 @@ public class LockStrategyComparison {
 
       for (int i = 0; i < INCREMENT_TIMES; i++) {
         if (isBigLock) {
-          bigLockIncrement(taskList, id);
+          try {
+            bigLockIncrement(taskList, id);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         } else {
-          smallLockIncrement(locks[id], taskList, id);
+          try {
+            smallLockIncrement(locks[id], taskList, id);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         }
       }
       counter.countDown();
+      System.out.print(taskList[id] + ", ");
     }
   }
 
@@ -102,7 +106,7 @@ public class LockStrategyComparison {
 
     counter.await();
     long totalTime = (System.currentTimeMillis() - startTime);
-    System.out.println("Big lock thread runtime: " + totalTime / 1000 + "sec.");
+    System.out.println("Big lock thread runtime: " + totalTime + " milli sec.");
 
     counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT);
     bigLockThread = new IncrementalTaskThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
@@ -114,7 +118,10 @@ public class LockStrategyComparison {
 
     counter.await();
     totalTime = (System.currentTimeMillis() - startTime);
-    System.out.println("Small lock thread runtime: " + totalTime / 1000 + "sec.");
+    System.out.println("Small lock thread runtime: " + totalTime + " milli sec.");
     threadPool.shutdown();
+
+    // The runtime of big lock thread should be [thread_core_amount] times longer than small lock
+    // thread.
   }
 }
