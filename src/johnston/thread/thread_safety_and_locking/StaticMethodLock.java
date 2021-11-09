@@ -1,6 +1,5 @@
 package johnston.thread.thread_safety_and_locking;
 
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -8,14 +7,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Exclusively locking critical section can avoid data racing, and comes with performance overhead.
- * So minimizing the critical section execution code and using more flexible locking strategy can
- * help to improve performance.
+ * Using synchronized keyword to modify static method is different to modify non-static method.
+ * Synchronized non-static method is object-level lock, while synchronized static method is
+ * class-level lock.
  *
- * This demo compares performance on two different strategies of locking: using one lock for all
- * synced variable, and each variable uses one specific lock.
+ * This demo shows that threads from two different objects can access a synchronized non-static
+ * method at the same time, while synchronized static method allows only one thread entered at
+ * the same time.
  */
-public class LockStrategyComparison {
+public class StaticMethodLock {
   private static final int INCREMENT_TIMES = 100;
   private static final int DEFAULT_THREAD_CORD_AMOUNT;
 
@@ -23,40 +23,29 @@ public class LockStrategyComparison {
     DEFAULT_THREAD_CORD_AMOUNT = Runtime.getRuntime().availableProcessors() / 2;
   }
 
-  static class IncrementalTaskThread extends Thread  {
+  static class StaticLockThread extends Thread  {
     int[] taskList;
     AtomicInteger taskIdDistribute;
-    boolean isBigLock;
-    Object[] locks;
+    boolean isStatic;
     CountDownLatch counter;
 
-    public IncrementalTaskThread(int threadAmount, CountDownLatch counter,  boolean isBigLock) {
+    public StaticLockThread(int threadAmount, CountDownLatch counter, boolean isStatic) {
       taskList = new int[threadAmount];
       taskIdDistribute = new AtomicInteger(threadAmount);
-      this.isBigLock = isBigLock;
+      this.isStatic = isStatic;
       this.counter = counter;
-
-      if (!isBigLock) {
-        locks = new Object[threadAmount];
-
-        for (int i = 0; i < threadAmount; i++) {
-          locks[i] = new Object();
-        }
-      }
     }
 
-    private synchronized void bigLockIncrement(int[] taskList, int idx)
+    private static synchronized void staticSyncIncrement(int[] taskList, int idx)
         throws InterruptedException {
       taskList[idx]++;
       Thread.sleep(10); // Simulates time-consuming work
     }
 
-    private void smallLockIncrement(Object lock, int[] taskList, int idx)
+    private synchronized void objectSyncIncrement(int[] taskList, int idx)
         throws InterruptedException {
-      synchronized (lock) {
-        taskList[idx]++;
-        Thread.sleep(10); // Simulates time-consuming work
-      }
+      taskList[idx]++;
+      Thread.sleep(10); // Simulates time-consuming work
     }
 
     @Override
@@ -69,15 +58,15 @@ public class LockStrategyComparison {
       }
 
       for (int i = 0; i < INCREMENT_TIMES; i++) {
-        if (isBigLock) {
+        if (isStatic) {
           try {
-            bigLockIncrement(taskList, id);
+            staticSyncIncrement(taskList, id);
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
         } else {
           try {
-            smallLockIncrement(locks[id], taskList, id);
+            objectSyncIncrement(taskList, id);
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
@@ -98,32 +87,38 @@ public class LockStrategyComparison {
         new ThreadPoolExecutor.CallerRunsPolicy() // Thread who submit task run task itself.
     );
 
-    CountDownLatch counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT);
-    Thread bigLockThread = new IncrementalTaskThread(DEFAULT_THREAD_CORD_AMOUNT, counter, true);
+    CountDownLatch counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT * 2);
+    Thread testThreadA =
+        new StaticLockThread(DEFAULT_THREAD_CORD_AMOUNT, counter, true);
+    Thread testThreadB =
+        new StaticLockThread(DEFAULT_THREAD_CORD_AMOUNT, counter, true);
     long startTime = System.currentTimeMillis();
 
     for (int i = 0; i < DEFAULT_THREAD_CORD_AMOUNT; i++) {
-      threadPool.execute(bigLockThread);
+      threadPool.execute(testThreadA);
+      threadPool.execute(testThreadB);
     }
 
     counter.await();
     long totalTime = (System.currentTimeMillis() - startTime);
-    System.out.println("\nBig lock thread runtime: " + totalTime + " milli sec.\n");
+    System.out.println("\nStatic lock thread runtime: " + totalTime + " milli sec.\n");
 
-    counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT);
-    bigLockThread = new IncrementalTaskThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
+    counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT * 2);
+    testThreadA = new StaticLockThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
+    testThreadB = new StaticLockThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
     startTime = System.currentTimeMillis();
 
     for (int i = 0; i < DEFAULT_THREAD_CORD_AMOUNT; i++) {
-      threadPool.execute(bigLockThread);
+      threadPool.execute(testThreadA);
+      threadPool.execute(testThreadB);
     }
 
     counter.await();
     totalTime = (System.currentTimeMillis() - startTime);
-    System.out.println("\nSmall lock thread runtime: " + totalTime + " milli sec.");
+    System.out.println("\nObject lock thread runtime: " + totalTime + " milli sec.");
     threadPool.shutdown();
 
-    // The runtime of big lock thread should be [thread_core_amount] times longer than small lock
+    // The runtime of using static lock thread should be 2 times longer than using object lock
     // thread.
   }
 }

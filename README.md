@@ -377,6 +377,15 @@ help to improve performance.
 This demo compares performance on two different strategies of locking: using one lock for all
 synced variable, and each variable uses one specific lock.
 
+#### 3.3 Synchronized Static Method  :link:[link](src/johnston/thread/thread_safety_and_locking/StaticMethodLock.java)
+Using synchronized keyword to modify static method is different to modify non-static method.
+Synchronized non-static method is object-level lock, while synchronized static method is
+class-level lock.
+
+This demo shows that threads from two different objects can access a synchronized non-static
+method at the same time, while synchronized static method allows only one thread entered at
+the same time.
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
