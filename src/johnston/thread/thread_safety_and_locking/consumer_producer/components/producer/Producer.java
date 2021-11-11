@@ -13,20 +13,26 @@ public class Producer implements Runnable {
   private Callable action;
   private int produceDuration;
   public static final int DEFAULT_PRODUCE_DURATION_MILLIS_SEC = 100;
+  private int maxProduced;
 
   public Producer(String name, Callable action) {
-    this(name, action, DEFAULT_PRODUCE_DURATION_MILLIS_SEC);
+    this(name, action, DEFAULT_PRODUCE_DURATION_MILLIS_SEC, Integer.MAX_VALUE);
   }
 
   public Producer(String name, Callable action, int produceDuration) {
+    this(name, action, produceDuration, Integer.MAX_VALUE);
+  }
+
+  public Producer(String name, Callable action, int produceDuration, int maxProduced) {
     NAME = name;
     this.action = action;
     this.produceDuration = produceDuration;
+    this.maxProduced = maxProduced;
   }
 
   @Override
   public void run() {
-    while (true) {
+    while (TURN_COUNTER.get() < maxProduced) {
       try {
         Object output = action.call();
 

@@ -13,20 +13,26 @@ public class Consumer implements Runnable {
   private final String NAME;
   private Callable action;
   private int consumeDuration;
+  private int maxConsumed;
 
   public Consumer(String name, Callable action) {
-    this(name, action, DEFAULT_CONSUME_DURATION_MILLIS_SEC);
+    this(name, action, DEFAULT_CONSUME_DURATION_MILLIS_SEC, Integer.MAX_VALUE);
   }
 
   public Consumer(String name, Callable action, int consumeDuration) {
+    this(name, action, consumeDuration, Integer.MAX_VALUE);
+  }
+
+  public Consumer(String name, Callable action, int consumeDuration, int maxConsumed) {
     NAME = name;
     this.action = action;
     this.consumeDuration = consumeDuration;
+    this.maxConsumed = maxConsumed;
   }
 
   @Override
   public void run() {
-    while (true) {
+    while (TURN_COUNTER.get() < maxConsumed) {
       try {
         Object output = action.call();
 
