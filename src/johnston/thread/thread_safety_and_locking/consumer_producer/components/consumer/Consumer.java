@@ -31,7 +31,7 @@ public class Consumer implements Runnable {
         Object output = action.call();
 
         if (output != null) {
-          System.out.println("Consumer " + TURN_COUNTER.get() + "-th time output.");
+          System.out.println("Consumer " + TURN_COUNTER.get() + "-th time condumed.");
           // Do some work if got data from Callable action
           Thread.sleep(consumeDuration);
           TURN_COUNTER.incrementAndGet();

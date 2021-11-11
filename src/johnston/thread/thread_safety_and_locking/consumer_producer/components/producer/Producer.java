@@ -24,7 +24,7 @@ public class Producer implements Runnable {
         Object output = action.call();
 
         if (output != null) {
-          System.out.println("Producer " + TURN_COUNTER.get() + "-th time output.");
+          System.out.println("Producer " + TURN_COUNTER.get() + "-th time produced.");
           TURN_COUNTER.incrementAndGet();
         }
 
