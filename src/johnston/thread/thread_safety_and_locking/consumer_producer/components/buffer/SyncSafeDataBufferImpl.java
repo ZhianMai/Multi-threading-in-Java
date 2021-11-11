@@ -1,7 +1,11 @@
 package johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer;
 
-public class SyncSafeDataBuffer<D> implements DataBuffer {
-  DataBuffer<D> dataBuffer = new UnsafeDataBuffer<>();
+/**
+ * Implementation of thread-safe data buffer. FIFO. Simply sync the produce and consume method.
+ * It serializes the read and write method, which has a great performance penalty.
+ */
+public class SyncSafeDataBufferImpl<D> implements DataBuffer {
+  DataBuffer<D> dataBuffer = new UnsafeDataBufferImpl<>();
 
   @Override
   public synchronized D get() {

@@ -11,10 +11,17 @@ public class Producer implements Runnable {
   private static final AtomicInteger TURN_COUNTER = new AtomicInteger(0);
   private final String NAME;
   private Callable action;
+  private int produceDuration;
+  public static final int DEFAULT_PRODUCE_DURATION_MILLIS_SEC = 100;
 
   public Producer(String name, Callable action) {
+    this(name, action, DEFAULT_PRODUCE_DURATION_MILLIS_SEC);
+  }
+
+  public Producer(String name, Callable action, int produceDuration) {
     NAME = name;
     this.action = action;
+    this.produceDuration = produceDuration;
   }
 
   @Override
@@ -24,7 +31,8 @@ public class Producer implements Runnable {
         Object output = action.call();
 
         if (output != null) {
-          System.out.println("Producer " + TURN_COUNTER.get() + "-th time produced.");
+          Thread.sleep(produceDuration);
+          System.out.println(NAME + " " + TURN_COUNTER.get() + "-th time produced: " + output);
           TURN_COUNTER.incrementAndGet();
         }
 

@@ -1,7 +1,7 @@
 package johnston.thread.thread_safety_and_locking.consumer_producer;
 
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.DataBuffer;
-import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.UnsafeDataBuffer;
+import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.UnsafeDataBufferImpl;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.consumer.ConsumeRandomIntAction;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.consumer.Consumer;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.producer.ProduceRandomIntAction;
@@ -11,13 +11,22 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Demo of producer and consumer using not thread-safe buffer. If there are more than one producer
+ * and more than one consumer, then race condition exists at:
+ * - Between buffer.get() size check and get -- size != 0 but get null, or index out of bound;
+ * - Between buffer.put() size check and put -- size > capacity.
+ *
+ * This is because both check size and get element operation are atomic, but putting them together
+ * is not! Same as check size and put element operation.
+ */
 public class BadConsumingProducing {
   public static void main(String[] args) {
-    DataBuffer<Integer> unsafeDataBuffer = new UnsafeDataBuffer<>();
-    ProduceRandomIntAction produceAction = new ProduceRandomIntAction(unsafeDataBuffer, 1000);
+    DataBuffer<Integer> unsafeDataBuffer = new UnsafeDataBufferImpl<>();
+    ProduceRandomIntAction produceAction = new ProduceRandomIntAction(unsafeDataBuffer);
     ConsumeRandomIntAction consumeAction = new ConsumeRandomIntAction(unsafeDataBuffer);
-    Producer producer = new Producer("Producer A", produceAction);
-    Consumer consumer = new Consumer("Consumer A", consumeAction, 1000);
+    Producer producer = new Producer("Producer A", produceAction, 10);
+    Consumer consumer = new Consumer("Consumer A", consumeAction, 10);
     int cpuCoreAmount = 4;
 
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(

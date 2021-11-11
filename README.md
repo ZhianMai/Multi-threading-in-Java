@@ -364,12 +364,14 @@ wait until decrement to 0, let all threads starts at the same time by calling aw
 
 ## 3. Locking and Thread Safety
 
-#### 3.1 Data Racing :link:[link](src/johnston/thread/thread_safety_and_locking/DataRacing.java)
+###3.1 Basics
+
+#### 3.1.1 Data Racing :link:[link](src/johnston/thread/thread_safety_and_locking/DataRacing.java)
 If a set of operation is not <i>atomic</i>, then <i>race condition</i> may have. Race condition can cause <i>data racing</i>.
 
 This demo shows that incremental operation <i>var++</i> is not thread-safety.
 
-#### 3.2 Lock Strategy Comparison :link:[link](src/johnston/thread/thread_safety_and_locking/LockStrategyComparison.java)
+#### 3.1.2 Lock Strategy Comparison :link:[link](src/johnston/thread/thread_safety_and_locking/LockStrategyComparison.java)
 Exclusively locking critical section can avoid data racing, and comes with performance overhead.
 So minimizing the critical section execution code and using more flexible locking strategy can
 help to improve performance.
@@ -377,7 +379,7 @@ help to improve performance.
 This demo compares performance on two different strategies of locking: using one lock for all
 synced variable, and each variable uses one specific lock.
 
-#### 3.3 Synchronized Static Method  :link:[link](src/johnston/thread/thread_safety_and_locking/StaticMethodLock.java)
+#### 3.1.3 Synchronized Static Method  :link:[link](src/johnston/thread/thread_safety_and_locking/StaticMethodLock.java)
 Using synchronized keyword to modify static method is different to modify non-static method.
 Synchronized non-static method is object-level lock, while synchronized static method is
 class-level lock.
@@ -385,6 +387,39 @@ class-level lock.
 This demo shows that threads from two different objects can access a synchronized non-static
 method at the same time, while synchronized static method allows only one thread entered at
 the same time.
+
+### 3.2 Producer-Consumer Problem
+Producer-Consumer Problem is same as Bounded-Buffer Problem. Producers and consumers share a same buffer. Producers
+put data to the buffer while consumers take data from it. It requires:
+- Producers and consumers should work concurrently.
+- The buffer capacity is limited.
+- Producers cannot put data to the buffer when it's full.
+- Consumers cannot take any data when the buffer is empty, and won't take duplicated data.
+- When producers and consumers are waiting, their threads should not be blocked.
+
+#### 3.2.1 Producer-Consumer Prep. :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/components)
+This package contains:
+- Producer and produce action (Callable);
+- Consumer and consume action (Callable);
+- Buffer interface and its implementations.
+
+#### 3.2.2 Bad Producer-Consumer  :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/BadConsumingProducing.java)
+Demo of producer and consumer using not thread-safe buffer. If there are more than one producer
+and more than one consumer, then race condition exists at:
+- Between buffer.get() size check and get -- size != 0 but get null, or index out of bound;
+- Between buffer.put() size check and put -- size > capacity.
+
+This is because both check size and get element operation are atomic, but putting them together
+is not! Same as check size and put element operation.
+
+#### 3.2.3 Synced Read & Write Producer-Consumer  :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/SyncedConsumingProducing.java)
+Demo of producer and consumer using not thread-safe buffer. If there are more than one producer
+and more than one consumer, then race condition exists at:
+- Between buffer.get() size check and get -- size != 0 but get null, or index out of bound;
+- Between buffer.put() size check and put -- size > capacity.
+
+This is because both check size and get element operation are atomic, but putting them together
+is not! Same as check size and put element operation.
 
 ## 4. 
 

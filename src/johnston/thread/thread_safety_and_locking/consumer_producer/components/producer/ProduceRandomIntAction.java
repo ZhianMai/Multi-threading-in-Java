@@ -12,17 +12,10 @@ import java.util.concurrent.Callable;
 public class ProduceRandomIntAction implements Callable {
   private DataBuffer<Integer> dataBuffer;
   private Random random;
-  private int produceDuration;
-  public static final int DEFAULT_PRODUCE_DURATION_MILLIS_SEC = 100;
 
   public ProduceRandomIntAction(DataBuffer<Integer> dataBuffer) {
-    this(dataBuffer, DEFAULT_PRODUCE_DURATION_MILLIS_SEC);
-  }
-
-  public ProduceRandomIntAction(DataBuffer<Integer> dataBuffer, int produceDuration) {
     this.dataBuffer = dataBuffer;
     random = new Random();
-    this.produceDuration = produceDuration;
   }
 
   @Override
@@ -30,7 +23,6 @@ public class ProduceRandomIntAction implements Callable {
     Integer newData = random.nextInt((int)System.currentTimeMillis());
 
     try {
-      Thread.sleep(produceDuration);
       dataBuffer.put(newData);
     } catch (Exception e) {
       e.printStackTrace();
