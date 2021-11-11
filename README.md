@@ -8,7 +8,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - Thread Creation: <i>Thread</i> class, <i>Runnable</i> interface, and <i>Callable</i> interface.
   - Thread Pool by java.util.concurrent.<i>Executors</i>;
   - Thread Properties: ID, name, priority, state, and daemon thread;
-  - Thread Pool Properties: blocking queue, hook methods, thread pool shutdown properly.
+  - Thread Pool Properties: blocking queue, hook methods, and thread pool shutdown properly.
 
 - Thread communications
   - stop(), join(), interrupt(), yield(), and InterruptedException;
