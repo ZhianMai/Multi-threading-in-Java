@@ -253,10 +253,10 @@ Blocking queue has several implementations:
 - <i>LinkedBlockingQueue</i>: queue implemented by linked-list. The order is FIFO. Size can be
   defined. If not, then the size is unlimited.
 
-- <i>PriorityBlockingQueue</i>: a priority queue that can take in comparator. If no comparator is
+- <i>PriorityBlockingQueue</i>: a priority queue that can take in comparator. If no comparator
   provided, then use the natural order of the elements. Size is unlimited.
 
-- <i>DelayQueue</i>: like a blocking queue. Elements can dequeue only if their time is expired. It
+- <i>DelayQueue</i>: like a blocking queue. Elements can dequeue only if they are expired. It
   can be used in producer-consumer scenario.
   The elements stored in DelayQueue must implement Delayed interface. The element that will
   expire first will be dequeued first. It cannot dequeue unexpired elements.
@@ -340,7 +340,18 @@ In this demo, an array of low priority thread, and an array of high priority thr
 each other, and the final result shows that high priority threads have more execution times than the lower
 priority ones.
 
-#### 2.6 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
+#### 2.6 Thread Waiting :link:[link](src/johnston/thread/communications/YieldThread.java)
+Calling wait() method of a lock can let it the thread who holds this lock release it, so another
+thread can enter the critical section.
+
+In this Demo, thread A will enter the critical section first, but needs to wait 1 sec. Thread A
+will release the lock and let thread B enter. Thread A will continue right after the wait()
+method if other threads notify it, or the wait() is countdown.
+
+When calling LOCK.wait(), the synchronized block holds LOCK, so it can release. If using other
+objects to call wait(), then it will throw IllegalMonitorStateException.
+
+#### 2.9 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
 <i>ThreadLocal</i> is a convenient way to ensure data safety in multi-threading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
 only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
@@ -358,13 +369,13 @@ In this demo, each Runnable task has its own unique random number n, and it crea
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
-#### 2.7 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
+#### 2.10 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
 <i>CountDownLatch</i> is a decremental counter for multi-threading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
 will be blocked until the counter is 0. It's like a join() method that can specify the location
 of exit-joining point instead of waiting the joined thread terminated.
 
-#### 2.8 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
+#### 2.11 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
 This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
 wait until decrement to 0, let all threads starts at the same time by calling await()!
 
