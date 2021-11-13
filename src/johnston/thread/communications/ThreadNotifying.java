@@ -61,7 +61,7 @@ public class ThreadNotifying {
 
   private static void consume(AtomicInteger runtimes) throws InterruptedException {
     while (runtimes.decrementAndGet() > 0) {
-      while (result.get() == 0) {
+      while (result.get() == 0) { // Use while loop to wait
         System.out.println(Thread.currentThread().getName() + ": no result so far. Wait.");
         consumerWaiting.set(true);
 
