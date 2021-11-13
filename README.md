@@ -361,6 +361,14 @@ is a big difference behind it.
 occupied, and let the thread which holds the lock wait. Of course the object lock, and the current thread inside the 
   critical section can be the same.
 
+#### 2.8 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadNotifying.java)
+Calling notify() from a lock object can pick a thread from the waiting pool to start. The
+waiting pool holds threads waiting for that lock.
+<p>
+In this demo, many producer threads and many consumers thread run at the same time. If a
+consumer cannot get resource, it will wait. If a producer notice consumers are waiting, it
+will notify them to wake up.
+
 #### 2.9 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
 <i>ThreadLocal</i> is a convenient way to ensure data safety in multi-threading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
