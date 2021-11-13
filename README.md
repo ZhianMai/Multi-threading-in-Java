@@ -351,6 +351,16 @@ method if other threads notify it, or the wait() is countdown.
 When calling LOCK.wait(), the synchronized block holds LOCK, so it can release. If using other
 objects to call wait(), then it will throw IllegalMonitorStateException.
 
+#### 2.7 Difference between wait() and sleep()
+It seems that these two methods have the same behavior: letting the current thread give up the CPU, but there
+is a big difference behind it.
+
+- A thread can sleep everywhere during execution, while a thread can wait only in the critical section.
+- Suppose a thread is holding a lock, if it sleeps, it will hold the lock; if it waits, it will release the lock.
+- Sleep is a method in Thread class, like an util method. Wait is a method called by the lock object (monitor) which is 
+occupied, and let the thread which holds the lock wait. Of course the object lock, and the current thread inside the 
+  critical section can be the same.
+
 #### 2.9 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
 <i>ThreadLocal</i> is a convenient way to ensure data safety in multi-threading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
