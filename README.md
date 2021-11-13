@@ -361,9 +361,11 @@ is a big difference behind it.
 occupied, and let the thread which holds the lock wait. Of course the object lock, and the current thread inside the 
   critical section can be the same.
 
-#### 2.8 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadNotifying.java)
+#### 2.8 Thread Notifying :link:[link](src/johnston/thread/communications/ThreadNotifying.java)
 Calling notify() from a lock object can pick a thread from the waiting pool to start. The
-waiting pool holds threads waiting for that lock.
+waiting pool holds threads waiting for that lock. The thread that calls notify() is in RUNNING
+state, and the awake thread is in BLOCKED state instead of WAITING. It will be the next one
+to enter critical section.
 <p>
 In this demo, many producer threads and many consumers thread run at the same time. If a
 consumer cannot get resource, it will wait. If a producer notice consumers are waiting, it

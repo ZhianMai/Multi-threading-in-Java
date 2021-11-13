@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Calling notify() from a lock object can pick a thread from the waiting pool to start. The
- * waiting pool holds threads waiting for that lock.
+ * waiting pool holds threads waiting for that lock. The thread that calls notify() is in RUNNING
+ * state, and the awake thread is in BLOCKED state instead of WAITING. It will be the next one
+ * to enter critical section.
  * <p>
  * In this demo, many producer threads and many consumers thread runs at the same time. If a
  * consumer cannot get resource, it will wait. If a producer notice consumers are waiting, it
@@ -80,13 +82,14 @@ public class ThreadNotifying {
 
   private static void produce(AtomicInteger runtimes) throws InterruptedException {
     while (runtimes.decrementAndGet() > 0) {
-      Thread.sleep(10);
+      Thread.sleep(20);
       System.out.println("Produce 1.");
       result.incrementAndGet();
 
       if (consumerWaiting.get()) {
         synchronized (CONSUMER_LOCK) {
           CONSUMER_LOCK.notify();
+          System.out.println("Wake up consumer.");
         }
       }
     }
@@ -107,8 +110,6 @@ public class ThreadNotifying {
 
     threadPool.execute(consumerA);
     threadPool.execute(producerA);
-    threadPool.execute(producerA);
-    threadPool.execute(consumerA);
 
     threadPool.shutdown();
     threadPool.awaitTermination(10000, TimeUnit.MILLISECONDS);
