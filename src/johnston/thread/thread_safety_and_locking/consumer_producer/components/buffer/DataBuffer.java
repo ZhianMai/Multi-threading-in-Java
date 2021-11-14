@@ -18,4 +18,14 @@ public interface DataBuffer<D> {
    * Empty the buffer.
    */
   public void clear();
+
+  /**
+   * Return size
+   */
+  public int size();
+
+  /**
+   * Return capacity
+   */
+  public int capacity();
 }

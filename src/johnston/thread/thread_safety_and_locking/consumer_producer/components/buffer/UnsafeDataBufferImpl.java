@@ -55,13 +55,23 @@ public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
     size.set(0);
   }
 
+  @Override
+  public int size() {
+    return size.get();
+  }
+
+  @Override
+  public int capacity() {
+    return capacity;
+  }
+
   private void checkSizeConsistency() {
-    if (size.get() != dataList.size()) {
-      // throw new RuntimeException("Size inconsistency in buffer occurred!");
+    if (size() > capacity) {
+      throw new RuntimeException("Buffer overflow!");
     }
 
-    if (size.get() > capacity) {
-      throw new RuntimeException("Buffer overflow!");
+    if (size() < 0) {
+      throw new RuntimeException("Negative size!");
     }
   }
 }

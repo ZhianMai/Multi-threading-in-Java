@@ -450,13 +450,15 @@ This is because both check size and get element operation are atomic, but puttin
 is not! Same as check size and put element operation.
 
 #### 3.2.3 Synced Read & Write Producer-Consumer  :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/SyncedConsumingProducing.java)
-Demo of producer and consumer using not thread-safe buffer. If there are more than one producer
-and more than one consumer, then race condition exists at:
-- Between buffer.get() size check and get -- size != 0 but get null, or index out of bound;
-- Between buffer.put() size check and put -- size > capacity.
+Implementation of thread-safe data buffer. FIFO. Simply sync the produce and consume method.
+It serializes the read and write method, which has a great performance penalty. It also exists
+useless query: if the buffer is full, then reject to insert; if the buffer is empty, then return
+null.
 
-This is because both check size and get element operation are atomic, but putting them together
-is not! Same as check size and put element operation.
+#### 3.2.4 Blocking Producer-Consumer  :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/BlockingConsumingProducing.java)
+A better version of consumer-producer. It blocks the consumer if the buffer is empty, and blocks
+the producer if the buffer is full. It allows producer and consumer run concurrently and avoid
+useless inquiry that rejecting producer and returning null to consumer.
 
 ## 4. 
 
