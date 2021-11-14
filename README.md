@@ -460,6 +460,21 @@ A better version of consumer-producer. It blocks the consumer if the buffer is e
 the producer if the buffer is full. It allows producer and consumer run concurrently and avoid
 useless inquiry that rejecting producer and returning null to consumer.
 
+### 3.3 JUC Atomic
+Package java.util.concurrent.atomic provides several atomic variables to guard thread-safety. They use java lightweight
+lock to ensure no data racing. Lightweight lock is optimistic lock which use spin lock to block the waiting threading. Since
+operations on single variable are not time-consuming, so it's much more efficient than using heavyweight lock. Heavyweight 
+lock needs to switch to OS kernel mode to perform thread scheduling, so using heavyweight lock to guard single variable
+thread-safety has very high performance penalty.
+
+#### 3.1 Atomic Primitives
+There are three primitive types in JUC atomic package: int, long, and boolean. They ensure
+operations like increment, decrement, set are all atomic, so it's thread safe.
+
+This demo shows that AtomicInteger is thread-safety.
+
+####
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
