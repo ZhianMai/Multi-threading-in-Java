@@ -467,13 +467,15 @@ operations on single variable are not time-consuming, so it's much more efficien
 lock needs to switch to OS kernel mode to perform thread scheduling, so using heavyweight lock to guard single variable
 thread-safety has very high performance penalty.
 
-#### 3.1 Atomic Primitives
+#### 3.1 Atomic Primitives  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicIntegerDemo.java)
 There are three primitive types in JUC atomic package: int, long, and boolean. They ensure
 operations like increment, decrement, set are all atomic, so it's thread safe.
 
 This demo shows that AtomicInteger is thread-safety.
 
-####
+#### 3.2 Atomic Array  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicArrayDemo.java)
+Atomic array has three components: integer, long, and reference array. They guarantee each
+element in the array is thread-safety.
 
 ## 4. 
 
