@@ -477,6 +477,14 @@ This demo shows that AtomicInteger is thread-safety.
 Atomic array has three components: integer, long, and reference array. They guarantee each
 element in the array is thread-safety.
 
+#### 3.3 Atomic Reference  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicReferenceDemo.java)
+There are three reference types in JUC atomic package: reference, stamped reference, and marked
+reference. AtomicReference can ensure that referencing the object can always be atomic. The
+AtomicStampedReference is like adding an integer as version or mark on the object like
+<Object, Integer>. The AtomicMakrkableReference is like <Object, Boolean>.
+
+Be careful! Modifying the object referenced by AtomicReference is not atomic!
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
