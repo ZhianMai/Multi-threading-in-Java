@@ -485,6 +485,9 @@ AtomicStampedReference is like adding an integer as version or mark on the objec
 
 Be careful! Modifying the object referenced by AtomicReference is not atomic!
 
+#### 3.4 Atomic Object Field Update   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicObjectFieldUpdater.java)
+Atomic filed updater can ensure modifying fields in an object is atomic. The filed to update must be public volatile.
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
