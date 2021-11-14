@@ -401,7 +401,7 @@ wait until decrement to 0, let all threads starts at the same time by calling aw
 
 ## 3. Locking and Thread Safety
 
-###3.1 Basics
+### 3.1 Basics
 
 #### 3.1.1 Data Racing :link:[link](src/johnston/thread/thread_safety_and_locking/DataRacing.java)
 If a set of operation is not <i>atomic</i>, then <i>race condition</i> may have. Race condition can cause <i>data racing</i>.
