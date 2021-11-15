@@ -469,7 +469,7 @@ A better version of consumer-producer. It blocks the consumer if the buffer is e
 the producer if the buffer is full. It allows producer and consumer run concurrently and avoid
 useless inquiry that rejecting producer and returning null to consumer.
 
-### 3.3 JUC Atomic
+### 3.3 JUC Atomic Variable
 Package java.util.concurrent.atomic provides several atomic variables to guard thread-safety. They use volatile variable and java
 lightweight lock to ensure no data racing. Lightweight lock is optimistic lock which use spin lock to block the waiting threading.
 Since operations on single variable are not time-consuming, so it's much more efficient than using heavyweight lock. Heavyweight 
@@ -537,7 +537,29 @@ a tradeoff on time-space.
  
 This demo shows that LongAdder has much better performance than AtomicInteger.
 
-## 4. 
+## 3.8 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/VolatileDemo.java)
+The three main problems in multi-threading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
+already introduced above.
+
+In modern memory architecture, memory has several levels from low read/write speed to high one. In general shared variables
+are in the main memory since they reside in the heap of JVM memory. When several threads run concurrently in several 
+CPU cores, and they need to read the shared variables, then it will read from the main memory and store a copy in the local 
+cache.
+
+The visibility problem: if one thread has modified the value in its local cache, can other threads notice this change.
+
+Modern compiler and CPU exercise out-of-order execution on instructions. This can greatly improve performance. However,
+in multi-threading, the out-of-order execution may cause side effects if the shared variable is dependent to the
+instructions.
+
+The sequencing problem: if the correctness of program relies on the order of instruction execution, how to ensure the order
+of execution.
+
+Variable modified by keyword <i>volatile</i> has memory barrier which prevent compiler and CPU from
+out-of-order executing, and forcing write-through policy when the value is modified.
+
+In this demo, if we remove the volatile keyword, then the spinlock will never unlock.
+
 
 ## 5. Demos of Using Multi-threading
 
