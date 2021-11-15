@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * In Java, assigning variable a value is atomic. The source code shows that the set method of
  * AtomicReference is simply an equal mark, but its lazySet, getAndSet, compareAndSet, and
- * weakCompareAndSet are guaranteed to be atomic since they involve two operations. They use CAS
+ * weakCompareAndSet methods guarantee to be atomic since they involve two operations. They use CAS
  * to ensure thread-safety which uses low-level OS call from the unsafe package.
  *
  * This demo shows that getAndSet() method is atomic. There are ten threads which concurrently
