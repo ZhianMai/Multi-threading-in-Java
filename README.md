@@ -23,6 +23,8 @@ This repo is a collection of multi-threading concept demo in Java.
   - JUC Atomic
   
 - ### Multi-threading Demo
+ - Matrix Multiplication
+ - Calculating Angle between Two Vectors
 
 <p></p>
 
