@@ -11,7 +11,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - <b>Thread Pool Properties</b>: blocking queue, hook methods, and thread pool shutdown properly.
 
 - ### Thread Communications
-  - <b>Basic</b>: stop(), join(), interrupt(), yield(), wait(), notify(), and InterruptedException;
+  - <b>Basics</b>: stop(), join(), interrupt(), yield(), wait(), notify(), and InterruptedException;
   - <i>ThreadLocal</i>
   - <i>CountDownLatch</i>
     
@@ -22,7 +22,9 @@ This repo is a collection of multi-threading concept demo in Java.
   - Lock Strategies
   - JUC Atomic
   
-- ### Demo of using multi-threading.
+- ### Multi-threading Demo
+
+<p></p>
 
 ## 1. Thread Basics
 
