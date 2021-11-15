@@ -14,7 +14,8 @@ import java.util.concurrent.atomic.LongAdder;
  *
  * One of the solution is to use <i>LongAdder</i>. LongAdder is like ThreadLocal which assign a
  * separate variable to each thread. It returns the sum of all separated variable when calling
- * sum() method. It greatly avoids hotspot problem on AtomicInteger and maintains Atomicity.
+ * sum() method. It greatly avoids hotspot problem on AtomicInteger and maintains Atomicity. It's
+ * a tradeoff on time-space.
  *
  * This demo shows that LongAdder has much better performance than AtomicInteger.
  */
