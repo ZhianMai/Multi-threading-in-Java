@@ -483,6 +483,16 @@ reference. AtomicReference can ensure that referencing the object can always be 
 AtomicStampedReference is like adding an integer as version or mark on the object like
 <Object, Integer>. The AtomicMakrkableReference is like <Object, Boolean>.
 
+In Java, assigning variable a value is atomic. The source code shows that the set method of
+AtomicReference is simply an equal mark, but its lazySet, getAndSet, compareAndSet, and
+weakCompareAndSet methods guarantee to be atomic since they involve two operations. They use CAS
+to ensure thread-safety which uses low-level OS call from the unsafe package.
+
+This demo shows that getAndSet() method is atomic. There are ten threads which concurrently
+record the previous version, and update a new version on the atomic reference using
+getAndSet(). The atomic reference can guarantee that all records return from getAndSet() are
+consistent.
+
 Be careful! Modifying the object referenced by AtomicReference is not atomic!
 
 #### 3.4 Atomic Object Field Update   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicObjectFieldUpdater.java)
