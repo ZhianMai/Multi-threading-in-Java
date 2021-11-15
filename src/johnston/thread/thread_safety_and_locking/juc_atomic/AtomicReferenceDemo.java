@@ -66,6 +66,7 @@ public class AtomicReferenceDemo {
       @Override
       public void run() {
         for (int i = 0; i < THREAD_INCREMENT_TIMES; i++) {
+          // Record previous version and set to new version
           OneInteger prev =
               atomicRef.getAndSet(new OneInteger(VERSION_DISTRIBUTER.incrementAndGet()));
           versionRecordList[id].add(prev.increment);
@@ -76,8 +77,8 @@ public class AtomicReferenceDemo {
            * Comment the two lines of code above and uncomment the below two lines to test
            * nonatomic reference. It will fail the test.
            */
-          // records[id].add(nonAtomicInt.increment);
-          // nonAtomicInt = new OneInteger(increment.incrementAndGet());
+//          versionRecordList[id].add(nonAtomicInt.increment);
+//          nonAtomicInt = new OneInteger(VERSION_DISTRIBUTER.incrementAndGet());
         }
         countDownLatch.countDown();
       }
@@ -123,10 +124,10 @@ public class AtomicReferenceDemo {
     }
 
     if (count != 0) {
-      System.out.println("Not consistency " + count + " times.");
+      System.out.println("History version record is not consistent " + count + " times.");
       return false;
     } else {
-      System.out.println("The result is consistency!");
+      System.out.println("History version record is consistent!");
       return true;
     }
   }
