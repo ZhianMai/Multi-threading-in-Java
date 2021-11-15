@@ -21,6 +21,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - Keyword <i>synchronized</i>
   - Lock Strategies
   - JUC Atomic
+  - ABA Problem 
   
 - ### Multi-threading Demo
   - Matrix Multiplication
@@ -505,6 +506,16 @@ Be careful! Modifying the object referenced by AtomicReference is not atomic!
 
 #### 3.4 Atomic Object Field Update   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicObjectFieldUpdater.java)
 Atomic filed updater can ensure modifying fields in an object is atomic. The filed to update must be public volatile.
+
+#### 3.5 ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/ABAProblem.java)
+The ABA problem can happen in multi-threading synchronization. When thread A reads the shared
+value twice and got the same value, and thread A considers this value has not changed. However,
+during these two reads, another thread B had changed the value and then change it back. Thread
+A cannot notice this changes and still perform executions.
+
+This demo shows the effect of ABA problem in linked list operation. Thread A performs remove head
+operation, and thread B perform modify the head.next operation. The result shows that all
+remaining elements of the linked list are lost even though thread A performs "atomic check".
 
 ## 4. 
 
