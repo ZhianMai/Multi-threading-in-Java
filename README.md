@@ -16,10 +16,10 @@ This repo is a collection of multi-threading concept demo in Java.
   - <i>CountDownLatch</i>
     
 - ### Thread Safety and Locking
-  - Producer-Consumer Problem
   - Data racing
   - Keyword <i>synchronized</i>
   - Lock Strategies
+  - Producer-Consumer Problem
   - JUC Atomic
   - ABA Problem 
   - Visibility, Sequencing Problem and Keyword volatile  
