@@ -542,7 +542,7 @@ This demo shows that LongAdder has much better performance than AtomicInteger.
 The three main problems in multi-threading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
 already introduced above.
 
-In modern memory architecture, memory has several levels from low read/write speed to high one. In general shared variables
+In modern memory architecture, memory has several levels from low read/write speed to high one. In general, shared variables
 are in the main memory since they reside in the heap of JVM memory. When several threads run concurrently in several 
 CPU cores, and they need to read the shared variables, then it will read from the main memory and store a copy in the local 
 cache.
