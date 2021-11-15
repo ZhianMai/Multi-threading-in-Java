@@ -525,6 +525,17 @@ variable as well.
 AtomicMarkableReference is a simplified AtomicStampedReference. It can only tell if the variable is
 modified once or not.
 
+#### 3.7 LongAdder   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/LongAdderDemo.java)
+AtomicInteger can have hotspot problem when too many threads competing each other to get it.
+Since AtomicInteger uses lightweight spinning lock to block waiting threads, so when too many
+waiting threads it will consume a lot of CPU resource to run the spinning lock.
+ 
+One of the solution is to use <i>LongAdder</i>. LongAdder is like ThreadLocal which assign a
+separate variable to each thread. It returns the sum of all separated variable when calling
+sum() method. It greatly avoids hotspot problem on AtomicInteger and maintains Atomicity.
+ 
+This demo shows that LongAdder has much better performance than AtomicInteger.
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
