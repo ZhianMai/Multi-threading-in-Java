@@ -560,6 +560,7 @@ out-of-order executing, and forcing write-through policy when the value is modif
 
 In this demo, if we remove the volatile keyword, then the spinlock will never unlock.
 
+Beware that keyword volatile does not guarantee atomicity!
 
 ## 5. Demos of Using Multi-threading
 
