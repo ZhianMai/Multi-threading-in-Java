@@ -22,7 +22,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - Producer-Consumer Problem
   - JUC Atomic
   - ABA Problem 
-  - Visibility, Sequencing Problem and Keyword volatile  
+  - Visibility, Sequencing Problem and Keyword <i>volatile</i>  
   
 - ### Multi-threading Demo
   - Matrix Multiplication
@@ -538,7 +538,7 @@ a tradeoff on time-space.
  
 This demo shows that LongAdder has much better performance than AtomicInteger.
 
-## 3.8 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/VolatileDemo.java)
+## 3.8 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
 The three main problems in multi-threading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
 already introduced above.
 
