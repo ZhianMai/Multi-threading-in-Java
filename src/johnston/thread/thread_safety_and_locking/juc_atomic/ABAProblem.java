@@ -46,7 +46,11 @@ public class ABAProblem {
         e.printStackTrace();
       }
 
-      aba.LINKED_LIST_HEAD.compareAndSet(currHead, next); // 1 -> 2 -> 3 -> 4
+      boolean result = aba.LINKED_LIST_HEAD.compareAndSet(currHead, next); // 1 -> 2 -> 3 -> 4
+
+      if (!result) {
+        throw new RuntimeException("Inconsistency, remove first rejected.");
+      }
     });
 
     Thread replaceSecond = new Thread(() -> {

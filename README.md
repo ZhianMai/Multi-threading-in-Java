@@ -517,6 +517,14 @@ This demo shows the effect of ABA problem in linked list operation. Thread A per
 operation, and thread B perform modify the head.next operation. The result shows that all
 remaining elements of the linked list are lost even though thread A performs "atomic check".
 
+#### 3.6 Solving ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/StampedRefNoABA.java)
+Using AtomicStampedReference to flag the inconsistency of the synced object can avoid ABA
+problem. It requires that every operation on the stamped reference should update the version
+variable as well.
+
+AtomicMarkableReference is a simplified AtomicStampedReference. It can only tell if the variable is
+modified once or not.
+
 ## 4. 
 
 ## 5. Demos of Using Multi-threading
