@@ -22,6 +22,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - Lock Strategies
   - JUC Atomic
   - ABA Problem 
+  - Visibility, Sequencing Problem and Keyword volatile  
   
 - ### Multi-threading Demo
   - Matrix Multiplication
