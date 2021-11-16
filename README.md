@@ -409,6 +409,12 @@ of exit-joining point instead of waiting the joined thread terminated.
 This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
 wait until decrement to 0, let all threads starts at the same time by calling await()!
 
+#### 2.12 LockSupport Util Class  :link:[link](src/johnston/thread/communications/LockSupportDemo.java)
+LockSupport is a util class provided by JUC. It allows a thread to sleep and let other threads
+to wake it up explicitly. It's like using Thread.sleep() but allows other thread to wake it up,
+and wound not throw interruption when interrupted. So it's more flexible than sleep().
+
+
 ## 3. Locking and Thread Safety
 
 ### 3.1 Basics
