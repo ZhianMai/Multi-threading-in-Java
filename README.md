@@ -446,7 +446,7 @@ put data to the buffer while consumers take data from it. It requires:
 
 The architecture is:
 
-<p style="font-size: large; font-style: italic; color: brown">
+<p>
 <b>Producer</b> --> <b>Produce Action</b> --> <b>Buffer</b> --> <b>Consume Action</b> --> <b>Consumer</b>
 </p>
 
