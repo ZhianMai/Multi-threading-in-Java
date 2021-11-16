@@ -470,6 +470,10 @@ A better version of consumer-producer. It blocks the consumer if the buffer is e
 the producer if the buffer is full. It allows producer and consumer run concurrently and avoid
 useless inquiry that rejecting producer and returning null to consumer.
 
+#### 3.2.5 Using Explicit Lock :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/ExplicitLockConsumingProducing.java)
+Using ReentrantLock which is a explicit lock to ensure thread-safety. It uses Java lightweight 
+lock (spinlock) to block threads instead of heavyweight lock.
+
 ### 3.3 JUC Atomic Variable
 Package java.util.concurrent.atomic provides several atomic variables to guard thread-safety. They use volatile variable and java
 lightweight lock to ensure no data racing. Lightweight lock is optimistic lock which use spin lock to block the waiting threading.
@@ -477,17 +481,17 @@ Since operations on single variable are not time-consuming, so it's much more ef
 lock needs to switch to OS kernel mode to perform thread scheduling, so using heavyweight lock to guard single variable
 thread-safety has very high performance penalty.
 
-#### 3.1 Atomic Primitives  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicIntegerDemo.java)
+#### 3.3.1 Atomic Primitives  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicIntegerDemo.java)
 There are three primitive types in JUC atomic package: int, long, and boolean. They ensure
 operations like increment, decrement, set are all atomic, so it's thread safe.
 
 This demo shows that AtomicInteger is thread-safety.
 
-#### 3.2 Atomic Array  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicArrayDemo.java)
+#### 3.3.2 Atomic Array  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicArrayDemo.java)
 Atomic array has three components: integer, long, and reference array. They guarantee each
 element in the array is thread-safety.
 
-#### 3.3 Atomic Reference  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicReferenceDemo.java)
+#### 3.3.3 Atomic Reference  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicReferenceDemo.java)
 There are three reference types in JUC atomic package: reference, stamped reference, and marked
 reference. AtomicReference can ensure that referencing the object can always be atomic. The
 AtomicStampedReference is like adding an integer as version or mark on the object like
@@ -505,10 +509,12 @@ consistent.
 
 Be careful! Modifying the object referenced by AtomicReference is not atomic!
 
-#### 3.4 Atomic Object Field Update   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicObjectFieldUpdater.java)
+#### 3.3.4 Atomic Object Field Update   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/AtomicObjectFieldUpdater.java)
 Atomic filed updater can ensure modifying fields in an object is atomic. The filed to update must be public volatile.
 
-#### 3.5 ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/ABAProblem.java)
+### 3.4 ABA Problem
+
+#### 3.4.1 ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/ABAProblem.java)
 The ABA problem can happen in multi-threading synchronization. When thread A reads the shared
 value twice and got the same value, and thread A considers this value has not changed. However,
 during these two reads, another thread B had changed the value and then change it back. Thread
@@ -518,7 +524,7 @@ This demo shows the effect of ABA problem in linked list operation. Thread A per
 operation, and thread B perform modify the head.next operation. The result shows that all
 remaining elements of the linked list are lost even though thread A performs "atomic check".
 
-#### 3.6 Solving ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/StampedRefNoABA.java)
+#### 3.4.2 Solving ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/StampedRefNoABA.java)
 Using AtomicStampedReference to flag the inconsistency of the synced object can avoid ABA
 problem. It requires that every operation on the stamped reference should update the version
 variable as well.
@@ -526,7 +532,7 @@ variable as well.
 AtomicMarkableReference is a simplified AtomicStampedReference. It can only tell if the variable is
 modified once or not.
 
-#### 3.7 LongAdder   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/LongAdderDemo.java)
+### 3.5 LongAdder  :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/LongAdderDemo.java)
 AtomicInteger can have hotspot problem when too many threads competing each other to get it.
 Since AtomicInteger uses lightweight spinning lock to block waiting threads, so when too many
 waiting threads it will consume a lot of CPU resource to run the spinning lock.
@@ -538,7 +544,7 @@ a tradeoff on time-space.
  
 This demo shows that LongAdder has much better performance than AtomicInteger.
 
-## 3.8 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
+### 3.6 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
 The three main problems in multi-threading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
 already introduced above.
 
@@ -562,6 +568,90 @@ out-of-order executing, and forcing write-through policy when the value is modif
 In this demo, if we remove the volatile keyword, then the spinlock will never unlock.
 
 Beware that keyword volatile does not guarantee atomicity!
+
+### 3.7 Explicit Lock
+Java object lock uses OS system call to perform thread locking. The JUC package provides several alternate explicit locks to
+ensure thread-safety. Explicit lock does not make system call but to use Java execution like spinlock to lock thread. So all
+locking operations like lock, unlock, wait, and notify need to code explicitly.
+
+Using explicit lock is complicated than object lock, but it has better performance and more flexible locking policy like 
+non-blocking lock.
+
+#### 3.7.1 Lock Interface in JUC.locks
+Lock interface is the entrance of explicit lock, like the monitor of object.
+
+ - lock.lock(): acquires the lock if possible, otherwise block the thread;
+ - lock.lockInterruptibly(): like lock(), and can throw exception when interrupt waiting;
+ - lock.tryLock(): non-blocking lock, return boolean immediately. False if no lock available;
+ - lock.unlock(): release the lock;
+ - lock.newCondition(): return the Condition instance bounded to the current Lock instance.
+
+#### 3.7.2 Condition Interface in JUC.locks
+Each Condition interface bounds to exactly one Lock interface. It has three methods only:
+
+ - condition.await(): let the thread which holds the lock wait;
+ - condition.await(timeout, TimeUnit): timed await();
+ - condition.signal(): wake up a waiting thread;
+ - condition. signalAll(): wake up all waiting threads.
+
+#### 3.7.3 Semantics of Explicit Lock Methods
+Explicit lock is very similar to Java object locks:
+
+ - lock.lock() --> enter synchronized(obj);
+ - lock.unlock() --> exit synchronized(obj);
+ - lock.tryLock() --> if synchronized() block is not available, then skip it;
+ - condition.await() --> obj.wait();
+ - condition.await(timeOut) --> obj.wait(timeOut); 
+ - condition.signal() --> obj.notify();
+ - condition.signalAll() --> obj.notifyAll().
+
+#### 3.7.4 Implementation Details
+ - lock() - unlock() should follow this pattern:
+    ``` java
+    Lock lock = new SomeLock();
+    lock.lock();
+    // No code between lock.lock() and try block to avoid throwing exception which
+    // will skip the lock.unlock() method.
+    try {
+      // Enter the critical section
+      // or 
+      // condition.await();
+    } finally {
+     lock.unlock(); // The lock will always unlock.
+    }
+    ```
+ - tryLock() - unlock()
+    ``` java
+    Lock lock = new SomeLock();
+   
+    if (lock.tryLock()) {
+       try {
+          // Enter the critical section
+        } finally {
+         lock.unlock(); // The lock will always unlock.
+        }
+    } else {
+     // Do other things if the lock is not available
+   }
+    ```
+#### 3.7.5 ReentrantLock on Producer-Consumer (See 3.2.5)
+ReentrantLock allows a thread to lock multiple times in the critical section:
+   ``` java
+    Lock lock = new SomeLock();
+    lock.lock();
+    lcok.lock(); // Second time locking
+
+    try {
+    // Enter the critical section
+    // or 
+    // condition.await();
+    } finally {
+    lock.unlock();
+    lock.unlock(); // Second time unlocking needed
+    }
+   ```
+
+As an explicit lock, ReentrantLock does not use heavyweight lock. 
 
 ## 5. Demos of Using Multi-threading
 

@@ -5,9 +5,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * A better approach of buffer implementation. It blocks the producer thread if the buffer is full,
- * and blocks the consumer thread if the buffer is empty. It ensures that every call from consumer
- * and producer can proceed instead of returning null or false.
+ * Using ReentrantLock which is a explicit lock to ensure thread-safety. It uses Java lightweight
+ * lock (spinlock) to block threads instead of heavyweight lock.
+ *
+ * Changing lock.lock() to lock.tryLock() can switch to non-blocking lock.
  */
 public class ReentrantSafeDataBufferImpl<D> implements DataBuffer {
   public static final int DEFAULT_BUFFER_CAPACITY = 10;
