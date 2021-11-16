@@ -10,38 +10,38 @@ import johnston.thread.thread_safety_and_locking.consumer_producer.SyncedConsumi
  */
 public class SyncSafeDataBufferImpl<D> implements DataBuffer {
   public static final int DEFAULT_BUFFER_CAPACITY = 10;
-  DataBuffer<D> dataBuffer;
+  DataBuffer<D> unsafeDataBuffer;
 
   public SyncSafeDataBufferImpl() {
     this(DEFAULT_BUFFER_CAPACITY);
   }
 
   public SyncSafeDataBufferImpl(int capacity) {
-    dataBuffer = new UnsafeDataBufferImpl<>(capacity);
+    unsafeDataBuffer = new UnsafeDataBufferImpl<>(capacity);
   }
 
   @Override
   public synchronized D get() {
-    return dataBuffer.get();
+    return unsafeDataBuffer.get();
   }
 
   @Override
   public synchronized boolean put(Object data) {
-    return dataBuffer.put((D) data);
+    return unsafeDataBuffer.put((D) data);
   }
 
   @Override
   public synchronized void clear() {
-    dataBuffer.clear();
+    unsafeDataBuffer.clear();
   }
 
   @Override
   public int size() {
-    return dataBuffer.size();
+    return unsafeDataBuffer.size();
   }
 
   @Override
   public int capacity() {
-    return dataBuffer.capacity();
+    return unsafeDataBuffer.capacity();
   }
 }

@@ -1,6 +1,7 @@
 package johnston.thread.thread_safety_and_locking.consumer_producer;
 
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.DataBuffer;
+import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.ReentrantSafeDataBufferImpl;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.WaitingSafeDataBufferImpl;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.consumer.ConsumeRandomIntAction;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.consumer.Consumer;
@@ -16,9 +17,9 @@ import java.util.concurrent.TimeUnit;
  * the producer if the buffer is full. It allows producer and consumer run concurrently and avoid
  * useless inquiry that rejecting producer and returning null to consumer.
  */
-public class BlockingConsumingProducing {
+public class ExplicitLockConsumingProducing {
   public static void main(String[] args) {
-    DataBuffer<Integer> waitingDataBuffer = new WaitingSafeDataBufferImpl<>();
+    DataBuffer<Integer> waitingDataBuffer = new ReentrantSafeDataBufferImpl<>();
     ProduceRandomIntAction produceAction = new ProduceRandomIntAction(waitingDataBuffer);
     ConsumeRandomIntAction consumeAction = new ConsumeRandomIntAction(waitingDataBuffer);
     Producer slowProducer = new Producer("Slow Producer", produceAction, 0);

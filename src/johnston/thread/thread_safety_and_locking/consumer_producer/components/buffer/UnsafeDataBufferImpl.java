@@ -8,11 +8,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Implementation of not thread-safe buffer. FIFO.
  */
 public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
-  public static final int DEFAULT_BUFFER_CAPACITY = 10;
+  public static final int DEFAULT_BUFFER_CAPACITY = 100;
 
-  private List<D> dataList;
+  private Object[] dataList;
   private AtomicInteger size;
   private int capacity;
+  private int headIdx = 0;
+  private int tailIdx = 0;
 
   public UnsafeDataBufferImpl() {
     this(DEFAULT_BUFFER_CAPACITY);
@@ -20,7 +22,7 @@ public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
 
   public UnsafeDataBufferImpl(int capacity) {
     this.capacity = capacity;
-    dataList = new LinkedList<>();
+    dataList = new Object[capacity];
     size = new AtomicInteger(0);
   }
 
@@ -33,7 +35,10 @@ public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
     }
 
     size.decrementAndGet();
-    return dataList.remove(0);
+    Object d = dataList[headIdx];
+    dataList[headIdx] = null;
+    headIdx = (++headIdx) % capacity;
+    return (D)d;
   }
 
   @Override
@@ -45,14 +50,17 @@ public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
     }
 
     size.incrementAndGet();
-    dataList.add(data);
+    dataList[tailIdx] = data;
+    tailIdx = (++tailIdx) % capacity;
     return true;
   }
 
   @Override
   public void clear() {
-    dataList.clear();
+    dataList = new Object[capacity];
     size.set(0);
+    headIdx = 0;
+    tailIdx = 0;
   }
 
   @Override

@@ -22,10 +22,10 @@ public class SyncedConsumingProducing {
     DataBuffer<Integer> unsafeDataBuffer = new SyncSafeDataBufferImpl<>();
     ProduceRandomIntAction produceAction = new ProduceRandomIntAction(unsafeDataBuffer);
     ConsumeRandomIntAction consumeAction = new ConsumeRandomIntAction(unsafeDataBuffer);
-    Producer slowProducer = new Producer("Slow Producer", produceAction, 5000);
-    Producer fastProducer = new Producer("Fast Producer", produceAction, 1000);
-    Consumer slowConsumer = new Consumer("Slow Consumer", consumeAction, 5000);
-    Consumer fastConsumer = new Consumer("Fast Consumer", consumeAction, 5000);
+    Producer slowProducer = new Producer("Slow Producer", produceAction, 0);
+    Producer fastProducer = new Producer("Fast Producer", produceAction, 0);
+    Consumer slowConsumer = new Consumer("Slow Consumer", consumeAction, 0);
+    Consumer fastConsumer = new Consumer("Fast Consumer", consumeAction, 0);
     int cpuCoreAmount = 4;
 
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
@@ -37,7 +37,7 @@ public class SyncedConsumingProducing {
         new ThreadPoolExecutor.CallerRunsPolicy() // Thread who submit task run task itself.
     );
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
       threadPool.execute(slowProducer);
       threadPool.execute(fastProducer);
       threadPool.execute(slowConsumer);
