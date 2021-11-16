@@ -444,6 +444,12 @@ put data to the buffer while consumers take data from it. It requires:
 - Consumers cannot take any data when the buffer is empty, and won't take duplicated data.
 - When producers and consumers are waiting, their threads should not be blocked.
 
+The architecture is:
+
+<p style="font-size: large">
+<b>Producer</b> --> <b>Produce Action</b> --> <b>Buffer</b> --> <b>Consume Action</b> --> <b>Consumer</b>
+</p>
+
 #### 3.2.1 Producer-Consumer Prep. :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/components)
 This package contains:
 - Producer and produce action (Callable);
