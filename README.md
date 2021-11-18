@@ -1,7 +1,7 @@
-# Multi-threading in Java
+# Multithreading in Java
 (In Progress)
 
-This repo is a collection of multi-threading concept demo in Java.
+This repo is a collection of multithreading concept demo in Java.
 
 ## Contents
 - ### Thread Basics
@@ -24,7 +24,7 @@ This repo is a collection of multi-threading concept demo in Java.
   - ABA Problem 
   - Visibility, Sequencing Problem and Keyword <i>volatile</i>  
   
-- ### Multi-threading Demo
+- ### Multithreading Demo
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
 
@@ -34,19 +34,19 @@ This repo is a collection of multi-threading concept demo in Java.
 
 ### 1.1 Single Thread Creation
 
-The first step of multi-threading.
+The first step of multithreading.
 
 #### 1.1.1 Inheriting <i>Thread</i> Class :link:[link](src/johnston/thread/basic/creation/single_thread/InheritedThread.java)
 
 - Create a class that extends <i>Thread</i> class;
-- Override run() method by putting the multi-threading logic in it;
+- Override run() method by putting the multithreading logic in it;
 - Create an object of the multi-threaded class;
 - Call start() method.
 
 #### 1.1.2 Implementing <i>Runnable</i> Class :link:[link](src/johnston/thread/basic/creation/single_thread/RunnableImpl.java)
 - Create a class that implements <i>Runnable</i> interface;
 - This interface has run() method only, and no other fields or methods;
-- So override run() method by putting the multi-threading logic in it;
+- So override run() method by putting the multithreading logic in it;
 - Create a <i>Runnable</i> object, and we cannot directly call start()!
 - Create a <i>Thread</i> object, and pass the Runnable object into the constructor;
 - Call the Thread object start() method.
@@ -81,18 +81,18 @@ Async thread: thread that runs async task, and supports return result. Basic Thr
 Using Thread class start() method to run a thread is a one-time process. When a thread is terminated, it cannot run again.
 For a large scale multi-threaded system, it's very resource-consuming.
 
-There is an alternate way to run multi-threading: using thread pool. Thread pool is provided in Java concurrency package. Its thread is reusable, and also provide better thread management
+There is an alternate way to run multithreading: using thread pool. Thread pool is in Java concurrency package. Its thread is reusable, and also provide better thread management
 than threads run by start() method.
 
 Thread pool is created by <i>Executors</i>, a factory method provided by Java concurrency package.
 
 #### 1.2.1 Single Thread Pool :link:[link](src/johnston/thread/basic/creation/executors/ExecutorSingleThread.java)
-Executor can create a thread pool with single thread. The execution order is guaranteed FIFO.
+Executor can create a thread pool with single thread. The execution order is FIFO.
  
 When using Thread class to run a thread, it's one time usage, but a thread pool can reuse
 its thread slot.
  
-In this Demo, a single thread pool is loaded multiple threads, and these threads will be
+In this Demo, a single thread pool loads multiple threads, and these threads will be
 executed in FIFO order.
 
 Single thread pool is a blocking queue with unlimited size.
@@ -132,7 +132,7 @@ and let the thread pool run for a while. The result shows that threads with smal
 period run more times than others. Fixed delay demo skips because it's very similar to this one.
 
 #### 1.2.6 :warning: Standard ThreadPoolExecutor :link:[link](src/johnston/thread/basic/creation/executors/StandardThreadPoolExecutor.java)
-In general, using Executors factory to create thread pool is not allowed in large-scale
+In general, using Executors factory to create thread pool is forbidden in large-scale
 development. The standard method is to use standard ThreadPoolExecutor, although Executors
 factory invokes ThreadPoolExecutor.
 
@@ -196,8 +196,8 @@ To get the priority of threadA, call threadA.getPriority().
 
 The default priority is 5.
 
-This demo class creates 10 threads, and each of them runs a heavy task. The last thread is set
-to the highest priority, while others have the lowest priority. Then the highest one always 
+This demo class creates 10 threads, and each of them runs a heavy task. The last thread has
+the highest priority, while others have the lowest priority. Then the highest one always 
 finishes first.
 
 #### 1.3.4 Thread State :link:[link](src/johnston/thread/basic/properties/single_thread/ThreadState.java)
@@ -214,7 +214,7 @@ This class simulates all these states of a thread.
 #### 1.3.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/single_thread/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
 start() method make a thread start running run().
-So simply calling run() directly would not start multi-threading, it just calls run() method in 
+So simply calling run() directly would not start multithreading, it just calls run() method in 
 the current thread!
 
 #### 1.3.6 Daemon Thread  :link:[link](src/johnston/thread/basic/properties/single_thread/DaemonThread.java)
@@ -382,10 +382,10 @@ consumer cannot get resource, it will wait. If a producer notice consumers are w
 will notify them to wake up.
 
 #### 2.9 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
-<i>ThreadLocal</i> is a convenient way to ensure data safety in multi-threading. It's like a hash map
+<i>ThreadLocal</i> is a convenient way to ensure data safety in multithreading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
 only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
-ThreadLocal also helps decouple among multi-threading methods and class when variable sharing is
+ThreadLocal also helps decouple among multithreading methods and class when variable sharing is
 required.
 
 ThreadLocal is usually static and final. Static ensures it can be used across all threads, and
@@ -400,7 +400,7 @@ in the ThreadLocal object, then increment that variable n times. The result show
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
 #### 2.10 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
-<i>CountDownLatch</i> is a decremental counter for multi-threading. It inits as an integer, and any
+<i>CountDownLatch</i> is a decremental counter for multithreading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
 will be blocked until the counter is 0. It's like a join() method that can specify the location
 of exit-joining point instead of waiting the joined thread terminated.
@@ -527,7 +527,7 @@ Atomic filed updater can ensure modifying fields in an object is atomic. The fil
 ### 3.4 ABA Problem
 
 #### 3.4.1 ABA Problem   :link:[link](src/johnston/thread/thread_safety_and_locking/juc_atomic/ABAProblem.java)
-The ABA problem can happen in multi-threading synchronization. When thread A reads the shared
+The ABA problem can happen in multithreading synchronization. When thread A reads the shared
 value twice and got the same value, and thread A considers this value has not changed. However,
 during these two reads, another thread B had changed the value and then change it back. Thread
 A cannot notice this changes and still perform executions.
@@ -557,7 +557,7 @@ a tradeoff on time-space.
 This demo shows that LongAdder has much better performance than AtomicInteger.
 
 ### 3.6 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
-The three main problems in multi-threading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
+The three main problems in multithreading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
 already introduced above.
 
 In modern memory architecture, memory has several levels from low read/write speed to high one. In general, shared variables
@@ -568,7 +568,7 @@ cache.
 The visibility problem: if one thread has modified the value in its local cache, can other threads notice this change.
 
 Modern compiler and CPU exercise out-of-order execution on instructions. This can greatly improve performance. However,
-in multi-threading, the out-of-order execution may cause side effects if the shared variable is dependent to the
+in multithreading, the out-of-order execution may cause side effects if the shared variable is dependent to the
 instructions.
 
 The sequencing problem: if the correctness of program relies on the order of instruction execution, how to ensure the order
@@ -665,10 +665,21 @@ ReentrantLock allows a thread to lock multiple times in the critical section:
 
 As an explicit lock, ReentrantLock does not use heavyweight lock. 
 
-## 5. Demos of Using Multi-threading
+#### 3.7.8 Optimistic Lock vs. Pessimistic Lock
+<i>Pessimistic Lock</i> considers that threads entering critical section are not "reliable", so it allows only
+one thread to enter critical section exclusively and blocks other threads. It has a high performance
+overhead in multithreading task. Java built-in object lock and ReeentrantLock are pessimistic lock.
+
+<i>Optimistic Lock</i> uses loosely policy that using version record to track the shared variable status when reading
+or writing it to ensure its atomicity. It allows multiple threads to read at the same time. ReentrantReadWriteLock is
+an optimistic lock.
+
+For implementation of ReentrantReadWriteLock, check out my Thread-safe linked list & hash map repo :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
+
+## 5. Demos of Using Multithreading
 
 ### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
-Matrix multiplication is a computationally heavy task. Using multi-threading to calculate matrix multiplication
+Matrix multiplication is a computationally heavy task. Using multithreading to calculate matrix multiplication
 is 4X faster than single-threaded. This demo uses thread pool to create worker threads.
 
 User can define the CPU core amount and thread amount. The thread amount is how many working threads will be
