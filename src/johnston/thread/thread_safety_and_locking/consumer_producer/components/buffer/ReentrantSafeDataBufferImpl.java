@@ -40,7 +40,7 @@ public class ReentrantSafeDataBufferImpl<D> implements DataBuffer {
       try {
         GET_CONDITION.await();
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        return null;
       } finally {
         GET_WAITING.unlock();
       }

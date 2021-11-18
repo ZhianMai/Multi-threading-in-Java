@@ -429,8 +429,14 @@ public void run() {
 }
 ```
 
+#### 2.10 Resolving DeadLock  :link:[link](src/johnston/thread/communications/DeadLockResolution.java)
+Util class ThreadMXBean can detect existing threads trapped in deadlock and return their thread
+id. In this demo I first created two threads trapped in deadlock, then use ThreadMXBean to
+locate and resolve their deadlock, letting them finish execution correctly.
 
-#### 2.10 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
+However, the best way is to locate the deadlock before it happens!
+
+#### 2.11 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
 <i>ThreadLocal</i> is a convenient way to ensure data safety in multithreading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
 only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
@@ -448,17 +454,17 @@ In this demo, each Runnable task has its own unique random number n, and it crea
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
-#### 2.11 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
+#### 2.12 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
 <i>CountDownLatch</i> is a decremental counter for multithreading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
 will be blocked until the counter is 0. It's like a join() method that can specify the location
 of exit-joining point instead of waiting the joined thread terminated.
 
-#### 2.12 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
+#### 2.13 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
 This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
 wait until decrement to 0, let all threads starts at the same time by calling await()!
 
-#### 2.13 LockSupport Util Class  :link:[link](src/johnston/thread/communications/LockSupportDemo.java)
+#### 2.14 LockSupport Util Class  :link:[link](src/johnston/thread/communications/LockSupportDemo.java)
 LockSupport is a util class provided by JUC. It allows a thread to sleep and let other threads
 to wake it up explicitly. It's like using Thread.sleep() but allows other thread to wake it up,
 and wound not throw interruption when interrupted. So it's more flexible than sleep().
