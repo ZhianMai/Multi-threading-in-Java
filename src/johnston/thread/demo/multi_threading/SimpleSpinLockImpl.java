@@ -76,6 +76,7 @@ public class SimpleSpinLockImpl implements Lock {
   @DisplayName("Test tryLock after locking")
   public void testTryLock() throws InterruptedException, ExecutionException {
     Lock spinLock = new SimpleSpinLockImpl();
+    final int SLEEP_MILLI_SEC = 10;
 
     Callable<Integer> lockCallable = new Callable() {
       @Override
@@ -102,7 +103,7 @@ public class SimpleSpinLockImpl implements Lock {
     Thread tryLockThread = new Thread(tryLockTask);
     lockThread.start();
     tryLockThread.start();
-    Thread.sleep(10);
+    Thread.sleep(SLEEP_MILLI_SEC);
 
     assertEquals(1, lockTask.get());
     assertTrue(tryLockTask.get());
@@ -113,12 +114,13 @@ public class SimpleSpinLockImpl implements Lock {
   public void testLock() throws InterruptedException, ExecutionException {
     Lock spinLock = new SimpleSpinLockImpl();
     AtomicInteger criticalSection = new AtomicInteger();
+    final int SLEEP_MILLI_SEC = 10;
 
     Thread lockFirst = new Thread(() -> {
         spinLock.lock();
         try {
           criticalSection.set(1);
-          Thread.sleep(10);
+          Thread.sleep(SLEEP_MILLI_SEC);
         } catch (InterruptedException e) {
           e.printStackTrace();
         } finally {
@@ -131,14 +133,19 @@ public class SimpleSpinLockImpl implements Lock {
       criticalSection.set(-1);
     }, "ThreadB");
 
+    // Init val == 0
     assertEquals(0, criticalSection.get());
     lockFirst.start();
     Thread.sleep(1);
+    // ThreadA changed to 1
     assertEquals(1, criticalSection.get());
     lockAfter.start();
     Thread.sleep(1);
+    // ThreadB locked
     assertEquals(1, criticalSection.get());
-    Thread.sleep(10); // Wait for threadA to unlock
+    // Wait for threadA to unlock
+    Thread.sleep(SLEEP_MILLI_SEC);
+    // ThreadB changed to -1
     assertEquals(-1, criticalSection.get());
   }
 }
