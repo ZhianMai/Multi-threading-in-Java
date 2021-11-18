@@ -18,7 +18,10 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * A simple spinlock implementation. Supports lock(), unlock(), and tryLock() method. It uses
- * thread id to record the current thread who got the lock. 
+ * thread id to record the current thread who got the lock.
+ *
+ * To upgrade to reentrant spinlock, simply add a counter to track the lock() and unlock() called
+ * by same thread.
  */
 public class SimpleSpinLockImpl implements Lock {
   private AtomicReference<Thread> lockOwner;
