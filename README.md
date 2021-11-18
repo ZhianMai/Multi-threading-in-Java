@@ -4,18 +4,18 @@
 This repo is a collection of multithreading concept demo in Java.
 
 ## Contents
-- ### Thread Basics [Link](#thread_basis)
+- ### Thread Basics  [link](#thread_basis)
   - <b>Thread Creation</b>: <i>Thread</i> class, <i>Runnable</i> interface, and <i>Callable</i> interface.
   - <b>Thread Pool</b> by java.util.concurrent.<i>Executors</i>;
   - <b>Thread Properties</b>: ID, name, priority, state, and daemon thread;
   - <b>Thread Pool Properties</b>: blocking queue, hook methods, and thread pool shutdown properly.
 
-- ### Thread Communications
+- ### Thread Communications [Link](#thread_communications)
   - <b>Basics</b>: stop(), join(), interrupt(), yield(), wait(), notify(), and InterruptedException;
   - <i>ThreadLocal</i>
   - <i>CountDownLatch</i>
     
-- ### Thread Safety and Locking
+- ### Thread Safety and Locking  [Link](#thread_safety_locking)
   - Data racing
   - Keyword <i>synchronized</i>
   - Lock Strategies
@@ -26,7 +26,7 @@ This repo is a collection of multithreading concept demo in Java.
   - Semaphore 
   - CyclicBarrier
   
-- ### Multithreading Demo
+- ### Multithreading Demo  [Link](#multithreading_demo)
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
 
@@ -312,6 +312,7 @@ General way to shut down a thread pool:
  - If timeout, call shutdownNow() to force all task finished.
  - Iteratively call shutdownNow() -- awaitTermination()
 
+<a name="thread_communications"></a>
 ## 2. Thread Communications
 
 #### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/communications/ThreadStop.java)
@@ -472,7 +473,7 @@ LockSupport is a util class provided by JUC. It allows a thread to sleep and let
 to wake it up explicitly. It's like using Thread.sleep() but allows other thread to wake it up,
 and wound not throw interruption when interrupted. So it's more flexible than sleep().
 
-
+<a name="thread_safety_locking"></a>
 ## 3. Locking and Thread Safety
 
 ### 3.1 Basics
@@ -762,6 +763,7 @@ tasks are running.
 Util class CyclicBarrier is like reusable CountdownLatch. It's a barrier that can keep all
 caller threads to wait at the barrier point until all ready, then notifies all threads.
 
+<a name="multithreading_demo"></a>
 ## 5. Demos of Using Multithreading
 
 ### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
