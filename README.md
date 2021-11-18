@@ -381,7 +381,56 @@ In this demo, many producer threads and many consumers thread run at the same ti
 consumer cannot get resource, it will wait. If a producer notice consumers are waiting, it
 will notify them to wake up.
 
-#### 2.9 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
+#### 2.9 DeadLock
+Suppose variable varA associated with lock lockA, and variable varB associated with lock lockB; now thread tA holds
+lockA and need varB, and thread tB holds lockB and need varA. Now none of them would release their lock, and they are in
+<i>deadlock</i> state. They lock each other and won't make any progress.
+``` java
+// Thread A
+public void run() {
+  synchronized(lockA) {
+    // Deadlock trapped here 
+    synchronized(lockB) {
+      varA.set(...);
+      varB.set(...);
+    }
+  }
+}
+
+// Thread B
+public void run() {
+  synchronized(lockB) {
+    // Deadlock trapped here 
+    synchronized(lockA) {
+      varA.set(...);
+      varB.set(...);
+    }
+  }
+}
+```
+
+Four conditions of deadlock:
+ - Mutual exclusion exists: shared variable allows only one thread entered;
+ - Hold and wait: threads waiting to access shared variable are blocked;
+ - Non-preemptive allocation: only the lock holder can release the lock (no timeout);
+ - Circular waiting (most important) : two threads holding one lock and waiting for each other's lock.
+
+Missing any one of the four conditions can break the deadlock. However, condition 1, 2, and 3 are essential in thread
+safety, so eliminating condition 4 is the best option.
+
+``` java
+public void run() {
+  synchronized(lockB) {
+    varB.set(...);
+  }
+  synchronized(lockA) {
+    varA.set(...);
+  }
+}
+```
+
+
+#### 2.10 ThreadLocal :link:[link](src/johnston/thread/communications/ThreadLocalInnerCommunication.java)
 <i>ThreadLocal</i> is a convenient way to ensure data safety in multithreading. It's like a hash map
 where the key is the thread task id, and the value is the variable belonging to that thread task
 only. It's a more efficient way to ensure data-racing free than using "synchronized" keyword.
@@ -399,17 +448,17 @@ In this demo, each Runnable task has its own unique random number n, and it crea
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
-#### 2.10 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
+#### 2.11 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
 <i>CountDownLatch</i> is a decremental counter for multithreading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
 will be blocked until the counter is 0. It's like a join() method that can specify the location
 of exit-joining point instead of waiting the joined thread terminated.
 
-#### 2.11 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
+#### 2.12 CountDownLatch All Threads Starting Together :link:[link](src/johnston/thread/communications/CountDownLatchWaitingToBegin.java)
 This is a different usage of CountDownLatch. Instead of letting the calling wait() thread to
 wait until decrement to 0, let all threads starts at the same time by calling await()!
 
-#### 2.12 LockSupport Util Class  :link:[link](src/johnston/thread/communications/LockSupportDemo.java)
+#### 2.13 LockSupport Util Class  :link:[link](src/johnston/thread/communications/LockSupportDemo.java)
 LockSupport is a util class provided by JUC. It allows a thread to sleep and let other threads
 to wake it up explicitly. It's like using Thread.sleep() but allows other thread to wake it up,
 and wound not throw interruption when interrupted. So it's more flexible than sleep().
