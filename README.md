@@ -714,7 +714,7 @@ ReentrantLock allows a thread to lock multiple times in the critical section:
 
 As an explicit lock, ReentrantLock does not use heavyweight lock. 
 
-#### 3.7.8 Optimistic Lock vs. Pessimistic Lock
+#### 3.7.6 Optimistic Lock vs. Pessimistic Lock
 <i>Pessimistic Lock</i> considers that threads entering critical section are not "reliable", so it allows only
 one thread to enter critical section exclusively and blocks other threads. It has a high performance
 overhead in multithreading task. Java built-in object lock and ReeentrantLock are pessimistic lock.
@@ -724,6 +724,17 @@ or writing it to ensure its atomicity. It allows multiple threads to read at the
 an optimistic lock.
 
 For implementation of ReentrantReadWriteLock, check out my Thread-safe linked list & hash map repo :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
+
+##### 3.7.7 Fair Lock vs. Nonfair Lock  :link:[link](src/johnston/thread/thread_safety_and_locking/FairLockDemo.java)
+Fair lock distributes locks in the order of waiting queue, while nonfair lock allows thread to jump ahead of the waiting queue
+and acquire the lock, which may lead to some threads' starvation. However, fair lock has performance overhead to maintain
+fairness.
+
+Nonfair lock has better performance. Suppose thread A just released the lock, and it needs to pick the next candidate thread.
+If the next candidate thread stays in the same CPU core as thread A, then it can skip context switching step.
+
+Run this demo multiple times, and the fair lock can produce waiting timeout threads. If the
+CPU has great performance, increase the THREAD_AMOUNT variable.
 
 ## 5. Demos of Using Multithreading
 

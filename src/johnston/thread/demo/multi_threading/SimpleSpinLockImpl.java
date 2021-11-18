@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A simple spinlock implementation. Supports lock(), unlock(), and tryLock() method. It uses
@@ -148,4 +149,5 @@ public class SimpleSpinLockImpl implements Lock {
     // ThreadB changed to -1
     assertEquals(-1, criticalSection.get());
   }
+
 }
