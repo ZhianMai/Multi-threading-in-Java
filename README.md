@@ -4,18 +4,18 @@
 This repo is a collection of multithreading concept demo in Java.
 
 ## Contents
-- ### Thread Basics  [link](#thread_basis)
+- ### [Thread Basics](#thread_basis)
   - <b>Thread Creation</b>: <i>Thread</i> class, <i>Runnable</i> interface, and <i>Callable</i> interface.
   - <b>Thread Pool</b> by java.util.concurrent.<i>Executors</i>;
   - <b>Thread Properties</b>: ID, name, priority, state, and daemon thread;
   - <b>Thread Pool Properties</b>: blocking queue, hook methods, and thread pool shutdown properly.
 
-- ### Thread Communications [Link](#thread_communications)
+- ### [Thread Communications](#thread_communications)
   - <b>Basics</b>: stop(), join(), interrupt(), yield(), wait(), notify(), and InterruptedException;
   - <i>ThreadLocal</i>
   - <i>CountDownLatch</i>
     
-- ### Thread Safety and Locking  [Link](#thread_safety_locking)
+- ### [Thread Safety and Locking](#thread_safety_locking)
   - Data racing
   - Keyword <i>synchronized</i>
   - Lock Strategies
@@ -26,7 +26,7 @@ This repo is a collection of multithreading concept demo in Java.
   - Semaphore 
   - CyclicBarrier
   
-- ### Multithreading Demo  [Link](#multithreading_demo)
+- ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
 
@@ -748,7 +748,7 @@ CPU has great performance, increase the THREAD_AMOUNT variable.
 
 So far I could not prove the fairness of the fair look because it seems that unfair lock holds fairness as well!
 
-#### 3.7.8 Semaphore  :link:[link](src/johnston/thread/thread_safety_and_locking/SemaphoreDemo.java)
+#### 3.7.8 Semaphore  :link:[go](src/johnston/thread/thread_safety_and_locking/SemaphoreDemo.java)
 Semaphore is a shared lock that holds a set of permit. Threads which can acquire one or more
 permits from semaphore can enter the critical section guarded by semaphore. Threads also can
 release one or more permits to the semaphore.
@@ -759,14 +759,14 @@ section guarded by semaphore, it can just release a permit for itself!
 In this demo the number of permit in semaphore is 2, so each period (five seconds) only two
 tasks are running.
 
-#### 3.7.9 CyclicBarrier  :link:[link](src/johnston/thread/thread_safety_and_locking/CyclicBarrierDemo.java)
+#### 3.7.9 CyclicBarrier  :link:[go](src/johnston/thread/thread_safety_and_locking/CyclicBarrierDemo.java)
 Util class CyclicBarrier is like reusable CountdownLatch. It's a barrier that can keep all
 caller threads to wait at the barrier point until all ready, then notifies all threads.
 
 <a name="multithreading_demo"></a>
 ## 5. Demos of Using Multithreading
 
-### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
+### 5.1 Matrix Multiplication :link:[jumpto](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
 Matrix multiplication is a computationally heavy task. Using multithreading to calculate matrix multiplication
 is 4X faster than single-threaded. This demo uses thread pool to create worker threads.
 
