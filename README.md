@@ -4,7 +4,7 @@
 This repo is a collection of multithreading concept demo in Java.
 
 ## Contents
-- ### Thread Basics
+- ### Thread Basics [Link](#thread_basis)
   - <b>Thread Creation</b>: <i>Thread</i> class, <i>Runnable</i> interface, and <i>Callable</i> interface.
   - <b>Thread Pool</b> by java.util.concurrent.<i>Executors</i>;
   - <b>Thread Properties</b>: ID, name, priority, state, and daemon thread;
@@ -22,7 +22,9 @@ This repo is a collection of multithreading concept demo in Java.
   - Producer-Consumer Problem
   - JUC Atomic
   - ABA Problem 
-  - Visibility, Sequencing Problem and Keyword <i>volatile</i>  
+  - Visibility, Sequencing Problem and Keyword <i>volatile</i>
+  - Semaphore 
+  - CyclicBarrier
   
 - ### Multithreading Demo
   - Matrix Multiplication
@@ -30,6 +32,7 @@ This repo is a collection of multithreading concept demo in Java.
 
 <p></p>
 
+<a name="thread_basis"></a>
 ## 1. Thread Basics
 
 ### 1.1 Single Thread Creation
@@ -611,7 +614,7 @@ a tradeoff on time-space.
  
 This demo shows that LongAdder has much better performance than AtomicInteger.
 
-### 3.6 Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
+### 3.6 :warning: Keyword volatile  :link:[link](src/johnston/thread/thread_safety_and_locking/VolatileDemo.java)
 The three main problems in multithreading are: <b>atomicity</b>, <b>visibility</b>, and <b>sequencing</b>. Atomicity
 already introduced above.
 
@@ -636,7 +639,7 @@ In this demo, if we remove the volatile keyword, then the spinlock will never un
 
 Beware that keyword volatile does not guarantee atomicity!
 
-### 3.7 Explicit Lock
+### 3.7  :warning: Explicit Lock
 Java object lock uses OS system call to perform thread locking. The JUC package provides several alternate explicit locks to
 ensure thread-safety. Explicit lock does not make system call but to use Java execution like spinlock to lock thread. So all
 locking operations like lock, unlock, wait, and notify need to code explicitly.
@@ -754,6 +757,10 @@ section guarded by semaphore, it can just release a permit for itself!
 
 In this demo the number of permit in semaphore is 2, so each period (five seconds) only two
 tasks are running.
+
+#### 3.7.9 CyclicBarrier  :link:[link](src/johnston/thread/thread_safety_and_locking/CyclicBarrierDemo.java)
+Util class CyclicBarrier is like reusable CountdownLatch. It's a barrier that can keep all
+caller threads to wait at the barrier point until all ready, then notifies all threads.
 
 ## 5. Demos of Using Multithreading
 
