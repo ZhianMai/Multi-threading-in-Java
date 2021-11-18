@@ -505,17 +505,17 @@ put data to the buffer while consumers take data from it. It requires:
 - Consumers cannot take any data when the buffer is empty, and won't take duplicated data.
 - When producers and consumers are waiting, their threads should not be blocked.
 
-The architecture is:
-
-<p>
-<b>Producer</b> --> <b>Produce Action</b> --> <b>Buffer</b> --> <b>Consume Action</b> --> <b>Consumer</b>
-</p>
-
 #### 3.2.1 Producer-Consumer Prep. :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/components)
 This package contains:
 - Producer and produce action (Callable);
 - Consumer and consume action (Callable);
 - Buffer interface and its implementations.
+
+The architecture is:
+
+<p>
+<b>Producer</b> --> <b>Produce Action</b> --> <b>Buffer</b> --> <b>Consume Action</b> --> <b>Consumer</b>
+</p>
 
 #### 3.2.2 Bad Producer-Consumer  :link:[link](src/johnston/thread/thread_safety_and_locking/consumer_producer/BadConsumingProducing.java)
 Demo of producer and consumer using not thread-safe buffer. If there are more than one producer
@@ -731,7 +731,7 @@ an optimistic lock.
 
 For implementation of ReentrantReadWriteLock, check out my Thread-safe linked list & hash map repo :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
 
-##### 3.7.7 Fair Lock vs. Nonfair Lock  :link:[link](src/johnston/thread/thread_safety_and_locking/FairLockDemo.java)
+#### 3.7.7 Fair Lock vs. Nonfair Lock  :link:[link](src/johnston/thread/thread_safety_and_locking/FairLockDemo.java)
 Fair lock distributes locks in the order of waiting queue, while nonfair lock allows thread to jump ahead of the waiting queue
 and acquire the lock, which may lead to some threads' starvation. However, fair lock has performance overhead to maintain
 fairness.
@@ -741,6 +741,19 @@ If the next candidate thread stays in the same CPU core as thread A, then it can
 
 Run this demo multiple times, and the fair lock can produce waiting timeout threads. If the
 CPU has great performance, increase the THREAD_AMOUNT variable.
+
+So far I could not prove the fairness of the fair look because it seems that unfair lock holds fairness as well!
+
+#### 3.7.8 Semaphore  :link:[link](src/johnston/thread/thread_safety_and_locking/SemaphoreDemo.java)
+Semaphore is a shared lock that holds a set of permit. Threads which can acquire one or more
+permits from semaphore can enter the critical section guarded by semaphore. Threads also can
+release one or more permits to the semaphore.
+
+Semaphore is not a mutual exclusive lock. If one malicious thread wants to enter the critical
+section guarded by semaphore, it can just release a permit for itself!
+
+In this demo the number of permit in semaphore is 2, so each period (five seconds) only two
+tasks are running.
 
 ## 5. Demos of Using Multithreading
 
