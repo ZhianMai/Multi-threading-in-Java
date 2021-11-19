@@ -748,7 +748,7 @@ CPU has great performance, increase the THREAD_AMOUNT variable.
 
 So far I could not prove the fairness of the fair look because it seems that unfair lock holds fairness as well!
 
-#### 3.7.8 Semaphore  :link:[go](src/johnston/thread/thread_safety_and_locking/SemaphoreDemo.java)
+#### 3.7.8 Semaphore  :link:[link](src/johnston/thread/thread_safety_and_locking/SemaphoreDemo.java)
 Semaphore is a shared lock that holds a set of permit. Threads which can acquire one or more
 permits from semaphore can enter the critical section guarded by semaphore. Threads also can
 release one or more permits to the semaphore.
@@ -759,14 +759,87 @@ section guarded by semaphore, it can just release a permit for itself!
 In this demo the number of permit in semaphore is 2, so each period (five seconds) only two
 tasks are running.
 
-#### 3.7.9 CyclicBarrier  :link:[go](src/johnston/thread/thread_safety_and_locking/CyclicBarrierDemo.java)
+#### 3.7.9 CyclicBarrier  :link:[link](src/johnston/thread/thread_safety_and_locking/CyclicBarrierDemo.java)
 Util class CyclicBarrier is like reusable CountdownLatch. It's a barrier that can keep all
 caller threads to wait at the barrier point until all ready, then notifies all threads.
+
+#### 3.7.10 ReadWriteLock  :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap/blob/main/src/main/java/johnston/hashmap/MyHashMapReentrantImpl.java)
+ReadWriteLock provides two separate locks: read lock and write lock
+``` java
+    private final ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+    private final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
+    private final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
+```
+ReadWriteLock can ensure:
+ - Threads holding READ_LOCK are not mutually exclude each other;
+ - A thread holding READ_LOCK mutually exclude a thread holding WRITE_LOCK;
+ - Only one thread can hold READ_LOCK.
+
+It allows acquiring read lock after acquiring the write lock, but cannot do vice versa.
+
+For demo see my Thread-safe hash map repo.
+
+#### 3.7.11 StampledLock
+An alternate implementation of ReentrantReadWriteLock. It supports optimistic read lock (no lock on reading)
+before the first time acquiring the write lock. It provides a time stamp to check the validity of
+optimistic read lock. 
+
+Its usage is complicated...
+
+## 4. Java Thread-safe Container
+
+## 4.1 Thread-safe Data Structure in java.util
+The java.util package provides several thread-safe data structures which use keyword synchronized.
+- <i>Vector</i>: like an ArrayList;
+- <i>Stack</i>: LIFO list;
+- <i>HashTable</i>: like a HashMap
+``` java
+Vector<Integer> vector = new Vector<>();
+Stack<Integer> stack = new Stack<>();
+Map<Integer, Integer> table = new Hashtable<>();
+```
+These data structures have high performance overhead because they use heavyweight lock.
+
+### 4.2 Wrapper Method in Collections
+<i>Collections</i> class provides several static methods which can covert the not thread-safe List and Map 
+data structure to thread-safe one, including HashMap, LinkedList, etc. It simply uses synchronized keyword
+to wrap the original methods.
+``` java
+ List<String> list = new ArrayList<String>();
+ List<String> syncedList = Collections.synchronizedList(list);
+
+ Map<String, Integer> map = new HashMap<>();
+ Map<String, Integer> syncedMap = Collections.synchronizedMap(map);
+ 
+ // more...
+```
+### 4.3 JUC High Concurrency Container
+JUC provides a set of container which supports high concurrency based on lock-free design using CAS and
+keyword volatile. CAS ensures atomicity, and volatile ensures visibility.
+
+#### 4.3.1 CopyOnWriteArrayList
+"Copy on Write" means:
+ - let the read thread (accessor) read from the original data;
+ - let the write thread (mutator) modify on a copied data, then its volatile reference points to the copied data.
+   It allows only one mutator at a time.
+
+``` java
+List<Integer> syncedList = new CopyOnWriteArrayList();
+syncedList.add(1);
+//...
+```
+CopyOnWriteArrayList is not suitable for heavy-write environment, since it needs to make a copy on each
+mutation. It does not hold any read lock at all!
+
+#### 4.3.2 BlockingQueue
+See 1.4.3.
+
+Recommend using ArrayBlockingQueue rather than LinkedBlockingQueue, because it would not generate node instance.
 
 <a name="multithreading_demo"></a>
 ## 5. Demos of Using Multithreading
 
-### 5.1 Matrix Multiplication :link:[jumpto](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
+### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
 Matrix multiplication is a computationally heavy task. Using multithreading to calculate matrix multiplication
 is 4X faster than single-threaded. This demo uses thread pool to create worker threads.
 

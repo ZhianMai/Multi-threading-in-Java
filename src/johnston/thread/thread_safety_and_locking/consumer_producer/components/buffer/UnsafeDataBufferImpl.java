@@ -12,7 +12,7 @@ public class UnsafeDataBufferImpl<D> implements DataBuffer<D> {
 
   private Object[] dataList;
   private AtomicInteger size;
-  private int capacity;
+  private final int capacity;
   private int headIdx = 0;
   private int tailIdx = 0;
 

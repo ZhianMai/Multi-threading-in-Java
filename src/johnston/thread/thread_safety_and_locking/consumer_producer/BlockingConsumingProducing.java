@@ -1,5 +1,6 @@
 package johnston.thread.thread_safety_and_locking.consumer_producer;
 
+import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.BlockingQueueBuffer;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.DataBuffer;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.buffer.WaitingSafeDataBufferImpl;
 import johnston.thread.thread_safety_and_locking.consumer_producer.components.consumer.ConsumeRandomIntAction;
@@ -18,7 +19,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class BlockingConsumingProducing {
   public static void main(String[] args) {
-    DataBuffer<Integer> waitingDataBuffer = new WaitingSafeDataBufferImpl<>();
+    // DataBuffer<Integer> waitingDataBuffer = new WaitingSafeDataBufferImpl<>();
+    DataBuffer<Integer> waitingDataBuffer = new BlockingQueueBuffer<>();
     ProduceRandomIntAction produceAction = new ProduceRandomIntAction(waitingDataBuffer);
     ConsumeRandomIntAction consumeAction = new ConsumeRandomIntAction(waitingDataBuffer);
     Producer slowProducer = new Producer("Slow Producer", produceAction, 0);
