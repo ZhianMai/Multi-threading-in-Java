@@ -31,9 +31,10 @@ This repo is a collection of multithreading concept demo in Java.
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
 
-<p></p>
 
+<p></p>
 <a name="thread_basis"></a>
+
 ## 1. Thread Basics
 
 ### 1.1 Single Thread Creation
@@ -313,7 +314,9 @@ General way to shut down a thread pool:
  - If timeout, call shutdownNow() to force all task finished.
  - Iteratively call shutdownNow() -- awaitTermination()
 
+<p></p>
 <a name="thread_communications"></a>
+
 ## 2. Thread Communications
 
 #### 2.1 (Danger) Stop a thread :link:[link](src/johnston/thread/communications/ThreadStop.java)
@@ -474,7 +477,9 @@ LockSupport is a util class provided by JUC. It allows a thread to sleep and let
 to wake it up explicitly. It's like using Thread.sleep() but allows other thread to wake it up,
 and wound not throw interruption when interrupted. So it's more flexible than sleep().
 
+<p></p>
 <a name="thread_safety_locking"></a>
+
 ## 3. Locking and Thread Safety
 
 ### 3.1 Basics
@@ -787,8 +792,9 @@ optimistic read lock.
 
 Its usage is complicated...
 
-thread_safe_container
+<p></p>
 <a name="thread_safe_container"></a>
+
 ## 4. Java Thread-safe Container
 
 ### 4.1 Thread-safe Data Structure in java.util
@@ -841,8 +847,9 @@ Recommend using ArrayBlockingQueue rather than LinkedBlockingQueue, because it w
 
 #### 4.3.3 ConcurrentHashMap
 
-
+<p></p>
 <a name="multithreading_demo"></a>
+
 ## 5. Demos of Using Multithreading
 
 ### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
