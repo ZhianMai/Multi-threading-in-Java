@@ -22,9 +22,10 @@ This repo is a collection of multithreading concept demo in Java.
   - Producer-Consumer Problem
   - JUC Atomic
   - ABA Problem 
-  - Visibility, Sequencing Problem and Keyword <i>volatile</i>
-  - Semaphore 
-  - CyclicBarrier
+  - Visibility, Sequencing Problem, and Keyword <i>volatile</i>
+  - Explicit Lock: Lock, Condition, ReadWriteLock, Semaphore, CyclicBarrier, StampledLock, etc.
+    
+- ### [Java Thread-safe Container](#thread_safe_container)
   
 - ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
@@ -786,6 +787,8 @@ optimistic read lock.
 
 Its usage is complicated...
 
+thread_safe_container
+<a name="thread_safe_container"></a>
 ## 4. Java Thread-safe Container
 
 ## 4.1 Thread-safe Data Structure in java.util
@@ -835,6 +838,9 @@ mutation. It does not hold any read lock at all!
 See 1.4.3.
 
 Recommend using ArrayBlockingQueue rather than LinkedBlockingQueue, because it would not generate node instance.
+
+#### 4.3.3 ConcurrentHashMap
+
 
 <a name="multithreading_demo"></a>
 ## 5. Demos of Using Multithreading
