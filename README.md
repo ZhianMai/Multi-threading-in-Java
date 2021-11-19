@@ -791,7 +791,7 @@ thread_safe_container
 <a name="thread_safe_container"></a>
 ## 4. Java Thread-safe Container
 
-## 4.1 Thread-safe Data Structure in java.util
+### 4.1 Thread-safe Data Structure in java.util
 The java.util package provides several thread-safe data structures which use keyword synchronized.
 - <i>Vector</i>: like an ArrayList;
 - <i>Stack</i>: LIFO list;
