@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SyncedDataStructure {
   public static void main(String[] args) {
@@ -15,5 +16,7 @@ public class SyncedDataStructure {
     vector.add(2);
     stack.add(1);
     table.put(1,1);
+
+    Map<Integer, Integer> syncedMap = new ConcurrentHashMap<>();
   }
 }

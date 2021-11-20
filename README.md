@@ -27,6 +27,15 @@ This repo is a collection of multithreading concept demo in Java.
     
 - ### [Java Thread-safe Container](#thread_safe_container)
   
+- Collections.synchronized*(...)
+- CopyOnWriteArrayList
+- BlockingQueue 
+- ConcurrentHashMap
+
+### [Thread-safe Design Patterns](#thread_safe_design_pattern)
+- Singleton
+- Master-Worker
+
 - ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
@@ -640,7 +649,7 @@ The sequencing problem: if the correctness of program relies on the order of ins
 of execution.
 
 Variable modified by keyword <i>volatile</i> has memory barrier which prevent compiler and CPU from
-out-of-order executing, and forcing write-through policy when the value is modified.
+out-of-order executing, and forcing write-through policy when the value is modified. volatile cannot be with keyword final.
 
 In this demo, if we remove the volatile keyword, then the spinlock will never unlock.
 
@@ -845,7 +854,72 @@ See 1.4.3.
 
 Recommend using ArrayBlockingQueue rather than LinkedBlockingQueue, because it would not generate node instance.
 
-#### 4.3.3 ConcurrentHashMap
+#### :warning: 4.3.3 ConcurrentHashMap
+The design idea behind ConcurrentHashMap is a masterpiece in multithreading. By default, it separates the hashMap into 16
+sub-hashMap (entries), and each entry has its own lock. It's like a distributed cluster with a load balancer. It can
+significantly balance the loading to avoid hotspot problem.
+
+<br />
+<a name="thread_safe_design_pattern"></a>
+
+## 4. Thread-safe Design Patterns
+In high concurrency situation, many threads may read a shared variable at the same time, and context-switching may happen
+in anywhere. Some design patterns like Singleton, which is safe in single-threaded environment, may not be safe here.
+
+### 4.1 Singleton
+
+#### 4.1.1 Unsafe Singleton
+A general lazy-init Singleton class is like: 
+
+``` java
+ public class UnsafeSingleton {
+   private UnsafeSIngleton() {}
+   private static final UnsafeSingleton INSTANCE;
+   
+   public static UnsafeSingleton getInstance() {
+     if (INSTANCE == null) {
+       // Problem 1#
+       INSTANCE = new UnsafeSIngleton();
+     }
+     return INSTANCE;
+   }
+ }
+```
+
+This class is not thread-safe. Before INSTANCE init, it may have multiple threads calling getInstance() at
+the same time, while initializing variable is not atomic, so it may create multiple instances.
+
+#### 4.1.2 Singleton with Synced Double-checked Init
+``` java
+ public class BetterSingleton {
+   private BetterSingleton() {}
+   private static final BetterSingleton INSTANCE;
+   
+   public static BetterSingleton getInstance() {
+     if (INSTANCE == null) {
+         synchronized(BetterSingleton.class) {
+           if (INSTANCE == null) {
+             INSTANCE = new BetterSingleton();
+           } 
+         }
+     }
+     return INSTANCE;
+   }
+ }
+```
+
+The init block of this singleton class uses synchronized block and double check designs.
+- If multiple threads call getInstance() at the beginning, it ensures they get into the init block
+one-by-one.
+- After the first thread init the INSTANCE, the other threads can still enter the init block but can
+not init INSTANCE anymore.
+- Later on the sync block won't bother the running.
+
+However, there is still a problem here: the constructor init is not atomic, how if during the initialization
+context-switch happens?
+
+#### 4.1.3 Thread-safe Static Inner Class Singleton  :link:[link](src/johnston/thread/concurrency/design_pattern/StaticInnerClassSingleton.java)
+This singleton class ensures singleton instance init is lazy, atomic, and only once. The code is short and clear.
 
 <br />
 <a name="multithreading_demo"></a>
