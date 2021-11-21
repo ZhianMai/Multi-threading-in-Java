@@ -921,6 +921,15 @@ context-switch happens?
 #### 4.1.3 Thread-safe Static Inner Class Singleton  :link:[link](src/johnston/thread/concurrency/design_pattern/StaticInnerClassSingleton.java)
 This singleton class ensures singleton instance init is lazy, atomic, and only once. The code is short and clear.
 
+### 4.2 Master-Worker Pattern
+The master class is responsible for:
+- accepting task from clients;
+- distributing work to worker class;
+- gathering result from worker class;
+- returning result to clients.
+
+It's like the leader znode and worker znodes in zookeeper. The core idea of this pattern is divide-and-conquer. 
+
 <br />
 <a name="multithreading_demo"></a>
 
