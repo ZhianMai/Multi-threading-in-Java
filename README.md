@@ -39,6 +39,8 @@ This repo is a collection of multithreading concept demo in Java.
 - ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
+  - Fork-Join Merge Sort
+  - Thread-safe Hash Map  
 
 
 <br />
