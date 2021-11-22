@@ -5,12 +5,14 @@ This repo is a collection of multithreading concept demo in Java.
 
 ## Contents
 - ### [Thread Basics](#thread_basis)
+  
   - <b>Thread Creation</b>: <i>Thread</i> class, <i>Runnable</i> interface, and <i>Callable</i> interface.
   - <b>Thread Pool</b> by java.util.concurrent.<i>Executors</i>;
   - <b>Thread Properties</b>: ID, name, priority, state, and daemon thread;
   - <b>Thread Pool Properties</b>: blocking queue, hook methods, and thread pool shutdown properly.
 
 - ### [Thread Communications](#thread_communications)
+  
   - <b>Basics</b>: stop(), join(), interrupt(), yield(), wait(), notify(), and InterruptedException;
   - <i>ThreadLocal</i>
   - <i>CountDownLatch</i>
@@ -27,19 +29,19 @@ This repo is a collection of multithreading concept demo in Java.
     
 - ### [Java Thread-safe Container](#thread_safe_container)
   
-- Collections.synchronized*(...)
-- CopyOnWriteArrayList
-- BlockingQueue 
-- ConcurrentHashMap
+    - Collections.synchronized*(...)
+    - CopyOnWriteArrayList
+    - BlockingQueue 
+    - ConcurrentHashMap
 
-### [Thread-safe Design Patterns](#thread_safe_design_pattern)
-- Singleton
-- Master-Worker
+- ### [Thread-safe Design Patterns](#thread_safe_design_pattern)
+  - Singleton
+  - Master-Worker
 
 - ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
-  - Fork-Join Merge Sort
+  - Fork-join Merge Sort
   - Thread-safe Hash Map  
 
 
@@ -931,6 +933,21 @@ The master class is responsible for:
 - returning result to clients.
 
 It's like the leader znode and worker znodes in zookeeper. The core idea of this pattern is divide-and-conquer. 
+
+### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
+Fork-join pattern is like master-worker pattern without master node. It breaks the master task into parallel subtasks
+recursively until reach the base case, like merge sort. Subtasks are push to the FIFO blocking queue, and available 
+threads (CPU core) would get the subtask to execute. Fork-join is designed for CPU-bounded tasks.
+
+Java JUC package provides a set of Fork-join framework to support this pattern. See the link above for detailed
+implementation demo.
+
+### 4.4 Producer-consumer Pattern
+See 3.2.
+
+### 4.5 Future Pattern
+The core of future pattern is async call, which would not block the caller thread and return the result in the future to
+the caller thread. The fork-join merge sort also includes this pattern as well.
 
 <br />
 <a name="multithreading_demo"></a>
