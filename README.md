@@ -941,3 +941,7 @@ is 4X faster than single-threaded. This demo uses thread pool to create worker t
 
 User can define the CPU core amount and thread amount. The thread amount is how many working threads will be
 created, and the CPU core amount is how many threads run concurrently.
+
+### 5.2 Fork-Join Merge Sort  :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
+The recursion tree of fork-join is identical to the recursion tree of merge sort, so why not combine them together?
+When the length of input array is 100000000, the fork-join merge sort is 3x faster than the single-threaded one.
