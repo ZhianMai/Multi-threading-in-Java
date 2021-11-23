@@ -475,6 +475,8 @@ In this demo, each Runnable task has its own unique random number n, and it crea
 in the ThreadLocal object, then increment that variable n times. The result shows that
 ThreadLocal would not mix the variables that each of them belongs to one Runnable task only.
 
+Beware that ThreadLocal may implicitly couple classes.
+
 #### 2.12 CountDownLatch Waiting :link:[link](src/johnston/thread/communications/CountDownLatchWaitBlocking.java)
 <i>CountDownLatch</i> is a decremental counter for multithreading. It inits as an integer, and any
 threads can call countDown() to make is decrement one time. Threads calling CountDownLatch::await
@@ -950,16 +952,24 @@ See 3.2.
 The core of future pattern is async call, which would not block the caller thread and return the result in the future to
 the caller thread. The fork-join merge sort also includes this pattern as well.
 
-#### 4.5.1 async callback with Guava :link:[link](src/johnston/thread/concurrency/design_pattern/callback_guava/GuavaFutureDemo.java)
+#### 4.5.1 Async Callback Using Guava :link:[link](src/johnston/thread/concurrency/design_pattern/callback_guava/GuavaFutureDemo.java)
 Cons of thread.join(): no return, and it's blocking.
 Cons of futureTask.get(): it's blocking, although it returns value.
 
-To achieve non-blocking  returning result from other threads, it needs some powerful libs. The Guava from Google comes 
+To achieve non-blocking  returning result from other threads, it needs some powerful libs (middleware). The Guava from Google comes 
 to help!
 
 The guava concurrent package provides a callback functionality to support non-blocking returning result. The thread crater A
 needs to register a callback object first, then bind it with subtask thread B. When the subtask thread B finishes the task, it will
-notify its callee A using the callback object. Thread A never be blocking.
+notify its callee A using the callback object. Thread A is never blocked.
+
+FutureTask:
+ - needs to explicitly get the result from other threads;
+ - the get() process is blocking;
+
+Guava callback:
+ - other threads notify the caller thread if the result is ready;
+ - the caller thread is never blocked.
 
 <br />
 <a name="multithreading_demo"></a>
@@ -973,6 +983,8 @@ is 4X faster than single-threaded. This demo uses thread pool to create worker t
 User can define the CPU core amount and thread amount. The thread amount is how many working threads will be
 created, and the CPU core amount is how many threads run concurrently.
 
-### 5.2 Fork-Join Merge Sort  :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
+### 5.2 Fork-join Merge Sort  :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
 The recursion tree of fork-join is identical to the recursion tree of merge sort, so why not combine them together?
 When the length of input array is 100000000, the fork-join merge sort is 3x faster than the single-threaded one.
+
+### 5.3 Thread-safe HashMap :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
