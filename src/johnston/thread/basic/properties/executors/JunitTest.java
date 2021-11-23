@@ -1,6 +1,6 @@
 package johnston.thread.basic.properties.executors;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
