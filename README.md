@@ -934,7 +934,8 @@ The master class is responsible for:
 
 It's like the leader znode and worker znodes in zookeeper. The core idea of this pattern is divide-and-conquer. 
 
-### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
+### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/concurrency/design_pattern/forkjoin/public class SumCalculationTask extends RecursiveTask<Long> {
+.java)
 Fork-join pattern is like master-worker pattern without master node. It breaks the master task into parallel subtasks
 recursively until reach the base case, like merge sort. Subtasks are push to the FIFO blocking queue, and available 
 threads (CPU core) would get the subtask to execute. Fork-join is designed for CPU-bounded tasks.
@@ -945,9 +946,20 @@ implementation demo.
 ### 4.4 Producer-consumer Pattern
 See 3.2.
 
-### 4.5 Future Pattern
+### 4.5 Future Pattern 
 The core of future pattern is async call, which would not block the caller thread and return the result in the future to
 the caller thread. The fork-join merge sort also includes this pattern as well.
+
+#### 4.5.1 async callback with Guava :link:[link](src/johnston/thread/concurrency/design_pattern/callback_guava/GuavaFutureDemo.java)
+Cons of thread.join(): no return, and it's blocking.
+Cons of futureTask.get(): it's blocking, although it returns value.
+
+To achieve non-blocking  returning result from other threads, it needs some powerful libs. The Guava from Google comes 
+to help!
+
+The guava concurrent package provides a callback functionality to support non-blocking returning result. The thread crater A
+needs to register a callback object first, then bind it with subtask thread B. When the subtask thread B finishes the task, it will
+notify its callee A using the callback object. Thread A never be blocking.
 
 <br />
 <a name="multithreading_demo"></a>

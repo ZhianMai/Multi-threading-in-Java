@@ -1,4 +1,4 @@
-package johnston.thread.communications.callback.guava;
+package johnston.thread.concurrency.design_pattern.callback_guava;
 
 import com.google.common.util.concurrent.*;
 
@@ -63,7 +63,7 @@ public class GuavaFutureDemo {
     ExecutorService jobPool = Executors.newFixedThreadPool(10);
     ListeningExecutorService gPool = MoreExecutors.listeningDecorator(jobPool);
 
-    FutureCallback<Boolean> boilWaterHook = new FutureCallback<Boolean>() {
+    FutureCallback<Boolean> boilWaterHook = new FutureCallback<>() {
       @Override
       public void onSuccess(@Nullable Boolean aBoolean) {
         if (aBoolean) {
@@ -82,7 +82,7 @@ public class GuavaFutureDemo {
     Futures.addCallback(boilWaterFuture, boilWaterHook);
 
     ListenableFuture<Boolean> cleanUpCupFuture = gPool.submit(cleanUpTask);
-    Futures.addCallback(cleanUpCupFuture, new FutureCallback<Boolean>() {
+    Futures.addCallback(cleanUpCupFuture, new FutureCallback<>() {
       @Override
       public void onSuccess(@Nullable Boolean aBoolean) {
         if (aBoolean) {
