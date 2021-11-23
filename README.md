@@ -1,5 +1,4 @@
 # Multithreading in Java
-(In Progress)
 
 This repo is a collection of multithreading concept demo in Java.
 
@@ -36,7 +35,9 @@ This repo is a collection of multithreading concept demo in Java.
 
 - ### [Thread-safe Design Patterns](#thread_safe_design_pattern)
   - Singleton
-  - Master-Worker
+  - Master-worker
+  - Fork-join
+  - Async Callback Future Task  
 
 - ### [Multithreading Demo](#multithreading_demo)
   - Matrix Multiplication
