@@ -938,7 +938,7 @@ The master class is responsible for:
 
 It's like the leader znode and worker znodes in zookeeper. The core idea of this pattern is divide-and-conquer. 
 
-### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/concurrency/design_pattern/forkjoin/public class SumCalculationTask extends RecursiveTask<Long> {
+### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/concurrency/design_pattern/forkjoin/)
 .java)
 Fork-join pattern is like master-worker pattern without master node. It breaks the master task into parallel subtasks
 recursively until reach the base case, like merge sort. Subtasks are push to the FIFO blocking queue, and available 
