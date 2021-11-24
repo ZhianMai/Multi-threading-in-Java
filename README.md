@@ -1,6 +1,6 @@
 # Multithreading in Java
 
-This repo is a collection of multithreading concept demo and its applications in Java.
+This repo contains multithreading concept demo and its applications in Java.
 
 ## Contents
 - ### [Thread Basics](#thread_basis)
