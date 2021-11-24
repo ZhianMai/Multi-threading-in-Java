@@ -1,6 +1,6 @@
 # Multithreading in Java
 
-This repo is a collection of multithreading concept demo in Java.
+This repo is a collection of multithreading concept demo and its applications in Java.
 
 ## Contents
 - ### [Thread Basics](#thread_basis)
@@ -43,7 +43,8 @@ This repo is a collection of multithreading concept demo in Java.
   - Matrix Multiplication
   - Calculating Angle between Two Vectors
   - Fork-join Merge Sort
-  - Thread-safe Hash Map  
+  - Thread-safe Hash Map 
+  - Async Callback FutureTask to Solve 3Sum  
 
 
 <br />
@@ -989,3 +990,6 @@ The recursion tree of fork-join is identical to the recursion tree of merge sort
 When the length of input array is 100000000, the fork-join merge sort is 3x faster than the single-threaded one.
 
 ### 5.3 Thread-safe HashMap :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
+
+### 5.4 Guava Async Callback 3Sum :link:[link](src/johnston/thread/demo/multi_threading/three_sum_guava)
+Using async callback FutureTask to solve 3Sum problem!
