@@ -31,7 +31,9 @@ public class ForkJoinMergeSortTest {
 
   private static void mergeSortBenchmark(int[] input) {
     Long startMin = System.currentTimeMillis();
-    simpleMergeSort(input);
+    // simpleMergeSort(input);
+    // Arrays.parallelSort(input);
+    Arrays.sort(input);
     System.out.println("Single-threaded benchmark time taken: " +
         ((System.currentTimeMillis() - startMin)) + " ms");
     checkSorted(input);

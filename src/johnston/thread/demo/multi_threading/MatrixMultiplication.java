@@ -123,7 +123,8 @@ public class MatrixMultiplication {
     int bCol = matrixB[0].length;
     int[][] result = new int[aRow][bCol];
     int totalEntries = aRow * bCol;
-    int subTaskEntries = (totalEntries + 1) / threadAmount;
+    // Ceiling computation
+    int subTaskEntries = (totalEntries - 1) / threadAmount + 1;
 
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
         cpuCoreAmount,

@@ -63,7 +63,7 @@ public class GuavaFutureDemo {
     ExecutorService jobPool = Executors.newFixedThreadPool(10);
     ListeningExecutorService gPool = MoreExecutors.listeningDecorator(jobPool);
 
-    FutureCallback<Boolean> boilWaterHook = new FutureCallback<>() {
+    FutureCallback<Boolean> boilWaterHook = new FutureCallback<Boolean>() {
       @Override
       public void onSuccess(@Nullable Boolean aBoolean) {
         if (aBoolean) {
@@ -82,7 +82,7 @@ public class GuavaFutureDemo {
     Futures.addCallback(boilWaterFuture, boilWaterHook);
 
     ListenableFuture<Boolean> cleanUpCupFuture = gPool.submit(cleanUpTask);
-    Futures.addCallback(cleanUpCupFuture, new FutureCallback<>() {
+    Futures.addCallback(cleanUpCupFuture, new FutureCallback<Boolean>() {
       @Override
       public void onSuccess(@Nullable Boolean aBoolean) {
         if (aBoolean) {
