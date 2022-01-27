@@ -9,17 +9,17 @@ public class AnonymousLambdaThread {
   private static final int THREAD_COUNT = 4;
 
   public static void main(String[] args) {
-    Thread[] threadPool = new Thread[THREAD_COUNT];
+    Thread[] fakeThreadPool = new Thread[THREAD_COUNT];
 
-    for (int i = 0; i < threadPool.length; i++) {
+    for (int i = 0; i < fakeThreadPool.length; i++) {
       // Lambda expression
-      threadPool[i] = new Thread(() -> {
+      fakeThreadPool[i] = new Thread(() -> {
         System.out.println("Running: " + Thread.currentThread().getName());
       });
-      threadPool[i].setName(String.valueOf(i));
+      fakeThreadPool[i].setName(String.valueOf(i));
     }
 
-    for (Thread thread : threadPool) {
+    for (Thread thread : fakeThreadPool) {
       thread.start();
     }
   }

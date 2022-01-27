@@ -233,7 +233,7 @@ This class simulates all these states of a thread.
 
 #### 1.3.5 :warning: Difference between run() and start() :link:[link](src/johnston/thread/basic/properties/single_thread/RunStartDiff.java)
 run() method contains the main logic/task for a thread to run.
-start() method make a thread start running run().
+start() method starts a thread then runs run() method.
 So simply calling run() directly would not start multithreading, it just calls run() method in 
 the current thread!
 

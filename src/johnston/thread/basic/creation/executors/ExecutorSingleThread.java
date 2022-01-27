@@ -29,14 +29,14 @@ public class ExecutorSingleThread {
         e.printStackTrace();
       }
 
-      System.out.println("Thread named \"" + this.getName() + "\" is running.");
+      System.out.println("Thread named \"" + Thread.currentThread().getName() + "\" is running.");
 
       try {
         Thread.sleep(SLEEP_MILLIS_SEC);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      System.out.println("Thread named \"" + this.getName() + "\" is finished.");
+      System.out.println("Thread named \"" + Thread.currentThread().getName() + "\" is finished.");
     }
   }
 
@@ -47,9 +47,10 @@ public class ExecutorSingleThread {
 
     singlePool.execute(threadA);
     singlePool.execute(threadB);
+
     // It can run a same Runnable object multiple times.
-    singlePool.submit(threadA);
-    singlePool.submit(threadB);
+    singlePool.execute(threadA);
+    singlePool.execute(threadB);
 
     System.out.println("\nMain thread finished thread loading.\n");
     singlePool.shutdown();

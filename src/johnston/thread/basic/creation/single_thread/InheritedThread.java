@@ -12,12 +12,17 @@ public class InheritedThread {
     }
 
     public void run() {
-      System.out.println("Thread with name: \"" + this.getName() + "\" is running.");
+      System.out.println("Thread with name: \"" + Thread.currentThread().getName() + "\" is running.");
     }
   }
 
   public static void main(String[] args) {
     Thread newThread = new ThreadDemo("thread_a");
     newThread.start();
+
+    InheritedThread inheritedThread = new InheritedThread();
+    Thread newThreadB = new InheritedThread.ThreadDemo("threa_b");
+    newThreadB.start();
+    newThreadB.start();
   }
 }
