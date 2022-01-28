@@ -42,8 +42,8 @@ public class ExecutorCachedThreadPool {
     ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     Thread thread = new ThreadDemo("Thread_A");
 
-    for (int i = 0; i < DEFAULT_THREAD_AMOUNT; i++) {
-      thread.setName(thread.getName() + i);
+    for (int i = 0; i < DEFAULT_THREAD_AMOUNT * 10; i++) {
+      // thread.setName(thread.getName() + i);
       cachedThreadPool.submit(thread);
     }
 
