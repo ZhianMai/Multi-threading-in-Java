@@ -35,10 +35,10 @@ public class ThreadPriority {
   }
 
   public static void main(String[] args) {
-    Thread[] threadPool = new Thread[THREAD_COUNT];
+    Thread[] threadArray = new Thread[THREAD_COUNT];
 
-    for (int i = 0; i < threadPool.length; i++) {
-      threadPool[i] = new Thread(new Runnable() {
+    for (int i = 0; i < threadArray.length; i++) {
+      threadArray[i] = new Thread(new Runnable() {
         @Override
         public void run() {
           heavyTask(HEAVY_WORK_ROUNDS);
@@ -46,13 +46,13 @@ public class ThreadPriority {
           System.out.println(", priority: " + Thread.currentThread().getPriority());
         }
       });
-      threadPool[i].setName(String.valueOf(i));
+      threadArray[i].setName(String.valueOf(i));
       // Set the last thread has the highest priority, and the others have the lowest.
       int priority = (i == THREAD_COUNT - 1 ? Thread.MAX_PRIORITY : Thread.MIN_PRIORITY);
-      threadPool[i].setPriority(priority);
+      threadArray[i].setPriority(priority);
     }
 
-    for (Thread thread : threadPool) {
+    for (Thread thread : threadArray) {
       thread.start();
     }
   }

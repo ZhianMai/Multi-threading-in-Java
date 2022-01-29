@@ -35,10 +35,10 @@ public class StandardThreadPoolExecutor {
   // Modify these three params to tune different thread pools.
   private static final int DEFAULT_CORE_POOL_SIZE = 1;
   private static final int DEFAULT_MAXIMUM_POOL_SIZE = 2;
-  private static final int DEFAULT_BLOCKING_QUEUE_SIZE = 2;
+  private static final int DEFAULT_BLOCKING_QUEUE_SIZE = 20;
 
   private static final int DEFAULT_KEEP_ALIVE_MILLIS_SECOND = 100;
-  private static final int DEFAULT_TASK_AMOUNT = 20;
+  private static final int DEFAULT_TASK_AMOUNT = 100;
   private static final int DEFAULT_TASK_SLEEP_MILLIS_SECOND = 10;
 
   static class ThreadDemo extends Thread {
@@ -62,7 +62,7 @@ public class StandardThreadPoolExecutor {
         DEFAULT_CORE_POOL_SIZE,
         DEFAULT_MAXIMUM_POOL_SIZE,
         DEFAULT_KEEP_ALIVE_MILLIS_SECOND,
-        TimeUnit.MILLISECONDS,
+        TimeUnit.DAYS,
         new LinkedBlockingDeque<>(DEFAULT_BLOCKING_QUEUE_SIZE),
         // Try different reject handling policy!
         // new ThreadPoolExecutor.DiscardOldestPolicy() // Dequeue & discard one task to make room

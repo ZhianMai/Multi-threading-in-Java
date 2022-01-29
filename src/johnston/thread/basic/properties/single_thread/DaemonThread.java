@@ -26,8 +26,8 @@ public class DaemonThread {
       System.out.println("I'm still running: " + Thread.currentThread().getName());
     });
     daemonThread.setName("Daemon X");
-    // daemonThread.setDaemon(true);
-    //daemonThread.setDaemon(false);
+    daemonThread.setDaemon(true);
+    // daemonThread.setDaemon(false);
     daemonThread.start();
 
     try {

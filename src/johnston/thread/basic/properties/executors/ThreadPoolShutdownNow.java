@@ -19,20 +19,23 @@ public class ThreadPoolShutdownNow {
     }
 
     public void run() {
-      try {
-        Thread.sleep(1);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-
       System.out.println("Thread named \"" + this.getName() + "\" is running.");
 
-      try {
-        Thread.sleep(SLEEP_MILLIS_SEC);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+//      try {
+//        Thread.sleep(SLEEP_MILLIS_SEC);
+//      } catch (InterruptedException e) {
+//        System.out.println(this.getName() + " is waken!");
+//        // e.printStackTrace();
+//      }
+
+      while(true) {
+        if (Thread.currentThread().isInterrupted()) {
+          System.out.println("我命由天不由我啊！");
+          break;
+        }
       }
-      System.out.println("Thread named \"" + this.getName() + "\" is finished.");
+
+      // System.out.println("Thread named \"" + this.getName() + "\" is finished.");
     }
   }
 
