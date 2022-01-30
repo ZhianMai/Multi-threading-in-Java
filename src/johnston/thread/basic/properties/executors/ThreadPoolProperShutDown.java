@@ -63,9 +63,15 @@ public class ThreadPoolProperShutDown {
           Thread.sleep(SLEEP_TIME_MILLIS_SEC);
         } catch (InterruptedException e) {
           try {
-            Thread.sleep(SLEEP_TIME_MILLIS_SEC);
+            System.out.println("第一次装睡");
+            Thread.sleep(SLEEP_TIME_MILLIS_SEC); // 装睡
           } catch (InterruptedException interruptedException) {
-            System.out.println("I got to terminate!");
+            System.out.println("第二次装睡");
+            try {
+              Thread.sleep(SLEEP_TIME_MILLIS_SEC); // 装睡
+            } catch (InterruptedException exception) {
+              System.out.println("不玩了。。。");
+            }
           }
         }
       }

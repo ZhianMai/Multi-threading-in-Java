@@ -28,7 +28,7 @@ import java.util.concurrent.*;
  *    - poll(): like take(), but if no data available, then it returns null instead of waiting.
  *    - put(E e): the caller has to wait until another thread takes away the data.
  *    - offer(E e): enqueue data only if another thread is waiting for data.
- *    -isEmpty(): ALWAYS return true!
+ *    - isEmpty(): ALWAYS return true!
  *
  * This demo contains usage of four types of BlockingQueue implementations.
  */
@@ -53,9 +53,9 @@ public class ThreadBlockingQueue {
       try {
         Integer result;
         if (isTake) {
-          result = blockingQueue.take();
+          result = blockingQueue.take(); // blocking
         } else {
-          result = blockingQueue.poll();
+          result = blockingQueue.poll(); // non-blocking with null
         }
         print(this.getName() + " got an element from blockingQueue: " + result +
             "\n");
@@ -195,6 +195,7 @@ public class ThreadBlockingQueue {
 
   private static void useSynchronousQueue() throws InterruptedException {
     blockingQueue = new SynchronousQueue<>();
+
     ExecutorService threadPool = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
     // take(): if the queue has no data, then the caller will be waiting until data available.
     Thread takerThread = new GetterThread("Taker thread", true); // use take()
@@ -203,7 +204,7 @@ public class ThreadBlockingQueue {
     // poll(): like take(), but if no data available, then it returns null instead of waiting.
     Thread pollerThread = new GetterThread("Poller thread", false); // use poll()
     // offer(E e): enqueue data only if another thread is waiting for data.
-    Thread offeredThread = new PutterThread("Offered thread", true); // use offer()
+    Thread offeredThread = new PutterThread("Offered thread", false); // use offer()
 
     print("*** take() - put(E e) Demo ***");
     threadPool.submit(takerThread);
@@ -241,9 +242,9 @@ public class ThreadBlockingQueue {
   }
 
   public static void main(String[] args) throws InterruptedException {
-    useArrayBlockingQueue();
-    //usePriorityBlockingQueue();
-    //useDelayedQueue();
-    //useSynchronousQueue();
+    // useArrayBlockingQueue();
+    // usePriorityBlockingQueue();
+    // useDelayedQueue();
+    useSynchronousQueue();
   }
 }

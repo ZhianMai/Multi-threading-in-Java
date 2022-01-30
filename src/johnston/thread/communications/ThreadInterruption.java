@@ -3,7 +3,7 @@ package johnston.thread.communications;
 import java.util.Random;
 
 /**
- * When threadA calls threadB.interrupt(), threadB can receive a interruption signal, and
+ * When threadA calls threadB.interrupt(), threadB can receive an interruption signal, and
  * decide what to do next. So calling interrupt() to threadB does not stop or pause threadB if
  * it's running (not waiting or sleeping).
  *
