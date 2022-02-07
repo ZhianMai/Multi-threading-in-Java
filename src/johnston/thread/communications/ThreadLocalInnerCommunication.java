@@ -31,6 +31,9 @@ public class ThreadLocalInnerCommunication {
     DEFAULT_THREAD_AMOUNT = DEFAULT_CPU_CORE_AMOUNT;
   }
 
+  // ThreadLocal<Integer> == HashMap<ThreadId, Integer>
+  private static final ThreadLocal<Integer> THREAD_LOCAL_DATA = new ThreadLocal<>();
+
   static class ThreadLocalIncrement extends Thread {
     private Random random = new Random();
 
@@ -54,8 +57,6 @@ public class ThreadLocalInnerCommunication {
           "executed " + THREAD_LOCAL_DATA.get() + " times.");
     }
   }
-
-  private static final ThreadLocal<Integer> THREAD_LOCAL_DATA = new ThreadLocal<>();
 
   public static void main(String[] args) {
     ThreadPoolExecutor threadPool = new ThreadPoolExecutor(

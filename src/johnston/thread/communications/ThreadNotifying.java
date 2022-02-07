@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * will notify them to wake up.
  */
 public class ThreadNotifying {
-  private static final int DEFAULT_RUNTIMES = 50;
+  private static final int DEFAULT_RUNTIMES = 500;
   private static AtomicInteger result = new AtomicInteger(0);
   private static AtomicBoolean consumerWaiting = new AtomicBoolean(false);
   private static final Object CONSUMER_LOCK = new Object();

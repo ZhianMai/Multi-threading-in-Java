@@ -1,5 +1,6 @@
 package johnston.thread.thread_safety_and_locking;
 
+import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -111,11 +112,11 @@ public class LockStrategyComparison {
     System.out.println("\nBig lock thread runtime: " + totalTime + " milli sec.\n");
 
     counter = new CountDownLatch(DEFAULT_THREAD_CORD_AMOUNT);
-    bigLockThread = new IncrementalTaskThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
+    Thread smallLockThread = new IncrementalTaskThread(DEFAULT_THREAD_CORD_AMOUNT, counter, false);
     startTime = System.currentTimeMillis();
 
     for (int i = 0; i < DEFAULT_THREAD_CORD_AMOUNT; i++) {
-      threadPool.execute(bigLockThread);
+      threadPool.execute(smallLockThread);
     }
 
     counter.await();
@@ -125,5 +126,9 @@ public class LockStrategyComparison {
 
     // The runtime of big lock thread should be [thread_core_amount] times longer than small lock
     // thread.
+
+    Collections.reverseOrder();
+
+    Class myClass = LockStrategyComparison.class;
   }
 }

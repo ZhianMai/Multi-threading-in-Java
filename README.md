@@ -373,7 +373,7 @@ In this demo, an array of low priority thread, and an array of high priority thr
 each other, and the final result shows that high priority threads have more execution times than the lower
 priority ones.
 
-#### 2.6 Thread Waiting :link:[link](src/johnston/thread/communications/YieldThread.java)
+#### 2.6 Thread Waiting :link:[link](src/johnston/thread/communications/ThreadWait.java)
 Calling wait() method of a lock can let it the thread who holds this lock release it, so another
 thread can enter the critical section.
 

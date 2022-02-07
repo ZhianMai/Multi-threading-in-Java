@@ -20,7 +20,7 @@ public class ProduceRandomIntAction implements Callable {
 
   @Override
   public Integer call() throws Exception {
-    Integer newData = random.nextInt((int)System.currentTimeMillis());
+    Integer newData = random.nextInt(1000);
 
     try {
       dataBuffer.put(newData);

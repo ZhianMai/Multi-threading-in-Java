@@ -18,6 +18,7 @@ public class CountDownLatchWaitBlocking {
   static class SleepThread implements Runnable {
 
     public void run() {
+      // latch.await();
       try {
         Thread.sleep(DEFAULT_SLEEP_MILLIS_SEC);
       } catch (InterruptedException e) {

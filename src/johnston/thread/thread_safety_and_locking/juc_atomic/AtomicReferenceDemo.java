@@ -67,9 +67,9 @@ public class AtomicReferenceDemo {
       public void run() {
         for (int i = 0; i < THREAD_INCREMENT_TIMES; i++) {
           // Record previous version and set to new version
-          OneInteger prev =
-              atomicRef.getAndSet(new OneInteger(VERSION_DISTRIBUTER.incrementAndGet()));
-          versionRecordList[id].add(prev.increment);
+//          OneInteger prev =
+//              atomicRef.getAndSet(new OneInteger(VERSION_DISTRIBUTER.incrementAndGet()));
+//          versionRecordList[id].add(prev.increment);
 
           /**
            * Non-atomic Reference Comparison
@@ -77,8 +77,8 @@ public class AtomicReferenceDemo {
            * Comment the two lines of code above and uncomment the below two lines to test
            * nonatomic reference. It will fail the test.
            */
-//          versionRecordList[id].add(nonAtomicInt.increment);
-//          nonAtomicInt = new OneInteger(VERSION_DISTRIBUTER.incrementAndGet());
+          versionRecordList[id].add(nonAtomicInt.increment);
+          nonAtomicInt = new OneInteger(VERSION_DISTRIBUTER.incrementAndGet());
         }
         countDownLatch.countDown();
       }
