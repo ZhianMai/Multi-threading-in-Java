@@ -753,8 +753,8 @@ one thread to enter critical section exclusively and blocks other threads. It ha
 overhead in multithreading task. Java built-in object lock and ReeentrantLock are pessimistic lock.
 
 <i>Optimistic Lock</i> uses loosely policy that using version record to track the shared variable status when reading
-or writing it to ensure its atomicity. It allows multiple threads to read at the same time. ReentrantReadWriteLock is
-an optimistic lock.
+or writing it to ensure its atomicity. It allows multiple threads to read or edit at the same time, but only keeps the
+latest update of the variable. ReentrantReadWriteLock is an optimistic lock.
 
 For implementation of ReentrantReadWriteLock, check out my Thread-safe linked list & hash map repo :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
 
