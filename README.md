@@ -870,13 +870,13 @@ significantly balance the loading to avoid hotspot problem.
 <br />
 <a name="thread_safe_design_pattern"></a>
 
-## 4. Thread-safe Design Patterns
+## 5. Thread-safe Design Patterns
 In high concurrency situation, many threads may read a shared variable at the same time, and context-switching may happen
 in anywhere. Some design patterns like Singleton, which is safe in single-threaded environment, may not be safe here.
 
-### 4.1 Singleton
+### 5.1 Singleton
 
-#### 4.1.1 Unsafe Singleton
+#### 5.1.1 Unsafe Singleton
 A general lazy-init Singleton class is like: 
 
 ``` java
@@ -897,7 +897,7 @@ A general lazy-init Singleton class is like:
 This class is not thread-safe. Before INSTANCE init, it may have multiple threads calling getInstance() at
 the same time, while initializing variable is not atomic, so it may create multiple instances.
 
-#### 4.1.2 Singleton with Synced Double-checked Init
+#### 5.1.2 Singleton with Synced Double-checked Init
 ``` java
  public class BetterSingleton {
    private BetterSingleton() {}
@@ -926,10 +926,10 @@ not init INSTANCE anymore.
 However, there is still a problem here: the constructor init is not atomic, how if during the initialization
 context-switch happens?
 
-#### 4.1.3 Thread-safe Static Inner Class Singleton  :link:[link](src/johnston/thread/concurrency/design_pattern/StaticInnerClassSingleton.java)
+#### 5.1.3 Thread-safe Static Inner Class Singleton  :link:[link](src/johnston/thread/concurrency/design_pattern/StaticInnerClassSingleton.java)
 This singleton class ensures singleton instance init is lazy, atomic, and only once. The code is short and clear.
 
-### 4.2 Master-Worker Pattern
+### 5.2 Master-Worker Pattern
 The master class is responsible for:
 - accepting task from clients;
 - distributing work to worker class;
@@ -938,7 +938,7 @@ The master class is responsible for:
 
 It's like the leader znode and worker znodes in zookeeper. The core idea of this pattern is divide-and-conquer. 
 
-### 4.3 Fork-join Pattern   :link:[link](src/johnston/thread/concurrency/design_pattern/forkjoin/)
+### 5.3 Fork-join Pattern   :link:[link](src/johnston/thread/concurrency/design_pattern/forkjoin/)
 .java)
 Fork-join pattern is like master-worker pattern without master node. It breaks the master task into parallel subtasks
 recursively until reach the base case, like merge sort. Subtasks are push to the FIFO blocking queue, and available 
@@ -947,14 +947,14 @@ threads (CPU core) would get the subtask to execute. Fork-join is designed for C
 Java JUC package provides a set of Fork-join framework to support this pattern. See the link above for detailed
 implementation demo.
 
-### 4.4 Producer-consumer Pattern
+### 5.4 Producer-consumer Pattern
 See 3.2.
 
-### 4.5 Future Pattern 
+### 5.5 Future Pattern 
 The core of future pattern is async call, which would not block the caller thread and return the result in the future to
 the caller thread. The fork-join merge sort also includes this pattern as well.
 
-#### 4.5.1 Async Callback Using Guava :link:[link](src/johnston/thread/concurrency/design_pattern/callback_guava/GuavaFutureDemo.java)
+#### 5.5.1 Async Callback Using Guava :link:[link](src/johnston/thread/concurrency/design_pattern/callback_guava/GuavaFutureDemo.java)
 Cons of thread.join(): no return, and it's blocking.
 Cons of futureTask.get(): it's blocking, although it returns value.
 
@@ -976,20 +976,20 @@ Guava callback:
 <br />
 <a name="multithreading_demo"></a>
 
-## 5. Demos of Using Multithreading
+## 6. Demos of Using Multithreading
 
-### 5.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
+### 6.1 Matrix Multiplication :link:[link](src/johnston/thread/demo/multi_threading/MatrixMultiplication.java)
 Matrix multiplication is a computationally heavy task. Using multithreading to calculate matrix multiplication
 is 4X faster than single-threaded. This demo uses thread pool to create worker threads.
 
 User can define the CPU core amount and thread amount. The thread amount is how many working threads will be
 created, and the CPU core amount is how many threads run concurrently.
 
-### 5.2 Fork-join Merge Sort  :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
+### 6.2 Fork-join Merge Sort  :link:[link](src/johnston/thread/demo/multi_threading/merge_sort/ForkJoinMergeSort.java)
 The recursion tree of fork-join is identical to the recursion tree of merge sort, so why not combine them together?
 When the length of input array is 100000000, the fork-join merge sort is 3x faster than the single-threaded one.
 
-### 5.3 Thread-safe HashMap :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
+### 6.3 Thread-safe HashMap :link:[link](https://github.com/ZhianMai/Thread-safe-LinkedList-Hashmap)
 
-### 5.4 Guava Async Callback 3Sum :link:[link](src/johnston/thread/demo/multi_threading/three_sum_guava)
+### 6.4 Guava Async Callback 3Sum :link:[link](src/johnston/thread/demo/multi_threading/three_sum_guava)
 Using async callback FutureTask to solve 3Sum problem!

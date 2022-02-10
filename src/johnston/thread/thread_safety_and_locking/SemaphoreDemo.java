@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Semaphore is not a mutual exclusive lock. If one malicious thread wants to enter the critical
  * section guarded by semaphore, it can just release a permit for itself!
  *
- * In this demo the number of permit in semaphore is 2, so each period (five seconds) only two
+ * In this demo the number of permit in semaphore is 2, so in each period (five seconds) only two
  * tasks are running.
  */
 public class SemaphoreDemo {
