@@ -668,7 +668,7 @@ Java object lock uses OS system call to perform thread locking. The JUC package 
 ensure thread-safety. Explicit lock does not make system call but to use Java execution like spinlock to lock thread. So all
 locking operations like lock, unlock, wait, and notify need to code explicitly.
 
-Using explicit lock is complicated than object lock, but it has better performance and more flexible locking policy like 
+Using explicit lock is more complicated than object lock, but it has better performance and more flexible locking policy like 
 non-blocking lock.
 
 #### 3.7.1 Lock Interface in JUC.locks
