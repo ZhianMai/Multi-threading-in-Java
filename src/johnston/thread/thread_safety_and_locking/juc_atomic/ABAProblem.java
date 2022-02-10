@@ -38,15 +38,19 @@ public class ABAProblem {
 
     Thread removeFirst = new Thread(() -> {
       ListNode currHead = aba.LINKED_LIST_HEAD.get();
-      ListNode next = currHead.next;
+      ListNode next = currHead.next; // 1 -> 2 -> 3 -> 4
 
       try {
+        // 睡觉期间，Thread B 将 1 -> 2 -> 3 -> 4 改成了 1 -> null
         Thread.sleep(10);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
 
-      boolean result = aba.LINKED_LIST_HEAD.compareAndSet(currHead, next); // 1 -> 2 -> 3 -> 4
+      // Second read, to check if the read result == first time read
+      // 如果前后读取的value不相等，不会执行更新操作
+      // 问题是： 1 -> 2 -> 3 -> 4 和 1 -> null 判定为相等！
+      boolean result = aba.LINKED_LIST_HEAD.compareAndSet(currHead, next); // 1 -> null
 
       if (!result) {
         throw new RuntimeException("Inconsistency, remove first rejected.");
@@ -57,7 +61,8 @@ public class ABAProblem {
       ListNode currHead = aba.LINKED_LIST_HEAD.get();
       ListNode newNext = new ListNode(9);
       newNext.next = currHead.next.next;
-      currHead.next.next = null;
+      // This operation cause theead A to holde nextNode == 1 -> null
+      currHead.next.next = null; // drope node[val == 1]
       currHead.next = newNext; // 0 -> 9 -> 2 -> 3 -> 4
     });
 
